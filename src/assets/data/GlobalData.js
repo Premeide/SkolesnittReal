@@ -26,6 +26,7 @@ let localData = {
     { value: 4, id: "Religion og etikk" },
     { value: 5, id: "Samfunnsfag" },
   ],
+  firstLogIn: { value: true },
 };
 
 const allClasseslist = [

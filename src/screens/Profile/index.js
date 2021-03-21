@@ -2,12 +2,12 @@ import React from "react";
 import { View, Text } from "react-native";
 import styles from "./styles";
 
-const EducationDetailsScreen = ({ route, navigation }) => {
+const ProfileScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Text>Educations Details</Text>
+      <Text>a functional component</Text>
     </View>
   );
 };
 
-export default EducationDetailsScreen;
+export default ProfileScreen;

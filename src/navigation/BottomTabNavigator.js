@@ -4,12 +4,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import KalkulatorScreen from "../screens/Kalkulator";
 import HomeScreen from "../screens/Home";
-import DiscoverScreen from "../screens/Discover";
-
+import RecommendScreen from "../screens/Recommend";
 import DiscoverStack from "./DiscoverStack";
-
-import NewProfileScreen from "../screens/NewProfile";
-import RetakeKalkulator from "../screens/RetakeKalkulator";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,6 +37,23 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <Icon
               name="calculator"
+              size={25}
+              color={focused ? "#03A9F4" : "grey"}
+              focused={focused}
+            />
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Utforsk"
+        component={RecommendScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="search"
               size={25}
               color={focused ? "#03A9F4" : "grey"}
               focused={focused}

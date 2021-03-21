@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Button,
-  StyleSheet,
   Image,
   TextInput,
   TouchableOpacity,
@@ -18,8 +16,7 @@ const LoginScreen = ({ navigation }) => {
   const [errorText, setErrorText] = useState(" ");
 
   function login() {
-    username && password
-      ? localData.born.value == 2020
+    username && password? localData.born.value == 2020
         ? navigation.navigate("Tab")
         : navigation.navigate("Tab")
       : setErrorText("Skriv inn bruker navn og passord.");
