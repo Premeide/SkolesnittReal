@@ -208,17 +208,5 @@
         "antall_venteliste": 0,
         "poenggrense_f": "Alle",
         "venteliste_f": 0
-    },
-    {
-        "studiekode": 258936,
-        "studienavn": "Praktisk teologi",
-        "lærerstedskode": "FIH",
-        "studiested": "Oslo",
-        "felt": "HISTORIE",
-        "opptakskrav": "GENS",
-        "poenggrense": "Alle",
-        "antall_venteliste": 0,
-        "poenggrense_f": "Alle",
-        "venteliste_f": 0
     }
 ]
