@@ -44,7 +44,7 @@ const KalkulatorScreen = ({ navigation }) => {
       setGrades(_grades);
       localData.grades.value = _grades;
     } else {
-      null;
+      tabDelete(name);
     }
     forceingUpdate();
   }
@@ -128,6 +128,7 @@ const KalkulatorScreen = ({ navigation }) => {
         {isEditing ? (
           <FlatList
             data={grades}
+            showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => (
               <View style={GlobalStyles.ItemSeparatorComponent} />
             )}
@@ -158,6 +159,7 @@ const KalkulatorScreen = ({ navigation }) => {
           <FlatList
             data={grades}
             ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
+            showsVerticalScrollIndicator={false}
             keyExtractor={keyExtractorGrades}
             renderItem={({ item, index }) => (
               <View>
@@ -176,6 +178,7 @@ const KalkulatorScreen = ({ navigation }) => {
                   activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
                   activeTextColor="white"
                   textColor="black"
+                  activeTextWeight="bold"
                 />
                 <View style={{ flexDirection: "row" }}>
                   <Text style={{ color: "grey" }}>Hatt eksamen? </Text>
@@ -202,6 +205,10 @@ const KalkulatorScreen = ({ navigation }) => {
                     tabs={gradeTabs}
                     currentIndex={item.exva}
                     onChange={(index) => tabChange(index, item.id, true)}
+                    segmentedControlBackgroundColor="gainsboro"
+                    activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
+                    activeTextColor="white"
+                    textColor="black"
                   />
                 ) : null}
               </View>
@@ -213,7 +220,7 @@ const KalkulatorScreen = ({ navigation }) => {
             <View style={styles.modalContainer}>
               <TextInput
                 style={GlobalStyles.textInput2}
-                placeholder="Søk utdanninger"
+                placeholder="Søk fag"
                 onChangeText={(text) => setSearchText(text)}
               />
               <View style={GlobalStyles.greyContainer}>
@@ -232,7 +239,10 @@ const KalkulatorScreen = ({ navigation }) => {
                         {item.name}
                       </Text>
                       <View style={GlobalStyles.listEndContainer}>
-                        <CheckBox value={checkboxHandler(item.name)} />
+                        <CheckBox
+                          value={checkboxHandler(item.name)}
+                          onChange={() => tabAdd(item.name)}
+                        />
                       </View>
                     </TouchableOpacity>
                   )}
@@ -258,7 +268,16 @@ const KalkulatorScreen = ({ navigation }) => {
             <Text style={styles.addText}>Legg til fag</Text>
           </View>
         </TouchableOpacity>
-      ) : null}
+      ) : (
+        <TouchableOpacity
+          style={[GlobalStyles.customBtnContainer, { bottom: "10%" }]}
+          onPress={() => navigation.navigate("Hjem")}
+        >
+          <View style={styles.addBtn}>
+            <Text style={styles.addText}>Fortsett/videre</Text>
+          </View>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         onPress={() => toggleIsEditing()}
         style={GlobalStyles.customBtnContainer}

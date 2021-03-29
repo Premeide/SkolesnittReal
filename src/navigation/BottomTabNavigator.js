@@ -22,14 +22,12 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <Icon
               name="home"
-              size={25}
+              size={30}
               color={focused ? GlobalStyles.blueColor.color : "grey"}
               focused={focused}
             />
           ),
-          tabBarLabel: () => {
-            return null;
-          },
+          tabBarLabel: "Hjem",
         }}
       />
       <Tab.Screen
@@ -44,9 +42,7 @@ const BottomTabNavigator = () => {
               focused={focused}
             />
           ),
-          tabBarLabel: () => {
-            return null;
-          },
+          tabBarLabel: "Kalkulator",
         }}
       />
       <Tab.Screen
@@ -61,9 +57,7 @@ const BottomTabNavigator = () => {
               focused={focused}
             />
           ),
-          tabBarLabel: () => {
-            return null;
-          },
+          tabBarLabel: "Øk snittet",
         }}
       />
       <Tab.Screen
@@ -78,9 +72,7 @@ const BottomTabNavigator = () => {
               focused={focused}
             />
           ),
-          tabBarLabel: () => {
-            return null;
-          },
+          tabBarLabel: "utdanninger",
         }}
       />
     </Tab.Navigator>

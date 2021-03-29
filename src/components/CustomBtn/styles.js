@@ -11,6 +11,8 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.blueColor.color,
     padding: 10,
     width: "90%",
+    borderWidth: 1,
+    borderColor: "white",
   },
   text: { fontSize: 20, color: "white", fontWeight: "bold" },
 });

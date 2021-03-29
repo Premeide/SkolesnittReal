@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import GlobalStyles from "../../assets/styles/GlobalStyles";
 
 const styles = StyleSheet.create({
   addBtn: {
@@ -9,9 +10,13 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "90%",
     borderWidth: 2,
-    borderColor: "blue",
+    borderColor: GlobalStyles.blueColor.color,
   },
-  addText: { fontSize: 20, color: "blue", fontWeight: "bold" },
+  addText: {
+    fontSize: 20,
+    color: GlobalStyles.blueColor.color,
+    fontWeight: "bold",
+  },
   modalContainer: {
     borderWidth: 1,
     borderColor: "black",

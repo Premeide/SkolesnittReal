@@ -11,6 +11,7 @@ import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CheckBox from "@react-native-community/checkbox";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { localData } from "../../assets/data/GlobalData";
 
 let newProfileData = [
   { name: "Folkehøyskole" },
@@ -27,12 +28,20 @@ let data2 = [
 ];
 
 const ProfileScreen = ({ navigation }) => {
-  const [age, setAge] = useState();
-  const [checkArray, setCheckArray] = useState([]);
+  const [age, setAge] = useState(localData.born.value);
+  const [checkArray, setCheckArray] = useState(initcheckarray());
 
+  const test = React.useRef();
+
+  const handleAgeChange = (t) => {
+    setAge(t);
+    if (t.length > 3) {
+      test.current.blur();
+      localData.born.value = t;
+    }
+  };
   const selectThis = (index) => {
     let tempCheckArray = checkArray;
-    console.log(index);
     if (checkArray.includes(index)) {
       tempCheckArray = tempCheckArray.filter((n) => {
         return n != index;
@@ -43,6 +52,37 @@ const ProfileScreen = ({ navigation }) => {
 
     setCheckArray(tempCheckArray);
   };
+  function initcheckarray() {
+    let a = [];
+    localData.extraPoints.f ? a.push(0) : null;
+    localData.extraPoints.m ? a.push(1) : null;
+    localData.extraPoints.tre ? a.push(2) : null;
+    localData.extraPoints.seks ? a.push(3) : null;
+    return a;
+  }
+  const handleTilleggspoeng = (i) => {
+    let points = 0;
+    i == 0
+      ? (localData.extraPoints.f = !localData.extraPoints.f)
+      : i == 1
+      ? (localData.extraPoints.m = !localData.extraPoints.m)
+      : i == 2
+      ? (localData.extraPoints.tre = !localData.extraPoints.tre)
+      : i == 3
+      ? (localData.extraPoints.seks = !localData.extraPoints.seks)
+      : null;
+    if (localData.extraPoints.tre) {
+      points = 1;
+    }
+    if (
+      localData.extraPoints.seks ||
+      localData.extraPoints.m ||
+      localData.extraPoints.f
+    ) {
+      points = 2;
+    }
+    localData.extraPoints.value = points;
+  };
   return (
     <View style={GlobalStyles.container}>
       <ScrollView>
@@ -50,10 +90,11 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={GlobalStyles.underTitleText}>Fødselsår:</Text>
           <TextInput
             value={age}
+            ref={test}
             keyboardType="number-pad"
             placeholder="2000"
             style={GlobalStyles.textInput}
-            onChangeText={(text) => setAge(text)}
+            onChangeText={(text) => handleAgeChange(text)}
           />
         </View>
 
@@ -64,7 +105,10 @@ const ProfileScreen = ({ navigation }) => {
               <View key={item.name}>
                 <TouchableOpacity
                   style={GlobalStyles.row}
-                  onPress={() => selectThis(index)}
+                  onPress={() => {
+                    selectThis(index);
+                    handleTilleggspoeng(index);
+                  }}
                 >
                   <Text style={GlobalStyles.listText}>{item.name}</Text>
                   <View style={GlobalStyles.listEndContainer}>
@@ -72,6 +116,7 @@ const ProfileScreen = ({ navigation }) => {
                       value={checkArray.includes(index)}
                       onChange={() => {
                         selectThis(index);
+                        handleTilleggspoeng(index);
                       }}
                     />
                   </View>
@@ -100,21 +145,6 @@ const ProfileScreen = ({ navigation }) => {
               )}
             </View>
           ))}
-          {/* <TouchableOpacity
-          style={GlobalStyles.row}
-          onPress={() =>
-            navigation.navigate("EducationDetails", {
-              postStudiekode: item.studiekode,
-            })
-          }
-        >
-          <Text style={[GlobalStyles.listText, { width: "90%" }]}>
-            {item.studienavn}
-          </Text>
-          <View style={GlobalStyles.listEndContainer}>
-            <Icon name="angle-right" size={30} />
-          </View>
-        </TouchableOpacity> */}
         </View>
       </ScrollView>
     </View>

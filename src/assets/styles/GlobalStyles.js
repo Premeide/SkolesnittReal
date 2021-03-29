@@ -4,7 +4,11 @@ const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   blueColor: { color: "#2C72FF" },
-  container: { flex: 1, backgroundColor: "#eaeaea", paddingTop: 40 },
+  container: {
+    flex: 1,
+    backgroundColor: "#eaeaea",
+    paddingTop: 40,
+  },
   whiteContainer: { backgroundColor: "white", padding: 15, marginTop: 7 },
   whiteContainer2: { flex: 1, backgroundColor: "white", padding: 15 },
   underTitleText: { fontSize: 20, fontWeight: "bold" },
