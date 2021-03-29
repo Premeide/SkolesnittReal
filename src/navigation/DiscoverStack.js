@@ -12,7 +12,7 @@ const DiscoverStack = () => {
       <Stack.Screen
         name="Discover"
         component={DiscoverScreen}
-        options={{ headerTitle: "Se hva du kan studere" }}
+        options={{ headerTitle: "Se hva du kan studere", headerShown: false }}
       />
       <Stack.Screen
         name="EducationDetails"

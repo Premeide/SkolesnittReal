@@ -3,7 +3,8 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#eaeaea" },
+  blueColor: { color: "#2C72FF" },
+  container: { flex: 1, backgroundColor: "#eaeaea", paddingTop: 40 },
   whiteContainer: { backgroundColor: "white", padding: 15, marginTop: 7 },
   whiteContainer2: { flex: 1, backgroundColor: "white", padding: 15 },
   underTitleText: { fontSize: 20, fontWeight: "bold" },
@@ -12,7 +13,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingHorizontal: 13,
   },
-  listText: { fontSize: 20, color: "black", marginVertical: 15, width: "92%" },
+  listText: {
+    fontSize: 20,
+    color: "black",
+    marginVertical: 15,
+  },
   ItemSeparatorComponent: {
     height: 1,
     backgroundColor: "lightgrey",
@@ -20,12 +25,11 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: "row" },
   textInput: {
-    width: 100,
-    textAlign: "center",
+    width: "100%",
     backgroundColor: "#EFF2F1",
     marginTop: 10,
-    fontSize: 25,
-    padding: 5,
+    fontSize: 20,
+    padding: 7,
     fontWeight: "bold",
   },
   textInput2: {

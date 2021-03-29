@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import styles from "./styles";
+import GlobalStyles from "../../assets/styles/GlobalStyles";
 
 const AboutScreen = (props) => {
   return (

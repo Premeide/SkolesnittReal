@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
+import { localData } from "../../assets/data/GlobalData";
 
 const DiscoverScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
@@ -61,12 +62,17 @@ const DiscoverScreen = ({ navigation }) => {
           )}
         />
       </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Kalkulator")}
-        style={GlobalStyles.customBtnContainer}
-      >
-        <CustomBtn text="Ferdig" />
-      </TouchableOpacity>
+      {localData.firstLogIn.value ? (
+        <TouchableOpacity
+          onPress={() => {
+            localData.firstLogIn.value = false;
+            navigation.navigate("Tab", { screen: "Kalkulator" });
+          }}
+          style={GlobalStyles.customBtnContainer}
+        >
+          <CustomBtn text="Ferdig" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

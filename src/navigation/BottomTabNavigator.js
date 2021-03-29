@@ -1,6 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
+import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import KalkulatorScreen from "../screens/Kalkulator";
 import HomeScreen from "../screens/Home";
@@ -11,7 +12,9 @@ const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
-    <Tab.Navigator tabBarOptions={{ activeTintColor: "#03A9F4" }}>
+    <Tab.Navigator
+      tabBarOptions={{ activeTintColor: GlobalStyles.blueColor.color }}
+    >
       <Tab.Screen
         name="Hjem"
         component={HomeScreen}
@@ -20,14 +23,13 @@ const BottomTabNavigator = () => {
             <Icon
               name="home"
               size={25}
-              color={focused ? "#03A9F4" : "grey"}
+              color={focused ? GlobalStyles.blueColor.color : "grey"}
               focused={focused}
             />
           ),
           tabBarLabel: () => {
             return null;
           },
-          title: "ok",
         }}
       />
       <Tab.Screen
@@ -38,7 +40,7 @@ const BottomTabNavigator = () => {
             <Icon
               name="calculator"
               size={25}
-              color={focused ? "#03A9F4" : "grey"}
+              color={focused ? GlobalStyles.blueColor.color : "grey"}
               focused={focused}
             />
           ),
@@ -48,14 +50,14 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Utforsk"
+        name="Recommend"
         component={RecommendScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Icon
-              name="search"
+              name="align-center"
               size={25}
-              color={focused ? "#03A9F4" : "grey"}
+              color={focused ? GlobalStyles.blueColor.color : "grey"}
               focused={focused}
             />
           ),
@@ -72,7 +74,7 @@ const BottomTabNavigator = () => {
             <Icon
               name="search"
               size={25}
-              color={focused ? "#03A9F4" : "grey"}
+              color={focused ? GlobalStyles.blueColor.color : "grey"}
               focused={focused}
             />
           ),

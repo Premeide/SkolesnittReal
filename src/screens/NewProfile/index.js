@@ -49,7 +49,7 @@ const NewProfileScreen = ({ navigation }) => {
           keyboardType="number-pad"
           placeholder="2000"
           style={GlobalStyles.textInput}
-          onChangeText={(text) => {}}
+          onChangeText={(text) => setAge(text)}
         />
       </View>
 

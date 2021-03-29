@@ -15,7 +15,7 @@ import CheckBox from "@react-native-community/checkbox";
 import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
-
+import CustomHeader from "../../components/CustomHeader";
 const gradeTabs = ["1", "2", "3", "4", "5", "6"];
 
 const KalkulatorScreen = ({ navigation }) => {
@@ -118,7 +118,6 @@ const KalkulatorScreen = ({ navigation }) => {
     }
     return isIncluded;
   }
-
   const toggleIsEditing = () => {
     setIsEditing(!isEditing);
   };
@@ -136,7 +135,12 @@ const KalkulatorScreen = ({ navigation }) => {
             keyExtractor={keyExtractorGrades}
             renderItem={({ item }) => (
               <View style={GlobalStyles.row}>
-                <Text style={[GlobalStyles.listText, { width: "90%" }]}>
+                <Text
+                  style={[
+                    GlobalStyles.listText,
+                    { width: "90%", fontWeight: "bold" },
+                  ]}
+                >
                   {item.id}
                 </Text>
                 <View style={GlobalStyles.listEndContainer}>
@@ -169,7 +173,7 @@ const KalkulatorScreen = ({ navigation }) => {
                   onChange={(index) => tabChange(index, item.id, false)}
                   paddingVertical={5}
                   segmentedControlBackgroundColor="gainsboro"
-                  activeSegmentBackgroundColor="#03A9F4"
+                  activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
                   activeTextColor="white"
                   textColor="black"
                 />
@@ -224,7 +228,9 @@ const KalkulatorScreen = ({ navigation }) => {
                       style={GlobalStyles.row}
                       onPress={() => tabAdd(item.name)}
                     >
-                      <Text style={GlobalStyles.listText}>{item.name}</Text>
+                      <Text style={[GlobalStyles.listText, { width: "90%" }]}>
+                        {item.name}
+                      </Text>
                       <View style={GlobalStyles.listEndContainer}>
                         <CheckBox value={checkboxHandler(item.name)} />
                       </View>
