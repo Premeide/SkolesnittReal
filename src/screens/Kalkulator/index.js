@@ -129,9 +129,7 @@ const KalkulatorScreen = ({ navigation }) => {
           <FlatList
             data={grades}
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => (
-              <View style={GlobalStyles.ItemSeparatorComponent} />
-            )}
+            ListHeaderComponent={() => <CustomHeader />}
             ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
             keyExtractor={keyExtractorGrades}
             renderItem={({ item }) => (
@@ -163,11 +161,7 @@ const KalkulatorScreen = ({ navigation }) => {
             keyExtractor={keyExtractorGrades}
             renderItem={({ item, index }) => (
               <View>
-                <Text
-                  style={{ fontSize: 20, color: "black", fontWeight: "bold" }}
-                >
-                  {item.id}
-                </Text>
+                <Text style={GlobalStyles.kalkText}>{item.id}</Text>
 
                 <SegmentedControl
                   tabs={gradeTabs}
@@ -209,6 +203,7 @@ const KalkulatorScreen = ({ navigation }) => {
                     activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
                     activeTextColor="white"
                     textColor="black"
+                    activeTextWeight="bold"
                   />
                 ) : null}
               </View>
@@ -217,7 +212,7 @@ const KalkulatorScreen = ({ navigation }) => {
         )}
         <Modal transparent={true} visible={showModal}>
           <View style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}>
-            <View style={styles.modalContainer}>
+            <View style={GlobalStyles.modalContainer}>
               <TextInput
                 style={GlobalStyles.textInput2}
                 placeholder="Søk fag"
@@ -261,23 +256,32 @@ const KalkulatorScreen = ({ navigation }) => {
 
       {isEditing ? (
         <TouchableOpacity
-          style={[GlobalStyles.customBtnContainer, { bottom: "10%" }]}
+          style={[
+            GlobalStyles.customBtnContainer,
+            { bottom: GlobalStyles.customBtn2Bottom.bottom },
+          ]}
           onPress={() => setShowModal(true)}
         >
-          <View style={styles.addBtn}>
-            <Text style={styles.addText}>Legg til fag</Text>
+          <View style={GlobalStyles.addBtn}>
+            <Text style={GlobalStyles.addText}>Legg til fag</Text>
           </View>
         </TouchableOpacity>
-      ) : (
+      ) : localData.firstTimeKalk.value ? (
         <TouchableOpacity
-          style={[GlobalStyles.customBtnContainer, { bottom: "10%" }]}
-          onPress={() => navigation.navigate("Hjem")}
+          style={[
+            GlobalStyles.customBtnContainer,
+            { bottom: GlobalStyles.customBtn2Bottom.bottom },
+          ]}
+          onPress={() => {
+            localData.firstTimeKalk.value = false;
+            navigation.navigate("Tab", { screen: "Hjem" });
+          }}
         >
-          <View style={styles.addBtn}>
-            <Text style={styles.addText}>Fortsett/videre</Text>
+          <View style={GlobalStyles.addBtn}>
+            <Text style={GlobalStyles.addText}>Fortsett/videre</Text>
           </View>
         </TouchableOpacity>
-      )}
+      ) : null}
       <TouchableOpacity
         onPress={() => toggleIsEditing()}
         style={GlobalStyles.customBtnContainer}

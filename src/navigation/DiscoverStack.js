@@ -1,5 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import EducationDetailsScreen from "../screens/EducationDetails";
 import DiscoverScreen from "../screens/Discover";
@@ -17,6 +18,11 @@ const DiscoverStack = () => {
       <Stack.Screen
         name="EducationDetails"
         component={EducationDetailsScreen}
+        options={{
+          headerTitle: "Utdanninger",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
       />
     </Stack.Navigator>
   );

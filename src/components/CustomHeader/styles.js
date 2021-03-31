@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     paddingHorizontal: 10,
+    paddingTop: 40,
   },
   row: {
     flexDirection: "row",

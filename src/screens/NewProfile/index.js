@@ -20,7 +20,6 @@ let newProfileData = [
   { name: "Militæret" },
   { name: "30 studiepoeng" },
   { name: "60 studiepoeng" },
-  { name: "23/5" },
 ];
 
 const NewProfileScreen = ({ navigation }) => {
@@ -44,7 +43,6 @@ const NewProfileScreen = ({ navigation }) => {
   };
   const selectThis = (index) => {
     let tempCheckArray = checkArray;
-    console.log(index);
     if (checkArray.includes(index)) {
       tempCheckArray = tempCheckArray.filter((n) => {
         return n != index;
@@ -79,23 +77,7 @@ const NewProfileScreen = ({ navigation }) => {
     }
     localData.extraPoints.value = points;
   };
-  const handle235 = () => {
-    console.log("here?");
-    if (checkArray.includes(4)) {
-      console.log("Fixing grades for 23/5");
-      localData.grades.value = [
-        { value: 0, id: "Engelsk", exam: false, exva: 0 },
-        { value: 0, id: "Historie", exam: false, exva: 0 },
-        { value: 0, id: "Matematikk 1T/1P", exam: false, exva: 0 },
-        { value: 0, id: "Matematikk 2T/2P", exam: false, exva: 0 },
-        { value: 0, id: "Norsk hovedmål", exam: false, exva: 0 },
-        { value: 0, id: "Norsk muntlig", exam: false, exva: 0 },
-        { value: 0, id: "Norsk Sidemål", exam: false, exva: 0 },
-        { value: 0, id: "Naturfag", exam: false, exva: 0 },
-        { value: 0, id: "Samfunnsfag", exam: false, exva: 0 },
-      ];
-    }
-  };
+
   return (
     <View style={GlobalStyles.container}>
       <View style={GlobalStyles.whiteContainer}>
@@ -146,9 +128,6 @@ const NewProfileScreen = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Discover");
-          handleTilleggspoeng();
-          handle235();
-          console.log("ok?");
         }}
         style={GlobalStyles.customBtnContainer}
       >

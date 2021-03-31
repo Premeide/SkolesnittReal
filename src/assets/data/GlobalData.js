@@ -8,6 +8,7 @@ let localData = {
       { value: 0, id: "Fremmedspråk", exam: false, exva: 0 },
       { value: 0, id: "Geografi", exam: false, exva: 0 },
       { value: 0, id: "Historie", exam: false, exva: 0 },
+      { value: 0, id: "Naturfag", exam: false, exva: 0 },
       { value: 0, id: "Kroppsøving", exam: false, exva: 0 },
       { value: 0, id: "Matematikk 1T/1P", exam: false, exva: 0 },
       { value: 0, id: "Matematikk 2T/2P", exam: false, exva: 0 },
@@ -18,15 +19,10 @@ let localData = {
       { value: 0, id: "Samfunnsfag", exam: false, exva: 0 },
     ],
   },
-  wantedEducations: { names: ["Medisin", "Psykologi", "Data Science"] },
-  retakeClasses: [
-    { value: 1, id: "Norsk hovedmål" },
-    { value: 2, id: "Norsk muntlig" },
-    { value: 3, id: "Norsk Sidemål" },
-    { value: 4, id: "Religion og etikk" },
-    { value: 5, id: "Samfunnsfag" },
-  ],
+  wantedEducations: { names: [] },
+  retakeClasses: [],
   firstLogIn: { value: true },
+  firstTimeKalk: { value: true },
 };
 
 const allClasseslist = [

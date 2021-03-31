@@ -42,7 +42,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
       let _grades = grades;
       _grades.push({ value: 0, id: name });
       setGrades(_grades);
-      localData.wantedEducations = _grades;
+      localData.retakeClasses = _grades;
     } else {
       null;
     }
@@ -62,7 +62,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
     }
 
     setGrades(_grades);
-    localData.wantedEducations = _grades;
+    localData.retakeClasses = _grades;
 
     return null;
   }
@@ -75,7 +75,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
       }
     }
     setGrades(_grades);
-    localData.wantedEducations = _grades;
+    localData.retakeClasses = _grades;
 
     forceingUpdate();
     return null;
@@ -139,11 +139,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
             keyExtractor={keyExtractorGrades}
             renderItem={({ item, index }) => (
               <View>
-                <Text
-                  style={{ fontSize: 20, color: "black", fontWeight: "bold" }}
-                >
-                  {item.id}
-                </Text>
+                <Text style={GlobalStyles.kalkText}>{item.id}</Text>
 
                 <SegmentedControl
                   tabs={gradeTabs}
@@ -154,6 +150,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
                   activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
                   activeTextColor="white"
                   textColor="black"
+                  activeTextWeight="bold"
                 />
               </View>
             )}
@@ -161,7 +158,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
         )}
         <Modal transparent={true} visible={showModal}>
           <View style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}>
-            <View style={styles.modalContainer}>
+            <View style={GlobalStyles.modalContainer}>
               <TextInput
                 style={GlobalStyles.textInput2}
                 placeholder="Søk utdanninger"
@@ -200,11 +197,14 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
 
       {isEditing ? (
         <TouchableOpacity
-          style={[GlobalStyles.customBtnContainer, { bottom: "10%" }]}
+          style={[
+            GlobalStyles.customBtnContainer,
+            { bottom: GlobalStyles.customBtn2Bottom.bottom },
+          ]}
           onPress={() => setShowModal(true)}
         >
-          <View style={styles.addBtn}>
-            <Text style={styles.addText}>Legg til fag</Text>
+          <View style={GlobalStyles.addBtn}>
+            <Text style={GlobalStyles.addText}>Legg til fag</Text>
           </View>
         </TouchableOpacity>
       ) : null}

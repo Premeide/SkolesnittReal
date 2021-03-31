@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
   },
-  text: { fontSize: 20, color: "white", fontWeight: "bold" },
+  text: { fontSize: 15, color: "white", fontWeight: "bold" },
 });
 
 export default styles;

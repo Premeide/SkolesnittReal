@@ -18,7 +18,6 @@ let newProfileData = [
   { name: "Militæret" },
   { name: "30 studiepoeng" },
   { name: "60 studiepoeng" },
-  { name: "23/5" },
 ];
 let data2 = [
   { name: "Vanlige spørsmål", screen: "Questions" },
@@ -28,7 +27,7 @@ let data2 = [
 ];
 
 const ProfileScreen = ({ navigation }) => {
-  const [age, setAge] = useState(localData.born.value);
+  const [age, setAge] = useState(localData.born.value.toString());
   const [checkArray, setCheckArray] = useState(initcheckarray());
 
   const test = React.useRef();

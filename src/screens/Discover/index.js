@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
+import CustomHeader from "../../components/CustomHeader";
 import { localData } from "../../assets/data/GlobalData";
 
 const DiscoverScreen = ({ navigation }) => {
@@ -39,7 +40,7 @@ const DiscoverScreen = ({ navigation }) => {
         />
         <FlatList
           data={searchFilter(input)}
-          keyExtractor={(item) => item.studienavn}
+          keyExtractor={(item) => item.studiekode.toString()}
           ItemSeparatorComponent={() => (
             <View style={GlobalStyles.ItemSeparatorComponent} />
           )}
@@ -66,7 +67,7 @@ const DiscoverScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             localData.firstLogIn.value = false;
-            navigation.navigate("Tab", { screen: "Kalkulator" });
+            navigation.navigate("_Kalkulator");
           }}
           style={GlobalStyles.customBtnContainer}
         >

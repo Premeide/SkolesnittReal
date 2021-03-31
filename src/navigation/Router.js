@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { View, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 
@@ -24,18 +25,42 @@ const Router = () => {
       <Stack.Screen
         name="NewProfile"
         component={NewProfileScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: "Ny profil",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
       />
 
-      <Stack.Screen name="Kalkulator" component={KalkulatorScreen} />
+      <Stack.Screen
+        name="_Kalkulator"
+        component={KalkulatorScreen}
+        options={{
+          headerTitle: "Legg til fagene dine",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
       <Stack.Screen
         name="Discover"
         component={DiscoverScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: "Hva ønsker du å studere?",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: GlobalStyles.blueColor.color,
+            fontSize: 16,
+          },
+        }}
       />
       <Stack.Screen
         name="EducationDetails"
         component={EducationDetailsScreen}
+        options={{
+          headerTitle: "Utdanninger",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
       />
       <Stack.Screen
         name="Tab"
@@ -49,6 +74,11 @@ const Router = () => {
       <Stack.Screen
         name="RetakeKalkulator"
         component={RetakeKalkulatorScreen}
+        options={{
+          headerTitle: "Legg til fag du skal ta opp",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
       />
       {/* <Stack.Screen name="Recommend" component={RecommendScreen} />
       

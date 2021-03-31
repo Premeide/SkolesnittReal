@@ -4,7 +4,7 @@ const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   poeng: {
-    fontSize: 50,
+    fontSize: 35,
     fontWeight: "bold",
     textAlign: "center",
     color: "black",
