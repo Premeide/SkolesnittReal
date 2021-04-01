@@ -16,7 +16,7 @@ import { localData } from "../../assets/data/GlobalData";
 let newProfileData = [
   { name: "Folkehøyskole" },
   { name: "Militæret" },
-  { name: "30 studiepoeng" },
+  { name: "30 til 59 studiepoeng" },
   { name: "60 studiepoeng" },
 ];
 let data2 = [

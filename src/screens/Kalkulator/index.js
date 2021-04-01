@@ -124,6 +124,7 @@ const KalkulatorScreen = ({ navigation }) => {
 
   return (
     <View style={GlobalStyles.container}>
+      <View style={{ height: "5%" }} />
       <View style={GlobalStyles.whiteContainer2}>
         {isEditing ? (
           <FlatList

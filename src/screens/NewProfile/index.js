@@ -18,7 +18,7 @@ import CustomBtn from "../../components/CustomBtn";
 let newProfileData = [
   { name: "Folkehøyskole" },
   { name: "Militæret" },
-  { name: "30 studiepoeng" },
+  { name: "30 til 59 studiepoeng" },
   { name: "60 studiepoeng" },
 ];
 
@@ -42,6 +42,7 @@ const NewProfileScreen = ({ navigation }) => {
     }
   };
   const selectThis = (index) => {
+    handleAgeChange(age); //for update
     let tempCheckArray = checkArray;
     if (checkArray.includes(index)) {
       tempCheckArray = tempCheckArray.filter((n) => {

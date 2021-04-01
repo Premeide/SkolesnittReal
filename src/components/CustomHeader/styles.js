@@ -12,11 +12,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  logoImage: { height: 40, width: 40 },
+  logoImage: { height: 50, width: 50, marginRight: 10 },
   headerTitle: {
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: "bold",
     color: GlobalStyles.blueColor.color,
+  },
+  iconContainer: {
+    backgroundColor: "lightgrey",
+    padding: 6,
+    borderRadius: 30,
   },
 });
 

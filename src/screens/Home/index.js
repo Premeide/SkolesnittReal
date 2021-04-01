@@ -118,7 +118,7 @@ const HomeScreen = ({ navigation }) => {
         return e.value + 1;
       }
     }
-    return "?";
+    return "0";
   }
   return (
     <View style={GlobalStyles.container}>
@@ -137,7 +137,9 @@ const HomeScreen = ({ navigation }) => {
             activeTextWeight="bold"
             textColor="black"
           />
-          <Text style={GlobalStyles.smallCenteredText}>Dine poeng:</Text>
+          <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
+            Dine poeng:
+          </Text>
           <Text style={styles.poeng}>
             {data2[activeSegment].value.toFixed(2)}
           </Text>
@@ -159,38 +161,36 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         <View style={GlobalStyles.whiteContainer}>
-          <Text style={GlobalStyles.underTitleText}>
+          <Text
+            style={GlobalStyles.underTitleText}
+            onPress={() => navigation.navigate("RetakeKalkulator")}
+          >
             Disse fagene skal jeg ta opp:
           </Text>
           <View style={GlobalStyles.greyContainer}>
-            {localData.retakeClasses.length >= 1 ? (
-              localData.retakeClasses.map((item, index) => (
-                <View key={item.id}>
-                  <TouchableOpacity
-                    style={GlobalStyles.row}
-                    onPress={() => navigation.navigate("RetakeKalkulator")}
-                  >
-                    <Text style={GlobalStyles.listText}>{item.id}</Text>
-                    <View style={GlobalStyles.listEndContainer}>
-                      <Text style={GlobalStyles.listText}>
-                        {oldGradeFinder(item.id)} til {item.value + 1}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  {index >= localData.retakeClasses.length - 1 ? null : (
-                    <View style={GlobalStyles.ItemSeparatorComponent}></View>
-                  )}
-                </View>
-              ))
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("RetakeKalkulator")}
-              >
-                <Text style={GlobalStyles.listText}>
-                  Trykk for å legge til fag
-                </Text>
-              </TouchableOpacity>
-            )}
+            {localData.retakeClasses.map((item, index) => (
+              <View key={item.id}>
+                <TouchableOpacity
+                  style={GlobalStyles.row}
+                  onPress={() => navigation.navigate("RetakeKalkulator")}
+                >
+                  <Text style={GlobalStyles.listText}>{item.id}</Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    <Text style={GlobalStyles.listText}>
+                      {oldGradeFinder(item.id)} til {item.value + 1}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <View style={GlobalStyles.ItemSeparatorComponent}></View>
+              </View>
+            ))}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RetakeKalkulator")}
+            >
+              <Text style={GlobalStyles.listText}>
+                Trykk for å legge til flere fag
+              </Text>
+            </TouchableOpacity>
           </View>
           <SegmentedControl
             tabs={["Skolepoeng", "Konkurransepoeng", "23/5-poeng"]}
@@ -208,7 +208,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.poeng}>
             {data3[activeSegment2].value.toFixed(2)}
           </Text>
-          <Text style={GlobalStyles.smallCenteredText}>
+          <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
             Dine poeng med nye fag
           </Text>
         </View>

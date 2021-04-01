@@ -67,10 +67,42 @@ const Router = () => {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="About" component={AboutScreen} />
-      <Stack.Screen name="Questions" component={QuestionsScreen} />
-      <Stack.Screen name="Feedback" component={FeedbackScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerTitle: "Profil",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{
+          headerTitle: "Om",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+      <Stack.Screen
+        name="Questions"
+        component={QuestionsScreen}
+        options={{
+          headerTitle: "Vanlige spørsmål",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+      <Stack.Screen
+        name="Feedback"
+        component={FeedbackScreen}
+        options={{
+          headerTitle: "Tilbakemelding",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
       <Stack.Screen
         name="RetakeKalkulator"
         component={RetakeKalkulatorScreen}

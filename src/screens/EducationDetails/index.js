@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import { localData } from "../../assets/data/GlobalData";
 
 const EducationDetailsScreen = ({ route, navigation }) => {
-  const [btnVisible, setBtnVisible] = useState(true);
   const { postStudiekode: subjectId } = route.params;
-
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
   const thisEd = karakterGrenser.find(
     (karakterGrenser) => karakterGrenser.studiekode === subjectId
+  );
+  const [edAlreadyAdded, setEdAlreadyAdded] = useState(
+    localData.wantedEducations.names.includes(thisEd.studienavn)
   );
   const educationData = [
     { name: "Studiekode", value: thisEd.studiekode },
@@ -45,17 +47,23 @@ const EducationDetailsScreen = ({ route, navigation }) => {
           />
         </View>
       </View>
-      {btnVisible ? (
+      {edAlreadyAdded ? (
+        <View style={GlobalStyles.customBtnContainer}>
+          <View style={GlobalStyles.addBtn}>
+            <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
+          </View>
+        </View>
+      ) : (
         <TouchableOpacity
           onPress={() => {
             localData.wantedEducations.names.push(thisEd.studienavn);
-            setBtnVisible(false);
+            setEdAlreadyAdded(true);
           }}
           style={GlobalStyles.customBtnContainer}
         >
           <CustomBtn text="Legg til utdanning" />
         </TouchableOpacity>
-      ) : null}
+      )}
     </View>
   );
 };

@@ -63,9 +63,8 @@ const styles = StyleSheet.create({
     height: "10%",
     bottom: "1%",
   },
-  smallCenteredText: {
+  smallText: {
     marginTop: 10,
-    textAlign: "center",
     fontSize: 10,
     color: "grey",
   },
@@ -97,27 +96,3 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
-
-// godkjent i fag?:
-// drite i de
-
-// 23/5 men kan se konkurranse?:
-// høre med thomas
-// ikke 23/5 ved profile
-
-// tar opp fag utenfor 23/5 men kan se 23/5 poeng?
-// la de
-
-// 23/5 check fjerne ikke-235 fag, men kan legges til?
-// se 2
-
-// se ny poeng med segmented control?
-// jaja
-
-// evt ekstra alderspoeng ved ta opp fag legges til selv?
-// info om det. er nok.
-
-// ha "utdanninger? vits?jaj vis sted viktig
-
-// SKRIV INN:
-// husk at dersom satser på 23/5 fokus på riktig fag. (info)

@@ -32,6 +32,7 @@ const DiscoverScreen = ({ navigation }) => {
 
   return (
     <View style={GlobalStyles.container}>
+      {localData.firstLogIn.value ? null : <View style={{ height: "5%" }} />}
       <View style={GlobalStyles.whiteContainer2}>
         <TextInput
           style={GlobalStyles.textInput2}
@@ -41,6 +42,7 @@ const DiscoverScreen = ({ navigation }) => {
         <FlatList
           data={searchFilter(input)}
           keyExtractor={(item) => item.studiekode.toString()}
+          showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => (
             <View style={GlobalStyles.ItemSeparatorComponent} />
           )}
@@ -54,7 +56,7 @@ const DiscoverScreen = ({ navigation }) => {
               }
             >
               <Text style={[GlobalStyles.listText, { width: "90%" }]}>
-                {item.studienavn}
+                {item.studienavn} ({item.lærerstedskode})
               </Text>
               <View style={GlobalStyles.listEndContainer}>
                 <Icon name="angle-right" size={30} />
