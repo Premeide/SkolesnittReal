@@ -13,7 +13,6 @@ import ProfileScreen from "../screens/Profile";
 import RetakeKalkulatorScreen from "../screens/RetakeKalkulator";
 import QuestionsScreen from "../screens/Questions";
 import FeedbackScreen from "../screens/Feedback";
-// import RecommendScreen from "../screens/Recommend";
 import EducationDetailsScreen from "../screens/EducationDetails";
 import KalkulatorScreen from "../screens/Kalkulator";
 
@@ -109,14 +108,25 @@ const Router = () => {
         options={{
           headerTitle: "Legg til fag du skal ta opp",
           headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerTitleStyle: {
+            color: GlobalStyles.blueColor.color,
+            fontSize: 16,
+          },
         }}
       />
-      {/* <Stack.Screen name="Recommend" component={RecommendScreen} />
-      
-       */}
     </Stack.Navigator>
   );
 };
 
 export default Router;
+
+//MANGLER:
+/*
+  - checkbox addlistener
+  - goBack() addlistener
+  - 23-5 poeng
+  - kalk/rekalk forceUpdate() addlistener
+  - recommend data funtcions
+  - mine utdanninger onpress -> edScreen
+  - edScreen check onpress -> goBack()
+*/
