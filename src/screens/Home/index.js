@@ -10,21 +10,22 @@ import SegmentedControl from "rn-segmented-control";
 const HomeScreen = ({ navigation }) => {
   const [activeSegment, setActiveSegment] = useState(1);
   const [activeSegment2, setActiveSegment2] = useState(1);
+  const karakterGrenser = require("../../assets/data/karaktergrense.json");
 
   let [data2, setData2] = useState([
-    { name: "Skolepoeng", value: 40.0 },
-    { name: "Konkurransepoeng", value: 50.0 },
-    { name: "23/5", value: 60.0 },
+    { name: "Skolepoeng", value: 400.0 },
+    { name: "Konkurransepoeng", value: 500.0 },
+    { name: "23/5", value: 600.0 },
   ]);
   let [data3, setData3] = useState([
-    { name: "Skolepoeng", value: 1 },
-    { name: "Konkurransepoeng", value: 2 },
-    { name: "23/5", value: 3 },
+    { name: "Skolepoeng", value: 100 },
+    { name: "Konkurransepoeng", value: 200 },
+    { name: "23/5", value: 300 },
   ]);
   let [data1, setData1] = useState([
-    { name: "Alderspoeng", value: 5 },
+    { name: "Alderspoeng", value: 50 },
     { name: "Tilleggspoeng", value: localData.extraPoints.value },
-    { name: "Real- og språkpoeng", value: 3 },
+    { name: "Real- og språkpoeng", value: 30 },
   ]);
   function realogspråkpoeng() {
     let sum = 0;
@@ -120,6 +121,29 @@ const HomeScreen = ({ navigation }) => {
     }
     return "0";
   }
+  function printUtdanninger(s) {
+    const thisEd = karakterGrenser.find(
+      (karakterGrenser) => karakterGrenser.studiekode === s
+    );
+    return (
+      <TouchableOpacity
+        style={GlobalStyles.row}
+        // onPress={() =>
+        //   navigation.navigate("Utforsk", {
+        //     screen: "EducationDetails",
+        //     postStudiekode: thisEd.studiekode,
+        //   })
+        // }
+      >
+        <Text style={GlobalStyles.listText}>
+          {thisEd.studienavn} ({thisEd.lærerstedskode})
+        </Text>
+        <View style={GlobalStyles.listEndContainer}>
+          <Text style={GlobalStyles.listText}>{thisEd.poenggrense}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
   return (
     <View style={GlobalStyles.container}>
       <ScrollView>
@@ -192,41 +216,41 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <SegmentedControl
-            tabs={["Skolepoeng", "Konkurransepoeng", "23/5-poeng"]}
-            textStyle={{ fontSize: 10 }}
-            currentIndex={activeSegment2}
-            onChange={(index) => handleSegmentedControl2(index)}
-            paddingVertical={7}
-            segmentedControlBackgroundColor="gainsboro"
-            activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
-            activeTextColor="white"
-            activeTextWeight="bold"
-            textColor="black"
-            containerStyle={{ marginTop: 10 }}
-          />
-          <Text style={styles.poeng}>
-            {data3[activeSegment2].value.toFixed(2)}
-          </Text>
-          <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
-            Dine poeng med nye fag
-          </Text>
+          {localData.retakeClasses.length >= 1 ? (
+            <View>
+              <SegmentedControl
+                tabs={["Skolepoeng", "Konkurransepoeng", "23/5-poeng"]}
+                textStyle={{ fontSize: 10 }}
+                currentIndex={activeSegment2}
+                onChange={(index) => handleSegmentedControl2(index)}
+                paddingVertical={7}
+                segmentedControlBackgroundColor="gainsboro"
+                activeSegmentBackgroundColor="#4A90E2"
+                activeTextColor="white"
+                activeTextWeight="bold"
+                textColor="black"
+                containerStyle={{ marginTop: 10 }}
+              />
+              <Text style={styles.poeng}>
+                {data3[activeSegment2].value.toFixed(2)}
+              </Text>
+              <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
+                Dine poeng med nye fag
+              </Text>
+            </View>
+          ) : null}
         </View>
+
         <View style={GlobalStyles.whiteContainer}>
           <Text style={GlobalStyles.underTitleText}>Mine utdanninger:</Text>
           {/* <Button title="ok" onPress={()=>console.log(localData.retakeClasses.length)}/> */}
           <View style={GlobalStyles.greyContainer}>
-            {localData.wantedEducations.names.length >= 1 ? (
-              localData.wantedEducations.names.map((item, index) => (
+            {localData.wantedEducations.studiekode.length >= 1 ? (
+              localData.wantedEducations.studiekode.map((item, index) => (
                 <View key={item}>
-                  <TouchableOpacity style={GlobalStyles.row}>
-                    <Text style={GlobalStyles.listText}>{item}</Text>
-                    <View style={GlobalStyles.listEndContainer}>
-                      <Text style={GlobalStyles.listText}>60.0</Text>
-                    </View>
-                  </TouchableOpacity>
+                  {printUtdanninger(item)}
                   {index >=
-                  localData.wantedEducations.names.length - 1 ? null : (
+                  localData.wantedEducations.studiekode.length - 1 ? null : (
                     <View style={GlobalStyles.ItemSeparatorComponent}></View>
                   )}
                 </View>

@@ -1,7 +1,7 @@
 let localData = {
   skolePoeng: { value: 0 },
   born: { value: 2020 },
-  extraPoints: { value: 0, m: true, f: true, tre: false, seks: false },
+  extraPoints: { value: 0, m: false, f: false, tre: false, seks: false },
   grades: {
     value: [
       { value: 0, id: "Engelsk", exam: false, exva: 0 },
@@ -19,7 +19,7 @@ let localData = {
       { value: 0, id: "Samfunnsfag", exam: false, exva: 0 },
     ],
   },
-  wantedEducations: { names: [] },
+  wantedEducations: { studiekode: [] },
   retakeClasses: [],
   firstLogIn: { value: true },
   firstTimeKalk: { value: true },
@@ -178,5 +178,16 @@ const allClasseslist = [
   { type: 0, name: "Historie og filosofi 2" },
   { type: 0.5, name: "Lulesamisk nivå 2 programfag" },
   { type: 0.5, name: "Russisk nivå 2 programfag" },
+  { type: 0, name: "Helsefremmende arbeid 1 (helse)" },
+  { type: 0, name: "Helsefremmende arbeid 2 (helse)" },
+  { type: 0, name: "Kommunikasjon og samhandling 1 (helse)" },
+  { type: 0, name: "Kommunikasjon og samhandling 2 (helse)" },
+  { type: 0, name: "Yrkesliv i helse- og oppvekstfag 1 (helse)" },
+  { type: 0, name: "Yrkesliv i helse- og oppvekstfag 2 (helse)" },
+  { type: 0, name: "Yrkesfaglig fordypning 1 (helse)" },
+  { type: 0, name: "Yrkesfaglig fordypning 2 (helse)" },
+  { type: 0, name: "Tverrfaglig eksamen (helse)" },
+  { type: 0, name: "Kristendomskunnskap 1" },
+  { type: 0, name: "Kristendomskunnskap 2" },
 ];
 export { localData, allClasseslist };

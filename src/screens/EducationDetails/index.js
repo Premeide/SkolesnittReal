@@ -13,13 +13,13 @@ const EducationDetailsScreen = ({ route, navigation }) => {
     (karakterGrenser) => karakterGrenser.studiekode === subjectId
   );
   const [edAlreadyAdded, setEdAlreadyAdded] = useState(
-    localData.wantedEducations.names.includes(thisEd.studienavn)
+    localData.wantedEducations.studiekode.includes(thisEd.studiekode)
   );
   const educationData = [
     { name: "Studiekode", value: thisEd.studiekode },
     { name: "Lærerstedskode", value: thisEd.lærerstedskode },
     { name: "Studiested", value: thisEd.studiested },
-    { name: "Feil", value: thisEd.felt },
+    { name: "Felt", value: thisEd.felt },
     { name: "Opptakskrav", value: thisEd.opptakskrav },
     { name: "Poenggrense", value: thisEd.poenggrense },
     { name: "Poenggrense_f", value: thisEd.poenggrense_f },
@@ -48,15 +48,18 @@ const EducationDetailsScreen = ({ route, navigation }) => {
         </View>
       </View>
       {edAlreadyAdded ? (
-        <View style={GlobalStyles.customBtnContainer}>
+        <TouchableOpacity
+          style={GlobalStyles.customBtnContainer}
+          onPress={() => navigation.goBack()}
+        >
           <View style={GlobalStyles.addBtn}>
             <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
           </View>
-        </View>
+        </TouchableOpacity>
       ) : (
         <TouchableOpacity
           onPress={() => {
-            localData.wantedEducations.names.push(thisEd.studienavn);
+            localData.wantedEducations.studiekode.push(thisEd.studiekode);
             setEdAlreadyAdded(true);
           }}
           style={GlobalStyles.customBtnContainer}

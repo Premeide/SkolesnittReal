@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
+  Button,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
@@ -16,19 +17,24 @@ import { localData } from "../../assets/data/GlobalData";
 const DiscoverScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
+  const [searchFilterText, setSearchFilterText] = useState(
+    require("../../assets/data/karaktergrense.json")
+  );
 
-  function searchFilter(txt) {
+  const searchFilter = (_txt) => {
+    let txt = _txt.trim().toLowerCase();
     if (txt) {
       let newList = [];
       for (const [index, element] of karakterGrenser.entries()) {
-        if (element.studienavn.toLowerCase().includes(txt.toLowerCase())) {
+        if (element.studienavn.toLowerCase().includes(txt)) {
           newList.push(element);
         }
       }
-      return newList;
+      setSearchFilterText(newList);
+    } else {
+      setSearchFilterText(karakterGrenser);
     }
-    return karakterGrenser;
-  }
+  };
 
   return (
     <View style={GlobalStyles.container}>
@@ -37,10 +43,10 @@ const DiscoverScreen = ({ navigation }) => {
         <TextInput
           style={GlobalStyles.textInput2}
           placeholder="Søk utdanninger"
-          onChangeText={(text) => setInput(text)}
+          onChangeText={(text) => searchFilter(text)}
         />
         <FlatList
-          data={searchFilter(input)}
+          data={searchFilterText}
           keyExtractor={(item) => item.studiekode.toString()}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => (

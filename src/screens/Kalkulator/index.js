@@ -16,6 +16,8 @@ import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import CustomHeader from "../../components/CustomHeader";
+import * as Animatable from "react-native-animatable";
+
 const gradeTabs = ["1", "2", "3", "4", "5", "6"];
 
 const KalkulatorScreen = ({ navigation }) => {
@@ -124,13 +126,12 @@ const KalkulatorScreen = ({ navigation }) => {
 
   return (
     <View style={GlobalStyles.container}>
-      <View style={{ height: "5%" }} />
+      {localData.firstTimeKalk.value ? null : <View style={{ height: "5%" }} />}
       <View style={GlobalStyles.whiteContainer2}>
         {isEditing ? (
           <FlatList
             data={grades}
             showsVerticalScrollIndicator={false}
-            ListHeaderComponent={() => <CustomHeader />}
             ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
             keyExtractor={keyExtractorGrades}
             renderItem={({ item }) => (
@@ -212,7 +213,10 @@ const KalkulatorScreen = ({ navigation }) => {
           />
         )}
         <Modal transparent={true} visible={showModal}>
-          <View style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}>
+          <Animatable.View
+            style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}
+            animation="fadeInUpBig"
+          >
             <View style={GlobalStyles.modalContainer}>
               <TextInput
                 style={GlobalStyles.textInput2}
@@ -245,7 +249,7 @@ const KalkulatorScreen = ({ navigation }) => {
                 />
               </View>
             </View>
-          </View>
+          </Animatable.View>
           <TouchableOpacity
             onPress={() => setShowModal(false)}
             style={GlobalStyles.customBtnContainer}
@@ -263,9 +267,9 @@ const KalkulatorScreen = ({ navigation }) => {
           ]}
           onPress={() => setShowModal(true)}
         >
-          <View style={GlobalStyles.addBtn}>
+          <Animatable.View style={GlobalStyles.addBtn} animation="fadeInUp">
             <Text style={GlobalStyles.addText}>Legg til fag</Text>
-          </View>
+          </Animatable.View>
         </TouchableOpacity>
       ) : localData.firstTimeKalk.value ? (
         <TouchableOpacity

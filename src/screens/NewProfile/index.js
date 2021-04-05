@@ -88,7 +88,7 @@ const NewProfileScreen = ({ navigation }) => {
           ref={test}
           maxLength={4}
           keyboardType="number-pad"
-          placeholder="2000"
+          placeholder="2021"
           style={GlobalStyles.textInput}
           onChangeText={(text) => handleAgeChange(text)}
         />
