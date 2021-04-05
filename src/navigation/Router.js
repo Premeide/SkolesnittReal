@@ -128,5 +128,16 @@ export default Router;
   - kalk/rekalk forceUpdate() addlistener
   - recommend data funtcions
   - mine utdanninger onpress -> edScreen
-  - edScreen check onpress -> goBack()
+  - about
+  - faq
+  - feedback
+
+  Optimization:
+  - logo
+  - searchFilter 3x steder
+  - Animation:
+    - modal
+    - CtmBtn 1&2
+    
+  
 */
