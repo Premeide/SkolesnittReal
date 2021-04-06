@@ -139,7 +139,7 @@ const HomeScreen = ({ navigation }) => {
         //   })
         // }
       >
-        <Text style={GlobalStyles.listText}>
+        <Text style={[GlobalStyles.listText, { width: "85%" }]}>
           {thisEd.studienavn} ({thisEd.lærerstedskode})
         </Text>
         <View style={GlobalStyles.listEndContainer}>

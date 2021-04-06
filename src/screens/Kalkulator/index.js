@@ -102,11 +102,12 @@ const KalkulatorScreen = ({ navigation }) => {
     forceingUpdate();
     return null;
   }
-  function searchFilter(txt) {
+  function searchFilter(_txt) {
+    let txt = _txt.trim().toLowerCase();
     if (txt) {
       let newList = [];
       for (const [index, element] of allClasseslist.entries()) {
-        if (element.name.toLowerCase().includes(txt.toLowerCase())) {
+        if (element.name.toLowerCase().includes(txt)) {
           newList.push(element);
         }
       }

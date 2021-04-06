@@ -26,15 +26,12 @@ let newProfileData = [
 const NewProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState();
   const [checkArray, setCheckArray] = useState([]);
-  const [force, setForce] = useState(10);
+  const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
 
   const test = React.useRef();
 
-  function checkboxHandler(i) {
-    if (checkArray.includes(i)) {
-      return true;
-    }
-    return false;
+  function addFunc(total, num) {
+    return total + num;
   }
   const handleAgeChange = (t) => {
     setAge(t);
@@ -44,7 +41,6 @@ const NewProfileScreen = ({ navigation }) => {
     }
   };
   const selectThis = (index) => {
-    handleAgeChange(age); //for update
     let tempCheckArray = checkArray;
     if (checkArray.includes(index)) {
       tempCheckArray = tempCheckArray.filter((n) => {
@@ -53,9 +49,7 @@ const NewProfileScreen = ({ navigation }) => {
     } else {
       tempCheckArray.push(index);
     }
-
     setCheckArray(tempCheckArray);
-    setAge(age);
   };
   const handleTilleggspoeng = (i) => {
     let points = 0;
@@ -79,6 +73,7 @@ const NewProfileScreen = ({ navigation }) => {
       points = 2;
     }
     localData.extraPoints.value = points;
+    setExtraPoints(checkArray.reduce(addFunc)); //for forceUpdate
   };
 
   return (
@@ -109,40 +104,45 @@ const NewProfileScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={GlobalStyles.row}
                 onPress={() => {
-                  selectThis(index);
+                  selectThis(index + 1);
                   handleTilleggspoeng(index);
                 }}
               >
                 <Text style={GlobalStyles.listText}>{item.name}</Text>
                 <View style={GlobalStyles.listEndContainer}>
                   {/* <CheckBox
-                    value={checkboxHandler(index)}
+                    value={checkArray.includes(index + 1)}
                     onPress={() => {
-                      selectThis(index);
+                      selectThis(index + 1);
                       handleTilleggspoeng(index);
                     }}
                   /> */}
-                  <Switch
-                    trackColor={{ false: "grey", true: "black" }}
-                    thumbColor={"green"}
+                  {checkArray.includes(index + 1) ? (
+                    <Icon name="check-square" size={25} />
+                  ) : (
+                    <Icon name="square" size={25} />
+                  )}
+                  {/* <Switch
+                    trackColor={{ false: "grey", true: "grey" }}
+                    thumbColor={"blue"}
                     onChange={() => {
                       selectThis(index);
                       handleTilleggspoeng(index);
                       setForce(4);
                     }}
                     value={checkArray.includes(index)}
-                  />
+                  /> */}
                 </View>
               </TouchableOpacity>
             )}
           />
         </View>
-        <Button
+        {/* <Button
           title="ok"
           onPress={() =>
             console.log(localData.extraPoints.value, "Arr: ", checkArray)
           }
-        />
+        /> */}
       </View>
       <TouchableOpacity
         onPress={() => {

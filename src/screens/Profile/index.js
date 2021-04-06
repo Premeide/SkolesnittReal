@@ -139,9 +139,7 @@ const ProfileScreen = ({ navigation }) => {
                   <Icon name="angle-right" size={30} />
                 </View>
               </TouchableOpacity>
-              {index >= data2.length - 1 ? null : (
-                <View style={GlobalStyles.ItemSeparatorComponent}></View>
-              )}
+              <View style={GlobalStyles.ItemSeparatorComponent}></View>
             </View>
           ))}
           <Text

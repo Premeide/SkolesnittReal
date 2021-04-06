@@ -20,7 +20,7 @@ const gradeTabs = ["1", "2", "3", "4", "5", "6"];
 
 const RetakeKalkulatorScreen = ({ navigation }) => {
   const [showModal, setShowModal] = useState(
-    localData.retakeClasses >= 1 ? false : true
+    localData.retakeClasses.length >= 1 ? false : true
   );
   const [searchText, setSearchText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
