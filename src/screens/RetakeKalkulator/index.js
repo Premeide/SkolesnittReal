@@ -19,7 +19,9 @@ import CustomBtn from "../../components/CustomBtn";
 const gradeTabs = ["1", "2", "3", "4", "5", "6"];
 
 const RetakeKalkulatorScreen = ({ navigation }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(
+    localData.retakeClasses >= 1 ? false : true
+  );
   const [searchText, setSearchText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   let [grades, setGrades] = useState(localData.retakeClasses);
@@ -27,7 +29,9 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
   const keyExtractorModal = useCallback((item) => item.name, []);
 
   function forceingUpdate() {
-    grades.length == 0 ? null : tabChange(grades[0].value, grades[0].id);
+    grades.length == 0
+      ? setGrades([])
+      : tabChange(grades[0].value, grades[0].id);
     return null;
   }
   function tabAdd(name) {

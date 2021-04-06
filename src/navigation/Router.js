@@ -122,11 +122,9 @@ export default Router;
 
 //MANGLER:
 /*
-  - checkbox addlistener
-  - goBack() addlistener
+  - checkbox addlistener/ switch
   - 23-5 poeng
-  - kalk/rekalk forceUpdate() addlistener
-  - recommend data funtcions
+  - recommend data functions
   - mine utdanninger onpress -> edScreen
   - about
   - faq

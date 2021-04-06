@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { allClasseslist, localData } from "../../assets/data/GlobalData";
@@ -6,8 +6,12 @@ import styles from "./styles";
 import CustomHeader from "../../components/CustomHeader";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import SegmentedControl from "rn-segmented-control";
-
+import { useIsFocused } from "@react-navigation/native";
 const HomeScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    updatePoeng(activeSegment);
+  }, [isFocused]);
   const [activeSegment, setActiveSegment] = useState(1);
   const [activeSegment2, setActiveSegment2] = useState(1);
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
@@ -96,11 +100,11 @@ const HomeScreen = ({ navigation }) => {
         { name: "Real- og språkpoeng", value: realogspråkpoeng() },
       ];
       setData1(newData1);
-      newData2[2].value =
-        karakterSnitt +
-        newData1[0].value +
-        newData1[1].value +
-        newData1[2].value;
+      newData2[2].value = 500;
+      // karakterSnitt +
+      // newData1[0].value +
+      // newData1[1].value +
+      // newData1[2].value;
       setData2(newData2);
     }
   };

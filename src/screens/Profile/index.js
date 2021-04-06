@@ -12,6 +12,7 @@ import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CheckBox from "@react-native-community/checkbox";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData } from "../../assets/data/GlobalData";
+import { Alert } from "react-native";
 
 let newProfileData = [
   { name: "Folkehøyskole" },
@@ -23,7 +24,6 @@ let data2 = [
   { name: "Vanlige spørsmål", screen: "Questions" },
   { name: "Tilbakemelding", screen: "Feedback" },
   { name: "Om", screen: "About" },
-  { name: "Logg ut", screen: "About" },
 ];
 
 const ProfileScreen = ({ navigation }) => {
@@ -144,6 +144,19 @@ const ProfileScreen = ({ navigation }) => {
               )}
             </View>
           ))}
+          <Text
+            style={[GlobalStyles.listText, { color: "red" }]}
+            onPress={() => {
+              Alert.alert("Logg ut?", "Bro, du logget aldri inn...", [
+                {
+                  text: "Oja, lol",
+                },
+                { text: "sry" },
+              ]);
+            }}
+          >
+            Logg ut
+          </Text>
         </View>
       </ScrollView>
     </View>

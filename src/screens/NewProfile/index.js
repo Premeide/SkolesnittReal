@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Button,
   ScrollView,
+  Switch,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData } from "../../assets/data/GlobalData";
@@ -25,6 +26,7 @@ let newProfileData = [
 const NewProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState();
   const [checkArray, setCheckArray] = useState([]);
+  const [force, setForce] = useState(10);
 
   const test = React.useRef();
 
@@ -113,18 +115,34 @@ const NewProfileScreen = ({ navigation }) => {
               >
                 <Text style={GlobalStyles.listText}>{item.name}</Text>
                 <View style={GlobalStyles.listEndContainer}>
-                  <CheckBox
+                  {/* <CheckBox
                     value={checkboxHandler(index)}
                     onPress={() => {
                       selectThis(index);
                       handleTilleggspoeng(index);
                     }}
+                  /> */}
+                  <Switch
+                    trackColor={{ false: "grey", true: "black" }}
+                    thumbColor={"green"}
+                    onChange={() => {
+                      selectThis(index);
+                      handleTilleggspoeng(index);
+                      setForce(4);
+                    }}
+                    value={checkArray.includes(index)}
                   />
                 </View>
               </TouchableOpacity>
             )}
           />
         </View>
+        <Button
+          title="ok"
+          onPress={() =>
+            console.log(localData.extraPoints.value, "Arr: ", checkArray)
+          }
+        />
       </View>
       <TouchableOpacity
         onPress={() => {

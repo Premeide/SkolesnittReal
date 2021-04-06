@@ -29,7 +29,10 @@ const KalkulatorScreen = ({ navigation }) => {
   const keyExtractorModal = useCallback((item) => item.name, []);
 
   function forceingUpdate() {
-    grades.length == 0 ? null : tabChange(grades[0].value, grades[0].id, false);
+    grades.length == 0
+      ? setGrades([])
+      : tabChange(grades[0].value, grades[0].id, false);
+
     return null;
   }
   function tabAdd(name) {
