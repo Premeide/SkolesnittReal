@@ -110,28 +110,11 @@ const NewProfileScreen = ({ navigation }) => {
               >
                 <Text style={GlobalStyles.listText}>{item.name}</Text>
                 <View style={GlobalStyles.listEndContainer}>
-                  {/* <CheckBox
-                    value={checkArray.includes(index + 1)}
-                    onPress={() => {
-                      selectThis(index + 1);
-                      handleTilleggspoeng(index);
-                    }}
-                  /> */}
                   {checkArray.includes(index + 1) ? (
                     <Icon name="check-square" size={25} />
                   ) : (
                     <Icon name="square" size={25} />
                   )}
-                  {/* <Switch
-                    trackColor={{ false: "grey", true: "grey" }}
-                    thumbColor={"blue"}
-                    onChange={() => {
-                      selectThis(index);
-                      handleTilleggspoeng(index);
-                      setForce(4);
-                    }}
-                    value={checkArray.includes(index)}
-                  /> */}
                 </View>
               </TouchableOpacity>
             )}

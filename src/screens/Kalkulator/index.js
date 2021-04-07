@@ -217,17 +217,17 @@ const KalkulatorScreen = ({ navigation }) => {
           />
         )}
         <Modal transparent={true} visible={showModal}>
-          <Animatable.View
-            style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}
-            animation="fadeInUpBig"
-          >
-            <View style={GlobalStyles.modalContainer}>
+          <View style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}>
+            <Animatable.View
+              style={GlobalStyles.modalContainer}
+              animation="fadeInUpBig"
+            >
               <TextInput
                 style={GlobalStyles.textInput2}
                 placeholder="Søk fag"
                 onChangeText={(text) => setSearchText(text)}
               />
-              <View style={GlobalStyles.greyContainer}>
+              <View style={[GlobalStyles.greyContainer, { height: "90%" }]}>
                 <FlatList
                   data={searchFilter(searchText)}
                   ItemSeparatorComponent={() => (
@@ -252,8 +252,8 @@ const KalkulatorScreen = ({ navigation }) => {
                   )}
                 />
               </View>
-            </View>
-          </Animatable.View>
+            </Animatable.View>
+          </View>
           <TouchableOpacity
             onPress={() => setShowModal(false)}
             style={GlobalStyles.customBtnContainer}
@@ -271,7 +271,7 @@ const KalkulatorScreen = ({ navigation }) => {
           ]}
           onPress={() => setShowModal(true)}
         >
-          <Animatable.View style={GlobalStyles.addBtn} animation="fadeInUp">
+          <Animatable.View style={GlobalStyles.addBtn} animation="fadeIn">
             <Text style={GlobalStyles.addText}>Legg til fag</Text>
           </Animatable.View>
         </TouchableOpacity>
@@ -287,7 +287,7 @@ const KalkulatorScreen = ({ navigation }) => {
           }}
         >
           <View style={GlobalStyles.addBtn}>
-            <Text style={GlobalStyles.addText}>Fortsett/videre</Text>
+            <Text style={GlobalStyles.addText}>Fortsett</Text>
           </View>
         </TouchableOpacity>
       ) : null}
@@ -295,7 +295,7 @@ const KalkulatorScreen = ({ navigation }) => {
         onPress={() => toggleIsEditing()}
         style={GlobalStyles.customBtnContainer}
       >
-        <CustomBtn text={isEditing ? "Ferdig" : "Endre fag"} />
+        <CustomBtn text={isEditing ? "Ferdig" : "Legg til/fjern fag"} />
       </TouchableOpacity>
     </View>
   );

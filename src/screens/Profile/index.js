@@ -29,9 +29,13 @@ let data2 = [
 const ProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState(localData.born.value.toString());
   const [checkArray, setCheckArray] = useState(initcheckarray());
+  const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
 
   const test = React.useRef();
 
+  function addFunc(total, num) {
+    return total + num;
+  }
   const handleAgeChange = (t) => {
     setAge(t);
     if (t.length > 3) {
@@ -48,7 +52,6 @@ const ProfileScreen = ({ navigation }) => {
     } else {
       tempCheckArray.push(index);
     }
-
     setCheckArray(tempCheckArray);
   };
   function initcheckarray() {
@@ -81,6 +84,7 @@ const ProfileScreen = ({ navigation }) => {
       points = 2;
     }
     localData.extraPoints.value = points;
+    setExtraPoints(checkArray.reduce(addFunc)); //for forceUpdate
   };
   return (
     <View style={GlobalStyles.container}>
@@ -90,6 +94,7 @@ const ProfileScreen = ({ navigation }) => {
           <TextInput
             value={age}
             ref={test}
+            maxLength={4}
             keyboardType="number-pad"
             placeholder="2000"
             style={GlobalStyles.textInput}
@@ -105,19 +110,17 @@ const ProfileScreen = ({ navigation }) => {
                 <TouchableOpacity
                   style={GlobalStyles.row}
                   onPress={() => {
-                    selectThis(index);
+                    selectThis(index + 1);
                     handleTilleggspoeng(index);
                   }}
                 >
                   <Text style={GlobalStyles.listText}>{item.name}</Text>
                   <View style={GlobalStyles.listEndContainer}>
-                    <CheckBox
-                      value={checkArray.includes(index)}
-                      onChange={() => {
-                        selectThis(index);
-                        handleTilleggspoeng(index);
-                      }}
-                    />
+                    {checkArray.includes(index + 1) ? (
+                      <Icon name="check-square" size={25} />
+                    ) : (
+                      <Icon name="square" size={25} />
+                    )}
                   </View>
                 </TouchableOpacity>
                 {index >= newProfileData.length - 1 ? null : (

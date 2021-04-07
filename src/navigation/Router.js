@@ -53,6 +53,15 @@ const Router = () => {
         }}
       />
       <Stack.Screen
+        name="_EducationDetails"
+        component={EducationDetailsScreen}
+        options={{
+          headerTitle: "Utdanninger",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+      <Stack.Screen
         name="EducationDetails"
         component={EducationDetailsScreen}
         options={{
@@ -125,10 +134,10 @@ export default Router;
   - checkbox addlistener/ switch
   - 23-5 poeng
   - recommend data functions
-  - mine utdanninger onpress -> edScreen
   - about
   - faq
   - feedback
+  - Fjern skolepoeng retake? 23-5?
 
   Optimization:
   - logo

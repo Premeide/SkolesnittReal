@@ -168,7 +168,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
                 placeholder="Søk utdanninger"
                 onChangeText={(text) => setSearchText(text)}
               />
-              <View style={GlobalStyles.greyContainer}>
+              <View style={[GlobalStyles.greyContainer, { height: "90%" }]}>
                 <FlatList
                   data={searchFilter(searchText)}
                   ItemSeparatorComponent={() => (
@@ -216,7 +216,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
         onPress={() => toggleIsEditing()}
         style={GlobalStyles.customBtnContainer}
       >
-        <CustomBtn text={isEditing ? "Ferdig" : "Endre fag"} />
+        <CustomBtn text={isEditing ? "Ferdig" : "Legg til/fjern fag"} />
       </TouchableOpacity>
     </View>
   );

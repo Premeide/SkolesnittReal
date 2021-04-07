@@ -8,6 +8,7 @@ import { localData } from "../../assets/data/GlobalData";
 
 const EducationDetailsScreen = ({ route, navigation }) => {
   const { postStudiekode: subjectId } = route.params;
+  console.log(subjectId, route.params);
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
   const thisEd = karakterGrenser.find(
     (karakterGrenser) => karakterGrenser.studiekode === subjectId
