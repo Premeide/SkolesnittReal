@@ -56,10 +56,10 @@ const ProfileScreen = ({ navigation }) => {
   };
   function initcheckarray() {
     let a = [];
-    localData.extraPoints.f ? a.push(0) : null;
-    localData.extraPoints.m ? a.push(1) : null;
-    localData.extraPoints.tre ? a.push(2) : null;
-    localData.extraPoints.seks ? a.push(3) : null;
+    localData.extraPoints.f ? a.push(1) : null;
+    localData.extraPoints.m ? a.push(2) : null;
+    localData.extraPoints.tre ? a.push(3) : null;
+    localData.extraPoints.seks ? a.push(4) : null;
     return a;
   }
   const handleTilleggspoeng = (i) => {

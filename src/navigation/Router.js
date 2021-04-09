@@ -131,20 +131,15 @@ export default Router;
 
 //MANGLER:
 /*
-  - checkbox addlistener/ switch
   - 23-5 poeng
   - recommend data functions
   - about
   - faq
   - feedback
-  - Fjern skolepoeng retake? 23-5?
 
   Optimization:
   - logo
-  - searchFilter 3x steder
   - Animation:
     - modal
     - CtmBtn 1&2
-    
-  
 */

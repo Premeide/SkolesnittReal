@@ -26,7 +26,9 @@ const RecommendScreen = (props) => {
     <View style={GlobalStyles.container}>
       <View style={{ height: "5%" }} />
       <ScrollView>
-        <View style={GlobalStyles.whiteContainer}>
+        <Text style={GlobalStyles.underTitleText}>Coming soon...</Text>
+
+        {/* <View style={GlobalStyles.whiteContainer}>
           <Text style={GlobalStyles.underTitleText}>
             Disse fagene kan du forbedre:(dummyData)
           </Text>
@@ -87,7 +89,7 @@ const RecommendScreen = (props) => {
               </View>
             ))}
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
