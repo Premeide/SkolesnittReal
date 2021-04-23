@@ -38,7 +38,9 @@ const EducationDetailsScreen = ({ route, navigation }) => {
             )}
             renderItem={({ item }) => (
               <View style={GlobalStyles.row}>
-                <Text style={GlobalStyles.listText}>{item.name}</Text>
+                <Text style={[GlobalStyles.listText, { fontWeight: "bold" }]}>
+                  {item.name}
+                </Text>
                 <View style={GlobalStyles.listEndContainer}>
                   <Text style={GlobalStyles.listText}>{item.value}</Text>
                 </View>
@@ -52,8 +54,12 @@ const EducationDetailsScreen = ({ route, navigation }) => {
           style={GlobalStyles.customBtnContainer}
           onPress={() => navigation.goBack()}
         >
-          <View style={GlobalStyles.addBtn}>
+          <View style={[GlobalStyles.addBtn, { flexDirection: "row" }]}>
             <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
+            <Text style={{ color: GlobalStyles.blueColor.color }}>
+              {" "}
+              Tilbake
+            </Text>
           </View>
         </TouchableOpacity>
       ) : (
@@ -67,6 +73,32 @@ const EducationDetailsScreen = ({ route, navigation }) => {
           <CustomBtn text="Legg til utdanning" />
         </TouchableOpacity>
       )}
+      {edAlreadyAdded ? (
+        <TouchableOpacity
+          style={[
+            GlobalStyles.customBtnContainer,
+            { bottom: GlobalStyles.customBtn2Bottom.bottom },
+          ]}
+          onPress={() => {
+            localData.wantedEducations.studiekode = localData.wantedEducations.studiekode.filter(
+              function (value, index, arr) {
+                return value != thisEd.studiekode;
+              }
+            );
+            setEdAlreadyAdded(false);
+          }}
+        >
+          <View
+            style={[
+              GlobalStyles.addBtn,
+              { flexDirection: "row", borderColor: "red" },
+            ]}
+          >
+            <Icon name="remove" size={25} color="red" />
+            <Text style={{ color: "red" }}> Fjern utdanning</Text>
+          </View>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

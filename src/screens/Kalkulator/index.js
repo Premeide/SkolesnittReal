@@ -136,6 +136,9 @@ const KalkulatorScreen = ({ navigation }) => {
           <FlatList
             data={grades}
             showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => (
+              <View style={GlobalStyles.ItemSeparatorComponent} />
+            )}
             ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
             keyExtractor={keyExtractorGrades}
             renderItem={({ item }) => (

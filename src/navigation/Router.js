@@ -1,7 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, Image } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import BottomTabNavigator from "./BottomTabNavigator";
@@ -30,7 +28,6 @@ const Router = () => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}
       />
-
       <Stack.Screen
         name="_Kalkulator"
         component={KalkulatorScreen}

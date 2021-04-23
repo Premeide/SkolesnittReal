@@ -6,9 +6,9 @@ import * as Animatable from "react-native-animatable";
 const CustomBtn = (props) => {
   const { text: txt } = props;
   return (
-    <Animatable.View style={styles.container} animation="slideInUp">
+    <View style={styles.container}>
       <Text style={styles.text}>{txt}</Text>
-    </Animatable.View>
+    </View>
   );
 };
 

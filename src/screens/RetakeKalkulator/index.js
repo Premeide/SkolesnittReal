@@ -115,6 +115,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
         {isEditing ? (
           <FlatList
             data={grades}
+            showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => (
               <View style={GlobalStyles.ItemSeparatorComponent} />
             )}
