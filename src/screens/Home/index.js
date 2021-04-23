@@ -15,7 +15,7 @@ import { useIsFocused } from "@react-navigation/native";
 const HomeScreen = ({ navigation }) => {
   const [activeSegment, setActiveSegment] = useState(0);
   const [activeSegment2, setActiveSegment2] = useState(0);
-  const isFocused = useIsFocused();
+  const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
   let [mainPoeng, setMainPoeng] = useState(2000);
   let [retakePoeng, setRetakePoeng] = useState(3000);
@@ -274,7 +274,9 @@ const HomeScreen = ({ navigation }) => {
                   style={GlobalStyles.row}
                   onPress={() => navigation.navigate("RetakeKalkulator")}
                 >
-                  <Text style={GlobalStyles.listText}>{item.id}</Text>
+                  <Text style={[GlobalStyles.listText, { width: "82%" }]}>
+                    {item.id}
+                  </Text>
                   <View style={GlobalStyles.listEndContainer}>
                     <Text style={GlobalStyles.listText}>
                       {oldGradeFinder(item.id)} {item.value + 1}
@@ -288,7 +290,7 @@ const HomeScreen = ({ navigation }) => {
               onPress={() => navigation.navigate("RetakeKalkulator")}
             >
               <Text style={GlobalStyles.listText}>
-                Trykk for å legge til flere fag
+                Trykk for å legge til fag
               </Text>
             </TouchableOpacity>
           </View>
