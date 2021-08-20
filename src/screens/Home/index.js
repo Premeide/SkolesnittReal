@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Modal,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
   allClasseslist,
@@ -17,6 +25,7 @@ const HomeScreen = ({ navigation }) => {
   const [activeSegment2, setActiveSegment2] = useState(0);
   const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
+  const [showModal, setShowModal] = useState(localData.firstTimeHome.value);
   let [mainPoeng, setMainPoeng] = useState(2000);
   let [retakePoeng, setRetakePoeng] = useState(3000);
   let [data1, setData1] = useState([
@@ -319,11 +328,6 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={GlobalStyles.whiteContainer}>
           <Text style={GlobalStyles.underTitleText}>Mine utdanninger:</Text>
-          {/* <Button
-            title="ok"
-            onPress={() =>
-            }
-          /> */}
           <View style={GlobalStyles.greyContainer}>
             {localData.wantedEducations.studiekode.length >= 1 ? (
               localData.wantedEducations.studiekode.map((item, index) => (
@@ -348,6 +352,20 @@ const HomeScreen = ({ navigation }) => {
           <Text style={{ fontSize: 50 }}></Text>
         </View>
       </ScrollView>
+      <Modal transparent={true} visible={showModal}>
+        <TouchableOpacity
+          style={{ flex: 1, alignItems: "stretch" }}
+          onPress={() => {
+            setShowModal(false);
+            localData.firstTimeHome.value = false;
+          }}
+        >
+          <Image
+            source={require("../../assets/images/Turorial_Home.png")}
+            style={{ flex: 1, width: null, height: null }}
+          />
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };

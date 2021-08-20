@@ -26,7 +26,7 @@ const CustomHeader = () => {
           <Text style={styles.headerTitle}>SkoleSnitt</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-          <Icon name="user" size={28} color={GlobalStyles.blueColor.color} />
+          <Icon name="user" size={40} color={GlobalStyles.blueColor.color} />
         </TouchableOpacity>
       </View>
     </View>

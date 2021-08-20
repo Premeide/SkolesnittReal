@@ -5,6 +5,7 @@ import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import { localData } from "../../assets/data/GlobalData";
+import * as Animatable from "react-native-animatable";
 
 const EducationDetailsScreen = ({ route, navigation }) => {
   const { postStudiekode: subjectId } = route.params;
@@ -54,13 +55,16 @@ const EducationDetailsScreen = ({ route, navigation }) => {
           style={GlobalStyles.customBtnContainer}
           onPress={() => navigation.goBack()}
         >
-          <View style={[GlobalStyles.addBtn, { flexDirection: "row" }]}>
+          <Animatable.View
+            animation="jello"
+            style={[GlobalStyles.addBtn, { flexDirection: "row" }]}
+          >
             <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
             <Text style={{ color: GlobalStyles.blueColor.color }}>
               {" "}
               Tilbake
             </Text>
-          </View>
+          </Animatable.View>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
@@ -80,11 +84,14 @@ const EducationDetailsScreen = ({ route, navigation }) => {
             { bottom: GlobalStyles.customBtn2Bottom.bottom },
           ]}
           onPress={() => {
-            localData.wantedEducations.studiekode = localData.wantedEducations.studiekode.filter(
-              function (value, index, arr) {
+            localData.wantedEducations.studiekode =
+              localData.wantedEducations.studiekode.filter(function (
+                value,
+                index,
+                arr
+              ) {
                 return value != thisEd.studiekode;
-              }
-            );
+              });
             setEdAlreadyAdded(false);
           }}
         >

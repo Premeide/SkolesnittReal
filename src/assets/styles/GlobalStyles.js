@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EFF2F1",
     fontSize: 15,
     padding: 10,
-    borderRadius: 10,
+    margin: 2,
     fontWeight: "bold",
   },
   listEndContainer: {
@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     margin: 20,
     padding: 10,
-    flex: 1,
+    width: "90%",
+    height: "90%",
   },
   kalkText: { fontSize: 15, color: "black", fontWeight: "bold" },
   customBtn2Bottom: { bottom: "10%" },

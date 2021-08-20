@@ -21,8 +21,8 @@ let newProfileData = [
   { name: "60 studiepoeng" },
 ];
 let data2 = [
-  { name: "Vanlige spørsmål", screen: "Questions" },
-  { name: "Tilbakemelding", screen: "Feedback" },
+  { name: "Vanlige spørsmål | FAQ", screen: "Questions" },
+  { name: "Tilbakemelding | Kontakt oss", screen: "Feedback" },
   { name: "Om", screen: "About" },
 ];
 
@@ -30,7 +30,6 @@ const ProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState(localData.born.value.toString());
   const [checkArray, setCheckArray] = useState(initcheckarray());
   const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
-
   const test = React.useRef();
 
   function addFunc(total, num) {
@@ -148,12 +147,19 @@ const ProfileScreen = ({ navigation }) => {
           <Text
             style={[GlobalStyles.listText, { color: "red" }]}
             onPress={() => {
-              Alert.alert("Logg ut?", "Bro, du logget aldri inn...", [
-                {
-                  text: "Oja, lol",
-                },
-                { text: "sry" },
-              ]);
+              Alert.alert(
+                "Logg ut?",
+                "Bro, du logget aldri inn... men du kan få lage en ny en.",
+                [
+                  {
+                    text: "Ja, gjør det",
+                    onPress: () => {
+                      navigation.navigate("NewProfile");
+                    },
+                  },
+                  { text: "sry" },
+                ]
+              );
             }}
           >
             Logg ut

@@ -8,6 +8,7 @@ import {
   Button,
   ScrollView,
   Switch,
+  Animated,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData } from "../../assets/data/GlobalData";
@@ -15,6 +16,8 @@ import CheckBox from "@react-native-community/checkbox";
 import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
+import ArrowButton from "../../components/ArrowButton";
+import * as Animatable from "react-native-animatable";
 
 let newProfileData = [
   { name: "Folkehøyskole" },
@@ -27,16 +30,24 @@ const NewProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState();
   const [checkArray, setCheckArray] = useState([]);
   const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
+  const opacity = useState(new Animated.Value(0))[0];
+  const ageInputRef = React.useRef();
 
-  const test = React.useRef();
-
+  function changeOpacity() {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+  }
   function addFunc(total, num) {
     return total + num;
   }
   const handleAgeChange = (t) => {
     setAge(t);
     if (t.length > 3) {
-      test.current.blur();
+      ageInputRef.current.blur();
+      changeOpacity();
       localData.born.value = t;
     }
   };
@@ -78,20 +89,26 @@ const NewProfileScreen = ({ navigation }) => {
 
   return (
     <View style={GlobalStyles.container}>
-      <View style={GlobalStyles.whiteContainer}>
+      <Animatable.View
+        style={GlobalStyles.whiteContainer}
+        animation="fadeInUp"
+        duration={700}
+      >
         <Text style={GlobalStyles.underTitleText}>Fødselsår:</Text>
         <TextInput
           value={age}
-          ref={test}
+          ref={ageInputRef}
           maxLength={4}
           keyboardType="number-pad"
           placeholder="2021"
           style={GlobalStyles.textInput}
           onChangeText={(text) => handleAgeChange(text)}
         />
-      </View>
+      </Animatable.View>
 
-      <View style={GlobalStyles.whiteContainer}>
+      <Animated.View
+        style={[GlobalStyles.whiteContainer, { opacity: opacity }]}
+      >
         <Text style={GlobalStyles.underTitleText}>Tilleggspoeng:</Text>
         <View style={GlobalStyles.greyContainer}>
           <FlatList
@@ -120,20 +137,15 @@ const NewProfileScreen = ({ navigation }) => {
             )}
           />
         </View>
-        {/* <Button
-          title="ok"
-          onPress={() =>
-            console.log(localData.extraPoints.value, "Arr: ", checkArray)
-          }
-        /> */}
-      </View>
+      </Animated.View>
+
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Discover");
         }}
         style={GlobalStyles.customBtnContainer}
       >
-        <CustomBtn text="Fortsett" />
+        <ArrowButton />
       </TouchableOpacity>
     </View>
   );

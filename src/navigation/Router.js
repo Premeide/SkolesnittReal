@@ -37,6 +37,19 @@ const Router = () => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}
       />
+
+      <Stack.Screen
+        name="RetakeKalkulator"
+        component={RetakeKalkulatorScreen}
+        options={{
+          headerTitle: "Legg til fag du skal ta opp",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: GlobalStyles.blueColor.color,
+            fontSize: 16,
+          },
+        }}
+      />
       <Stack.Screen
         name="Discover"
         component={DiscoverScreen}
@@ -106,18 +119,6 @@ const Router = () => {
           headerTitle: "Tilbakemelding",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
-        }}
-      />
-      <Stack.Screen
-        name="RetakeKalkulator"
-        component={RetakeKalkulatorScreen}
-        options={{
-          headerTitle: "Legg til fag du skal ta opp",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: GlobalStyles.blueColor.color,
-            fontSize: 16,
-          },
         }}
       />
     </Stack.Navigator>

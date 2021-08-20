@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Button,
   Text,
@@ -7,6 +7,8 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
+  Animated,
+  StyleSheet,
 } from "react-native";
 import SegmentedControl from "rn-segmented-control";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -15,6 +17,7 @@ import CheckBox from "@react-native-community/checkbox";
 import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
+import * as Animatable from "react-native-animatable";
 
 const gradeTabs = ["1", "2", "3", "4", "5", "6"];
 
@@ -27,7 +30,23 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
   let [grades, setGrades] = useState(localData.retakeClasses);
   const keyExtractorGrades = useCallback((item) => item.id, []);
   const keyExtractorModal = useCallback((item) => item.name, []);
+  const editWidth = useRef(new Animated.Value(0)).current;
+  const modalPos = useRef(new Animated.Value(0)).current;
 
+  function addEditWidth() {
+    Animated.spring(editWidth, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }
+  function removeEditWidth() {
+    Animated.timing(editWidth, {
+      toValue: 0,
+      duration: 600,
+      useNativeDriver: false,
+    }).start();
+  }
   function forceingUpdate() {
     grades.length == 0
       ? setGrades([])
@@ -106,43 +125,44 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
     return isIncluded;
   }
   const toggleIsEditing = () => {
+    isEditing ? removeEditWidth() : addEditWidth();
     setIsEditing(!isEditing);
   };
 
   return (
     <View style={GlobalStyles.container}>
       <View style={GlobalStyles.whiteContainer2}>
-        {isEditing ? (
-          <FlatList
-            data={grades}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => (
-              <View style={GlobalStyles.ItemSeparatorComponent} />
-            )}
-            ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
-            keyExtractor={keyExtractorGrades}
-            renderItem={({ item }) => (
-              <View style={GlobalStyles.row}>
-                <Text style={[GlobalStyles.listText, { width: "90%" }]}>
-                  {item.id}
-                </Text>
-                <View style={GlobalStyles.listEndContainer}>
-                  <Icon
-                    name="remove"
-                    size={30}
-                    color="red"
-                    onPress={() => tabDelete(item.id)}
-                  />
-                </View>
-              </View>
-            )}
-          />
-        ) : (
-          <FlatList
-            data={grades}
-            ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
-            keyExtractor={keyExtractorGrades}
-            renderItem={({ item, index }) => (
+        <FlatList
+          data={grades}
+          ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
+          ItemSeparatorComponent={() => (
+            <View
+              style={[
+                GlobalStyles.ItemSeparatorComponent,
+                { marginVertical: 5 },
+              ]}
+            />
+          )}
+          keyExtractor={keyExtractorGrades}
+          renderItem={({ item, index }) => (
+            <View style={{ flexDirection: "row" }}>
+              <Animated.View
+                style={{
+                  width: editWidth.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ["0%", "20%"],
+                  }),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Icon
+                  name="remove"
+                  size={45}
+                  color="red"
+                  onPress={() => tabDelete(item.id)}
+                />
+              </Animated.View>
               <View>
                 <Text style={GlobalStyles.kalkText}>{item.id}</Text>
 
@@ -158,11 +178,15 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
                   activeTextWeight="bold"
                 />
               </View>
-            )}
-          />
-        )}
+            </View>
+          )}
+        />
         <Modal transparent={true} visible={showModal}>
-          <View style={{ backgroundColor: "#eaeaeaaa", flex: 1 }}>
+          <Animatable.View
+            style={{ backgroundColor: "grey", flex: 1 }}
+            animation="fadeIn"
+            duration={300}
+          >
             <View style={GlobalStyles.modalContainer}>
               <TextInput
                 style={GlobalStyles.textInput2}
@@ -190,7 +214,7 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
                 />
               </View>
             </View>
-          </View>
+          </Animatable.View>
           <TouchableOpacity
             onPress={() => setShowModal(false)}
             style={GlobalStyles.customBtnContainer}
@@ -200,27 +224,38 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
         </Modal>
       </View>
 
-      {isEditing ? (
+      <View style={[GlobalStyles.customBtnContainer, { flexDirection: "row" }]}>
         <TouchableOpacity
-          style={[
-            GlobalStyles.customBtnContainer,
-            { bottom: GlobalStyles.customBtn2Bottom.bottom },
-          ]}
+          style={[splitBtnStyle.container, { backgroundColor: "green" }]}
           onPress={() => setShowModal(true)}
         >
-          <View style={GlobalStyles.addBtn}>
-            <Text style={GlobalStyles.addText}>Legg til fag</Text>
-          </View>
+          <Text style={splitBtnStyle.text}>Legg til fag</Text>
         </TouchableOpacity>
-      ) : null}
-      <TouchableOpacity
-        onPress={() => toggleIsEditing()}
-        style={GlobalStyles.customBtnContainer}
-      >
-        <CustomBtn text={isEditing ? "Ferdig" : "Legg til/fjern fag"} />
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[splitBtnStyle.container, { backgroundColor: "red" }]}
+          onPress={toggleIsEditing}
+        >
+          <Text style={splitBtnStyle.text}>
+            {isEditing ? "Ferdig" : "Fjern fag"}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
+const splitBtnStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "white",
+  },
+  text: {
+    alignSelf: "center",
+    justifyContent: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
+});
 export default RetakeKalkulatorScreen;

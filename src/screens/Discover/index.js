@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  Modal,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
@@ -13,9 +15,11 @@ import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import CustomHeader from "../../components/CustomHeader";
 import { localData } from "../../assets/data/GlobalData";
+import ArrowButton from "../../components/ArrowButton";
 
 const DiscoverScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
+  const [showModal, setShowModal] = useState(localData.firstLogIn.value);
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
   const [searchFilterText, setSearchFilterText] = useState(
     require("../../assets/data/karaktergrense.json")
@@ -79,9 +83,22 @@ const DiscoverScreen = ({ navigation }) => {
           }}
           style={GlobalStyles.customBtnContainer}
         >
-          <CustomBtn text="Ferdig" />
+          <ArrowButton />
         </TouchableOpacity>
       ) : null}
+      <Modal transparent={true} visible={showModal}>
+        <TouchableOpacity
+          style={{ flex: 1, alignItems: "stretch" }}
+          onPress={() => {
+            setShowModal(false);
+          }}
+        >
+          <Image
+            source={require("../../assets/images/Turorial_Discover.png")}
+            style={{ flex: 1, width: null, height: null }}
+          />
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };
