@@ -31,11 +31,6 @@ const Router = () => {
       }}
     >
       <Stack.Screen
-        name="Tab"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="Forside"
         component={ForsideScreen}
         options={{
@@ -44,6 +39,11 @@ const Router = () => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
           headerShown: false,
         }}
+      />
+      <Stack.Screen
+        name="Tab"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen

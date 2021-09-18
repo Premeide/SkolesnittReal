@@ -32,6 +32,7 @@ const KalkulatorScreen = ({ navigation }) => {
 
   useEffect(() => {
     setSnitt(snittCalc().toFixed(2));
+    console.log("CL ing");
   }, [grades]);
 
   function addEditWidth() {
@@ -161,7 +162,7 @@ const KalkulatorScreen = ({ navigation }) => {
       }
     }
     snitt = (sum * 10) / numOfClasses;
-    console.log(snitt);
+    console.log(snitt); // prints 3x ??!?
     return snitt;
   }
   const toggleIsEditing = () => {
