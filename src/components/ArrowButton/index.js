@@ -6,12 +6,7 @@ import * as Animatable from "react-native-animatable";
 
 const ArrowButton = () => {
   return (
-    <Animatable.View
-      animation="pulse"
-      iterationCount="infinite"
-      direction="alternate"
-      style={styles.container}
-    >
+    <Animatable.View animation="slideInRight" style={styles.container}>
       <Icon name="arrow-right" size={30} color="white" />
     </Animatable.View>
   );

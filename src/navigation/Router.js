@@ -1,5 +1,9 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import BottomTabNavigator from "./BottomTabNavigator";
@@ -13,12 +17,35 @@ import QuestionsScreen from "../screens/Questions";
 import FeedbackScreen from "../screens/Feedback";
 import EducationDetailsScreen from "../screens/EducationDetails";
 import KalkulatorScreen from "../screens/Kalkulator";
+import ForsideScreen from "../screens/Forside";
 
 const Stack = createStackNavigator();
 
 const Router = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        gestureEnabled: true,
+        gestureDirection: "horizontal",
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+    >
+      <Stack.Screen
+        name="Tab"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Forside"
+        component={ForsideScreen}
+        options={{
+          headerTitle: "FORSIDE as",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
+        }}
+      />
+
       <Stack.Screen
         name="NewProfile"
         component={NewProfileScreen}
@@ -35,6 +62,7 @@ const Router = () => {
           headerTitle: "Legg til fagene dine",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
         }}
       />
 
@@ -80,11 +108,7 @@ const Router = () => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}
       />
-      <Stack.Screen
-        name="Tab"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
+
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
@@ -116,7 +140,7 @@ const Router = () => {
         name="Feedback"
         component={FeedbackScreen}
         options={{
-          headerTitle: "Tilbakemelding",
+          headerTitle: "Kontakt oss",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}

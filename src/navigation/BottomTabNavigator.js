@@ -7,7 +7,7 @@ import KalkulatorScreen from "../screens/Kalkulator";
 import HomeScreen from "../screens/Home";
 import RecommendScreen from "../screens/Recommend";
 import DiscoverStack from "./DiscoverStack";
-
+import RecommendStack from "./RecommendStack";
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
@@ -46,8 +46,8 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Recommend"
-        component={RecommendScreen}
+        name="RecommendStack"
+        component={RecommendStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Icon
@@ -72,7 +72,7 @@ const BottomTabNavigator = () => {
               focused={focused}
             />
           ),
-          tabBarLabel: "utdanninger",
+          tabBarLabel: "Utdanninger",
         }}
       />
     </Tab.Navigator>

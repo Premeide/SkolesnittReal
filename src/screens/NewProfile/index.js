@@ -1,53 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   FlatList,
   TouchableOpacity,
-  Button,
-  ScrollView,
-  Switch,
-  Animated,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData } from "../../assets/data/GlobalData";
-import CheckBox from "@react-native-community/checkbox";
-import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
 import ArrowButton from "../../components/ArrowButton";
 import * as Animatable from "react-native-animatable";
+import { useIsFocused } from "@react-navigation/native";
 
 let newProfileData = [
   { name: "Folkehøyskole" },
   { name: "Militæret" },
   { name: "30 til 59 studiepoeng" },
   { name: "60 studiepoeng" },
+  { name: "Ingen av disse" },
 ];
 
 const NewProfileScreen = ({ navigation }) => {
   const [age, setAge] = useState();
+  const [showArrow, setShowArrow] = useState(false);
   const [checkArray, setCheckArray] = useState([]);
   const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
-  const opacity = useState(new Animated.Value(0))[0];
+  const [showPoints, setShowPoints] = useState(false); //useState(new Animated.Value(0))[0];
   const ageInputRef = React.useRef();
+  const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
 
-  function changeOpacity() {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 400,
-      useNativeDriver: true,
-    }).start();
-  }
-  function addFunc(total, num) {
-    return total + num;
-  }
+  useEffect(() => {
+    if (!showArrow) ageInputRef.current.focus();
+  }, [isFocused]);
+
   const handleAgeChange = (t) => {
     setAge(t);
     if (t.length > 3) {
       ageInputRef.current.blur();
-      changeOpacity();
+      setShowPoints(true);
       localData.born.value = t;
     }
   };
@@ -59,6 +50,12 @@ const NewProfileScreen = ({ navigation }) => {
       });
     } else {
       tempCheckArray.push(index);
+      tempCheckArray = tempCheckArray.filter((n) => {
+        return n != 5;
+      });
+    }
+    if (index == 5) {
+      tempCheckArray = [5];
     }
     setCheckArray(tempCheckArray);
   };
@@ -83,8 +80,16 @@ const NewProfileScreen = ({ navigation }) => {
     ) {
       points = 2;
     }
+    if (i == 4) {
+      points = 0;
+      localData.extraPoints.f =
+        localData.extraPoints.m =
+        localData.extraPoints.tre =
+        localData.extraPoints.seks =
+          false;
+    }
     localData.extraPoints.value = points;
-    setExtraPoints(checkArray.reduce(addFunc)); //for forceUpdate
+    setExtraPoints(points);
   };
 
   return (
@@ -106,47 +111,56 @@ const NewProfileScreen = ({ navigation }) => {
         />
       </Animatable.View>
 
-      <Animated.View
-        style={[GlobalStyles.whiteContainer, { opacity: opacity }]}
-      >
-        <Text style={GlobalStyles.underTitleText}>Tilleggspoeng:</Text>
-        <View style={GlobalStyles.greyContainer}>
-          <FlatList
-            data={newProfileData}
-            keyExtractor={(item) => item.name}
-            ItemSeparatorComponent={() => (
-              <View style={GlobalStyles.ItemSeparatorComponent} />
-            )}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                style={GlobalStyles.row}
-                onPress={() => {
-                  selectThis(index + 1);
-                  handleTilleggspoeng(index);
-                }}
-              >
-                <Text style={GlobalStyles.listText}>{item.name}</Text>
-                <View style={GlobalStyles.listEndContainer}>
-                  {checkArray.includes(index + 1) ? (
-                    <Icon name="check-square" size={25} />
-                  ) : (
-                    <Icon name="square" size={25} />
-                  )}
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-      </Animated.View>
+      {showPoints ? (
+        <Animatable.View
+          style={GlobalStyles.whiteContainer}
+          animation="fadeInUp"
+          duration={700}
+        >
+          <Text style={GlobalStyles.underTitleText}>
+            Tilleggspoeng: {extraPoints}
+          </Text>
+          <View style={GlobalStyles.greyContainer}>
+            <FlatList
+              data={newProfileData}
+              keyExtractor={(item) => item.name}
+              ItemSeparatorComponent={() => (
+                <View style={GlobalStyles.ItemSeparatorComponent} />
+              )}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  style={GlobalStyles.row}
+                  onPress={() => {
+                    selectThis(index + 1);
+                    handleTilleggspoeng(index);
+                    setShowArrow(true);
+                  }}
+                >
+                  <Text style={GlobalStyles.listText}>{item.name}</Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    {checkArray.includes(index + 1) ? (
+                      <Icon name="check-square" size={25} />
+                    ) : (
+                      <Icon name="square" size={25} />
+                    )}
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </Animatable.View>
+      ) : null}
 
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Discover");
-        }}
-        style={GlobalStyles.customBtnContainer}
-      >
-        <ArrowButton />
-      </TouchableOpacity>
+      {showArrow ? (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("_Kalkulator");
+          }}
+          style={GlobalStyles.customBtnContainer}
+        >
+          <ArrowButton />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

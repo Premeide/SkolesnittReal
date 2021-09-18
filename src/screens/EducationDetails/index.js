@@ -50,27 +50,15 @@ const EducationDetailsScreen = ({ route, navigation }) => {
           />
         </View>
       </View>
-      {edAlreadyAdded ? (
-        <TouchableOpacity
-          style={GlobalStyles.customBtnContainer}
-          onPress={() => navigation.goBack()}
-        >
-          <Animatable.View
-            animation="jello"
-            style={[GlobalStyles.addBtn, { flexDirection: "row" }]}
-          >
-            <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
-            <Text style={{ color: GlobalStyles.blueColor.color }}>
-              {" "}
-              Tilbake
-            </Text>
-          </Animatable.View>
-        </TouchableOpacity>
-      ) : (
+      {edAlreadyAdded ? null : (
         <TouchableOpacity
           onPress={() => {
             localData.wantedEducations.studiekode.push(thisEd.studiekode);
             setEdAlreadyAdded(true);
+            if (localData.firstLogIn.value) {
+              localData.firstLogIn.value = false;
+              navigation.navigate("RecommendStack");
+            }
           }}
           style={GlobalStyles.customBtnContainer}
         >
@@ -79,10 +67,7 @@ const EducationDetailsScreen = ({ route, navigation }) => {
       )}
       {edAlreadyAdded ? (
         <TouchableOpacity
-          style={[
-            GlobalStyles.customBtnContainer,
-            { bottom: GlobalStyles.customBtn2Bottom.bottom },
-          ]}
+          style={GlobalStyles.customBtnContainer}
           onPress={() => {
             localData.wantedEducations.studiekode =
               localData.wantedEducations.studiekode.filter(function (
@@ -111,3 +96,21 @@ const EducationDetailsScreen = ({ route, navigation }) => {
 };
 
 export default EducationDetailsScreen;
+
+// (
+//   <TouchableOpacity
+//     style={GlobalStyles.customBtnContainer}
+//     onPress={() => navigation.goBack()}
+//   >
+//     <Animatable.View
+//       animation="jello"
+//       style={[GlobalStyles.addBtn, { flexDirection: "row" }]}
+//     >
+//       <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
+//       <Text style={{ color: GlobalStyles.blueColor.color }}>
+//         {" "}
+//         Tilbake
+//       </Text>
+//     </Animatable.View>
+//   </TouchableOpacity>
+// )

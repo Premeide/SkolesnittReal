@@ -4,12 +4,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  FlatList,
   ScrollView,
 } from "react-native";
-import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CheckBox from "@react-native-community/checkbox";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData } from "../../assets/data/GlobalData";
 import { Alert } from "react-native";
@@ -19,10 +16,11 @@ let newProfileData = [
   { name: "Militæret" },
   { name: "30 til 59 studiepoeng" },
   { name: "60 studiepoeng" },
+  { name: "Ingen av disse" },
 ];
 let data2 = [
-  { name: "Vanlige spørsmål | FAQ", screen: "Questions" },
-  { name: "Tilbakemelding | Kontakt oss", screen: "Feedback" },
+  { name: "Vanlige spørsmål", screen: "Questions" },
+  { name: "Kontakt oss", screen: "Feedback" },
   { name: "Om", screen: "About" },
 ];
 
@@ -32,9 +30,6 @@ const ProfileScreen = ({ navigation }) => {
   const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
   const test = React.useRef();
 
-  function addFunc(total, num) {
-    return total + num;
-  }
   const handleAgeChange = (t) => {
     setAge(t);
     if (t.length > 3) {
@@ -50,6 +45,12 @@ const ProfileScreen = ({ navigation }) => {
       });
     } else {
       tempCheckArray.push(index);
+      tempCheckArray = tempCheckArray.filter((n) => {
+        return n != 5;
+      });
+    }
+    if (index == 5) {
+      tempCheckArray = [5];
     }
     setCheckArray(tempCheckArray);
   };
@@ -59,7 +60,9 @@ const ProfileScreen = ({ navigation }) => {
     localData.extraPoints.m ? a.push(2) : null;
     localData.extraPoints.tre ? a.push(3) : null;
     localData.extraPoints.seks ? a.push(4) : null;
-    return a;
+    if (a.length > 0) {
+      return a;
+    } else return [];
   }
   const handleTilleggspoeng = (i) => {
     let points = 0;
@@ -83,7 +86,7 @@ const ProfileScreen = ({ navigation }) => {
       points = 2;
     }
     localData.extraPoints.value = points;
-    setExtraPoints(checkArray.reduce(addFunc)); //for forceUpdate
+    setExtraPoints(points); //setExtraPoints(checkArray.reduce(addFunc)); //for forceUpdate
   };
   return (
     <View style={GlobalStyles.container}>
@@ -102,7 +105,9 @@ const ProfileScreen = ({ navigation }) => {
         </View>
 
         <View style={GlobalStyles.whiteContainer}>
-          <Text style={GlobalStyles.underTitleText}>Tilleggspoeng:</Text>
+          <Text style={GlobalStyles.underTitleText}>
+            Tilleggspoeng: {extraPoints}
+          </Text>
           <View style={GlobalStyles.greyContainer}>
             {newProfileData.map((item, index) => (
               <View key={item.name}>

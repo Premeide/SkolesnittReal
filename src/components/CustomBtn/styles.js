@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     width: "90%",
     borderWidth: 1,
     borderColor: "white",
+    borderRadius: 20,
   },
   text: { fontSize: 15, color: "white", fontWeight: "bold" },
 });

@@ -4,7 +4,7 @@ const { width: WIDTH } = Dimensions.get("window");
 
 const theme = {
   backgroundColor: "#eaeaea",
-  blueColor: "#2C72FF",
+  blueColor: "#246EE9", //#2C72FF
 };
 const styles = StyleSheet.create({
   blueColor: { color: theme.blueColor },
@@ -12,13 +12,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.backgroundColor,
   },
-  whiteContainer: { backgroundColor: "white", padding: 15, marginTop: 7 },
-  whiteContainer2: { flex: 1, backgroundColor: "white", padding: 15 },
+  whiteContainer: {
+    backgroundColor: "white",
+    padding: 15,
+    marginTop: 7,
+    borderRadius: 20,
+  },
+  whiteContainer2: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+  },
   underTitleText: { fontSize: 15, fontWeight: "bold" },
   greyContainer: {
     backgroundColor: "#EFF2F1",
     marginTop: 15,
     paddingHorizontal: 13,
+    borderRadius: 10,
   },
   listText: {
     fontSize: 15,
@@ -38,6 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 7,
     fontWeight: "bold",
+    borderRadius: 10,
   },
   textInput2: {
     alignSelf: "center",
@@ -47,6 +58,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 2,
     fontWeight: "bold",
+    borderRadius: 20,
   },
   listEndContainer: {
     flexDirection: "row",
@@ -77,6 +89,9 @@ const styles = StyleSheet.create({
     width: "90%",
     borderWidth: 2,
     borderColor: theme.blueColor,
+    borderRadius: 20,
+    elevation: 10,
+    shadowColor: "#52006A",
   },
   addText: {
     fontSize: 15,

@@ -5,26 +5,23 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
-  Button,
-  Modal,
-  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
-import CustomHeader from "../../components/CustomHeader";
 import { localData } from "../../assets/data/GlobalData";
-import ArrowButton from "../../components/ArrowButton";
+import { useIsFocused } from "@react-navigation/native";
 
 const DiscoverScreen = ({ navigation }) => {
-  const [input, setInput] = useState("");
-  const [showModal, setShowModal] = useState(localData.firstLogIn.value);
+  const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
   const [searchFilterText, setSearchFilterText] = useState(
     require("../../assets/data/karaktergrense.json")
   );
 
+  function isEdAdded(kode) {
+    if (localData.wantedEducations.studiekode.includes(kode)) return true;
+    else return false;
+  }
   const searchFilter = (_txt) => {
     let txt = _txt.trim().toLowerCase();
     if (txt) {
@@ -42,8 +39,8 @@ const DiscoverScreen = ({ navigation }) => {
 
   return (
     <View style={GlobalStyles.container}>
-      {localData.firstLogIn.value ? null : <View style={{ height: "5%" }} />}
       <View style={GlobalStyles.whiteContainer2}>
+        <View style={{ height: localData.firstLogIn.value ? "1%" : "7%" }} />
         <TextInput
           style={GlobalStyles.textInput2}
           placeholder="Søk utdanninger"
@@ -65,7 +62,15 @@ const DiscoverScreen = ({ navigation }) => {
                 })
               }
             >
-              <Text style={[GlobalStyles.listText, { width: "90%" }]}>
+              <Text
+                style={[
+                  GlobalStyles.listText,
+                  {
+                    width: "90%",
+                    fontWeight: isEdAdded(item.studiekode) ? "bold" : "100",
+                  },
+                ]}
+              >
                 {item.studienavn} ({item.lærerstedskode})
               </Text>
               <View style={GlobalStyles.listEndContainer}>
@@ -75,30 +80,6 @@ const DiscoverScreen = ({ navigation }) => {
           )}
         />
       </View>
-      {localData.firstLogIn.value ? (
-        <TouchableOpacity
-          onPress={() => {
-            localData.firstLogIn.value = false;
-            navigation.navigate("_Kalkulator");
-          }}
-          style={GlobalStyles.customBtnContainer}
-        >
-          <ArrowButton />
-        </TouchableOpacity>
-      ) : null}
-      <Modal transparent={true} visible={showModal}>
-        <TouchableOpacity
-          style={{ flex: 1, alignItems: "stretch" }}
-          onPress={() => {
-            setShowModal(false);
-          }}
-        >
-          <Image
-            source={require("../../assets/images/Turorial_Discover.png")}
-            style={{ flex: 1, width: null, height: null }}
-          />
-        </TouchableOpacity>
-      </Modal>
     </View>
   );
 };

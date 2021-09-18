@@ -23,10 +23,18 @@ const CustomHeader = () => {
             source={require("../../assets/images/logo.jpg")}
             style={styles.logoImage}
           />
-          <Text style={styles.headerTitle}>SkoleSnitt</Text>
+          <Text style={styles.headerTitle}>koleSnitt</Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-          <Icon name="user" size={40} color={GlobalStyles.blueColor.color} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Profile")}
+          style={{
+            backgroundColor: "#eaeaea",
+            padding: 12,
+            borderRadius: 20,
+            bottom: 4,
+          }}
+        >
+          <Icon name="user" size={20} color={GlobalStyles.blueColor.color} />
         </TouchableOpacity>
       </View>
     </View>

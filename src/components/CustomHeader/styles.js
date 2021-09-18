@@ -12,8 +12,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  logoImage: { height: 50, width: 50, marginRight: 10 },
+  logoImage: { height: 40, width: 40 },
   headerTitle: {
+    fontFamily: "serif",
     fontSize: 20,
     fontWeight: "bold",
     color: GlobalStyles.blueColor.color,
