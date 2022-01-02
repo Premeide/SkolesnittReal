@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
-import styles from "./styles";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 
 const AboutScreen = (props) => {
@@ -25,5 +24,7 @@ const AboutScreen = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default AboutScreen;

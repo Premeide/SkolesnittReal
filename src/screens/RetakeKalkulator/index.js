@@ -13,8 +13,6 @@ import {
 import SegmentedControl from "rn-segmented-control";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData, allClasseslist } from "../../assets/data/GlobalData";
-import CheckBox from "@react-native-community/checkbox";
-import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import * as Animatable from "react-native-animatable";
@@ -118,11 +116,9 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
   function checkboxHandler(name) {
     let isIncluded = grades.find((grades) => grades.id === name);
     if (isIncluded == undefined) {
-      isIncluded = false;
-    } else {
-      isIncluded = true;
+      return false;
     }
-    return isIncluded;
+    return true;
   }
   const toggleIsEditing = () => {
     isEditing ? removeEditWidth() : addEditWidth();
@@ -207,7 +203,11 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
                     >
                       <Text style={GlobalStyles.listText}>{item.name}</Text>
                       <View style={GlobalStyles.listEndContainer}>
-                        <CheckBox value={checkboxHandler(item.name)} />
+                        {checkboxHandler(item.name) ? (
+                          <Icon name="check-square" size={25} />
+                        ) : (
+                          <Icon name="square" size={25} />
+                        )}
                       </View>
                     </TouchableOpacity>
                   )}
@@ -243,6 +243,8 @@ const RetakeKalkulatorScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({});
 
 const splitBtnStyle = StyleSheet.create({
   container: {

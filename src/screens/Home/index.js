@@ -6,13 +6,14 @@ import {
   TouchableOpacity,
   Image,
   Modal,
+  StyleSheet,
 } from "react-native";
 import {
   allClasseslist,
   localData,
   basisClasses,
 } from "../../assets/data/GlobalData";
-import styles from "./styles";
+import { Alert } from "react-native";
 import CustomHeader from "../../components/CustomHeader";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import SegmentedControl from "rn-segmented-control";
@@ -102,6 +103,37 @@ const HomeScreen = ({ navigation }) => {
     setData1(newData1);
     setMainPoeng(newMainPoeng);
   };
+  function alertInformation(name) {
+    let text = "";
+    switch (name) {
+      case "Alderspoeng":
+        text += "Fødselsår: " + localData.born.value;
+        text += "\n\n (+2 poeng fra og med året du fyller 20)";
+        break;
+      case "Tilleggspoeng":
+        text = "nice";
+        break;
+      case "Real- og språkpoeng":
+        let tempLst = [];
+        let _grades = localData.grades.value;
+        for (const [i, e] of _grades.entries()) {
+          for (const [idx, ele] of allClasseslist.entries()) {
+            if (e.id == ele.name && ele.type > 0) {
+              tempLst.push(e.id + ": " + ele.type);
+            }
+          }
+        }
+        text += "Fag du har som gir poeng:\n\n";
+        text += tempLst.join("\n");
+        break;
+      case "Karaktersnitt":
+        text += "niceas";
+        break;
+      default:
+        text = "????";
+    }
+    return text;
+  }
 
   const handleSegmentedControl = (i) => {
     setActiveSegment(i);
@@ -118,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
             textStyle={{ fontSize: 10 }}
             currentIndex={activeSegment}
             onChange={(index) => handleSegmentedControl(index)}
-            paddingVertical={7}
+            paddingVertical={10}
             segmentedControlBackgroundColor="gainsboro"
             activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
             activeTextColor="white"
@@ -131,7 +163,14 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.poeng}>{mainPoeng.toFixed(2)}</Text>
           <View style={GlobalStyles.greyContainer}>
             {data1.map((item, index) => (
-              <View key={item.name}>
+              <TouchableOpacity
+                key={item.name}
+                onPress={() => {
+                  Alert.alert(item.name, alertInformation(item.name), [
+                    { text: "Ok" },
+                  ]);
+                }}
+              >
                 <View style={GlobalStyles.row}>
                   <Text style={GlobalStyles.listText}>{item.name}</Text>
                   <View style={GlobalStyles.listEndContainer}>
@@ -141,7 +180,7 @@ const HomeScreen = ({ navigation }) => {
                 {index >= data1.length - 1 ? null : (
                   <View style={GlobalStyles.ItemSeparatorComponent}></View>
                 )}
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
@@ -166,5 +205,14 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  poeng: {
+    fontSize: 35,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "black",
+  },
+});
 
 export default HomeScreen;

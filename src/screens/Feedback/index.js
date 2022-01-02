@@ -7,8 +7,8 @@ import {
   Linking,
   Alert,
   Platform,
+  StyleSheet,
 } from "react-native";
-import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import qs from "qs";
@@ -154,5 +154,7 @@ const FeedbackScreen = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({});
 
 export default FeedbackScreen;

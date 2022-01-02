@@ -13,7 +13,7 @@ import {
 import SegmentedControl from "rn-segmented-control";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { localData, allClasseslist } from "../../assets/data/GlobalData";
-import CheckBox from "@react-native-community/checkbox";
+//import CheckBox from "@react-native-community/checkbox";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import * as Animatable from "react-native-animatable";
@@ -23,33 +23,30 @@ const gradeTabs = ["1", "2", "3", "4", "5", "6"];
 const KalkulatorScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  let [grades, setGrades] = useState(localData.grades.value);
+  const [grades, setGrades] = useState(localData.grades.value);
+  const [showModal, setShowModal] = useState(false);
+  const [snitt, setSnitt] = useState(10.0);
+  const editWidth = useRef(new Animated.Value(0)).current;
   const keyExtractorGrades = useCallback((item) => item.id, []);
   const keyExtractorModal = useCallback((item) => item.name, []);
-  const editWidth = useRef(new Animated.Value(0)).current;
-  const [showModal, setShowModal] = useState(false);
-  const [snitt, setSnitt] = useState(snittCalc());
 
-  useEffect(() => {
-    setSnitt(snittCalc().toFixed(2));
-    console.log("CL ing");
-  }, [grades]);
-
-  function addEditWidth() {
-    Animated.spring(editWidth, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
-  }
-  function removeEditWidth() {
-    Animated.timing(editWidth, {
-      toValue: 0,
-      duration: 600,
-      useNativeDriver: false,
-    }).start();
+  function EditWidth(action) {
+    if (action == "add") {
+      Animated.spring(editWidth, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: false,
+      }).start();
+    } else if (action == "remove") {
+      Animated.timing(editWidth, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: false,
+      }).start();
+    }
   }
   function forceingUpdate() {
+    console.log("FORCINGUPDATE");
     grades.length == 0
       ? setGrades([])
       : tabChange(grades[0].value, grades[0].id, false);
@@ -71,11 +68,11 @@ const KalkulatorScreen = ({ navigation }) => {
     } else {
       tabDelete(name);
     }
-    forceingUpdate();
+    setSnitt(snittCalc().toFixed(2));
   }
   function tabChange(idx, name, isExam) {
     //toggleisediting excluding forceupdates
-    if (!(idx == grades[0].value) || !(name == grades[0].id)) {
+    if (idx != grades[0].value || name != grades[0].id) {
       isEditing ? toggleIsEditing() : null;
     }
 
@@ -108,9 +105,9 @@ const KalkulatorScreen = ({ navigation }) => {
       }
     }
 
-    setGrades(_grades);
     localData.grades.value = _grades;
-    return null;
+    setGrades(_grades);
+    setSnitt(snittCalc().toFixed(2));
   }
   function tabDelete(name) {
     let _grades = grades;
@@ -120,11 +117,10 @@ const KalkulatorScreen = ({ navigation }) => {
         _grades.splice(index, 1);
       }
     }
-    setGrades(_grades);
     localData.grades.value = _grades;
 
+    setGrades(_grades);
     forceingUpdate();
-    return null;
   }
   function searchFilter(_txt) {
     let txt = _txt.trim().toLowerCase();
@@ -142,11 +138,9 @@ const KalkulatorScreen = ({ navigation }) => {
   function checkboxHandler(name) {
     let isIncluded = grades.find((grades) => grades.id === name);
     if (isIncluded == undefined) {
-      isIncluded = false;
-    } else {
-      isIncluded = true;
+      return false;
     }
-    return isIncluded;
+    return true;
   }
   function snittCalc() {
     let snitt = 0;
@@ -162,11 +156,10 @@ const KalkulatorScreen = ({ navigation }) => {
       }
     }
     snitt = (sum * 10) / numOfClasses;
-    console.log(snitt); // prints 3x ??!?
     return snitt;
   }
   const toggleIsEditing = () => {
-    isEditing ? removeEditWidth() : addEditWidth();
+    isEditing ? EditWidth("remove") : EditWidth("add");
     setIsEditing(!isEditing);
   };
 
@@ -181,7 +174,7 @@ const KalkulatorScreen = ({ navigation }) => {
       <FlatList
         data={grades}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={() => <Text style={{ fontSize: 25 }}> </Text>}
+        ListFooterComponent={() => <Text style={{ fontSize: 65 }}> </Text>}
         ListHeaderComponent={() => <Text style={{ fontSize: 60 }}> </Text>}
         keyExtractor={keyExtractorGrades}
         renderItem={({ item, index }) => (
@@ -256,26 +249,6 @@ const KalkulatorScreen = ({ navigation }) => {
                 ) : null}
               </View>
             </View>
-            {index >= grades.length - 1 ? (
-              <Animatable.View animation="zoomOutDown">
-                <Text style={GlobalStyles.kalkText}>Goodbye</Text>
-                <SegmentedControl
-                  tabs={gradeTabs}
-                  currentIndex={4}
-                  paddingVertical={5}
-                  segmentedControlBackgroundColor="gainsboro"
-                  activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
-                  activeTextColor="white"
-                  textColor="black"
-                  activeTextWeight="bold"
-                />
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ color: "grey" }}>Hatt eksamen? </Text>
-                  <Text style={{ color: "black" }}>Ja </Text>
-                  <Text style={{ color: "black" }}> Nei</Text>
-                </View>
-              </Animatable.View>
-            ) : null}
           </Animatable.View>
         )}
       />
@@ -307,10 +280,11 @@ const KalkulatorScreen = ({ navigation }) => {
                       {item.name}
                     </Text>
                     <View style={GlobalStyles.listEndContainer}>
-                      <CheckBox
-                        value={checkboxHandler(item.name)}
-                        onChange={() => tabAdd(item.name)}
-                      />
+                      {checkboxHandler(item.name) ? (
+                        <Icon name="check-square" size={25} />
+                      ) : (
+                        <Icon name="square" size={25} />
+                      )}
                     </View>
                   </TouchableOpacity>
                 )}

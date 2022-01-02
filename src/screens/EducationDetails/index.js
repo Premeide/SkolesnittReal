@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import styles from "./styles";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import { localData } from "../../assets/data/GlobalData";
@@ -94,6 +99,10 @@ const EducationDetailsScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  title: { fontSize: 20, fontWeight: "bold" },
+});
 
 export default EducationDetailsScreen;
 
