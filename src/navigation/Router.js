@@ -31,20 +31,20 @@ const Router = () => {
       }}
     >
       <Stack.Screen
-        name="_Kalkulator"
-        component={KalkulatorScreen}
+        name="Forside"
+        component={ForsideScreen}
         options={{
-          headerTitle: "Legg til fagene dine",
+          headerTitle: "FORSIDE as",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="Forside"
-        component={ForsideScreen}
+        name="_Kalkulator"
+        component={KalkulatorScreen}
         options={{
-          headerTitle: "FORSIDE as",
+          headerTitle: "Legg til fagene dine",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
           headerShown: false,

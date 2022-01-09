@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
-  Button,
   Text,
   View,
   FlatList,
@@ -11,7 +10,6 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import SegmentedControl from "rn-segmented-control";
 import { localData, allClasseslist } from "../../assets/data/GlobalData";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
@@ -24,10 +22,9 @@ import Animated, {
 } from "react-native-reanimated";
 import GradeItem from "../../components/GradeItem";
 import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
-import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const KalkulatorScreen = () => {
+const KalkulatorScreen = ({ navigation }) => {
   const [grades, setGrades] = useState(localData.grades.value);
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -41,6 +38,7 @@ const KalkulatorScreen = () => {
   useEffect(() => {
     console.log("-----------------useEffect..");
     setSnitt(snittCalculator(grades));
+    localData.grades.value = grades;
   }, [grades]);
   const tabDelete = useCallback((delGrade: GradesInterface) => {
     console.log("tabDelete..", delGrade.id);
@@ -130,6 +128,10 @@ const KalkulatorScreen = () => {
     }
     return true;
   };
+  const forceUpdate = () => {
+    console.log("-- ForceUpdate -- ");
+    grades.length == 0 ? setGrades([]) : tabChange(grades[0]);
+  };
   function snittCalculator(gradeList: any) {
     let sum = 0;
     let numOfClasses = 0;
@@ -144,10 +146,6 @@ const KalkulatorScreen = () => {
     }
     return ((sum * 10) / numOfClasses).toFixed(2);
   }
-  const forceUpdate = () => {
-    console.log("-- ForceUpdate -- ");
-    grades.length == 0 ? setGrades([]) : tabChange(grades[0]);
-  };
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <StatusBar style="auto" />
@@ -225,7 +223,22 @@ const KalkulatorScreen = () => {
           <CustomBtn text="Ferdig" />
         </TouchableOpacity>
       </Modal>
-
+      {localData.firstTimeKalk.value ? (
+        <TouchableOpacity
+          style={[
+            GlobalStyles.customBtnContainer,
+            { bottom: GlobalStyles.customBtn2Bottom.bottom },
+          ]}
+          onPress={() => {
+            localData.firstTimeKalk.value = false;
+            navigation.navigate("Tab", { screen: "Hjem" });
+          }}
+        >
+          <View style={GlobalStyles.addBtn}>
+            <Text style={GlobalStyles.addText}>Fortsett</Text>
+          </View>
+        </TouchableOpacity>
+      ) : null}
       <AddOrDeleteBtn
         toggleIsEditing={toggleIsEditing}
         toggleModal={toggleModal}

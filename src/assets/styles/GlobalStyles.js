@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: theme.blueColor,
     borderRadius: 20,
-    elevation: 10,
+    elevation: 4,
     shadowColor: "#52006A",
   },
   addText: {
@@ -99,9 +99,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   modalContainer: {
-    borderWidth: 1,
-    borderColor: "black",
+    // borderWidth: 1,
+    // borderColor: "black",
     backgroundColor: "#ffffff",
+    borderRadius: 20,
     margin: 20,
     padding: 10,
     width: "90%",

@@ -21,10 +21,11 @@ interface GradeItemProps {
   hadExamChange: (grade: GradesInterface) => void;
   translateX: any;
 }
-const HEIGHT_CONTAINER = 120;
-const HEIGHT_CONTAINER_INCLUDING_EXAM = 180;
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const HEIGHT_CONTAINER = SCREEN_HEIGHT * 0.18;
+const HEIGHT_CONTAINER_INCLUDING_EXAM = SCREEN_HEIGHT * 0.28;
 const GRADE_TABS = ["1", "2", "3", "4", "5", "6"];
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const GradeItem: React.FC<GradeItemProps> = ({
   grade,
