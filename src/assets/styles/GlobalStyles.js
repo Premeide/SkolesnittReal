@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width: WIDTH } = Dimensions.get("window");
 
 const theme = {
-  backgroundColor: "#eaeaea",
+  backgroundColor: "#eaeaea", // "#eaeaea"
   blueColor: "#246EE9", //#2C72FF
 };
 const styles = StyleSheet.create({

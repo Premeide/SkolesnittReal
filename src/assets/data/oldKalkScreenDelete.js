@@ -25,7 +25,7 @@ const KalkulatorScreen = ({ navigation }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [grades, setGrades] = useState(localData.grades.value);
   const [showModal, setShowModal] = useState(false);
-  const [snitt, setSnitt] = useState(10.0);
+  const [snitt, setSnitt] = useState(snittCalc());
   const editWidth = useRef(new Animated.Value(0)).current;
   const keyExtractorGrades = useCallback((item) => item.id, []);
   const keyExtractorModal = useCallback((item) => item.name, []);
@@ -69,6 +69,7 @@ const KalkulatorScreen = ({ navigation }) => {
       tabDelete(name);
     }
     setSnitt(snittCalc().toFixed(2));
+    forceingUpdate();
   }
   function tabChange(idx, name, isExam) {
     //toggleisediting excluding forceupdates

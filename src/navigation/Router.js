@@ -1,12 +1,13 @@
 import React from "react";
 import {
   createStackNavigator,
-  TransitionPresets,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import BottomTabNavigator from "./BottomTabNavigator";
+
+import KalkulatorScreen from "../screens/Kalkulator";
 
 import NewProfileScreen from "../screens/NewProfile";
 import AboutScreen from "../screens/About";
@@ -16,7 +17,6 @@ import RetakeKalkulatorScreen from "../screens/RetakeKalkulator";
 import QuestionsScreen from "../screens/Questions";
 import FeedbackScreen from "../screens/Feedback";
 import EducationDetailsScreen from "../screens/EducationDetails";
-import KalkulatorScreen from "../screens/Kalkulator";
 import ForsideScreen from "../screens/Forside";
 
 const Stack = createStackNavigator();
@@ -31,9 +31,14 @@ const Router = () => {
       }}
     >
       <Stack.Screen
-        name="Tab"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
+        name="_Kalkulator"
+        component={KalkulatorScreen}
+        options={{
+          headerTitle: "Legg til fagene dine",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="Forside"
@@ -45,6 +50,13 @@ const Router = () => {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        name="Tab"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="Questions"
         component={QuestionsScreen}
@@ -62,16 +74,6 @@ const Router = () => {
           headerTitle: "Ny profil",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
-        }}
-      />
-      <Stack.Screen
-        name="_Kalkulator"
-        component={KalkulatorScreen}
-        options={{
-          headerTitle: "Legg til fagene dine",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-          headerShown: false,
         }}
       />
 

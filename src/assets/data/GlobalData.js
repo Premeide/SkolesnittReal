@@ -6,8 +6,8 @@ let localData = {
     value: [
       { value: 0, id: "Engelsk", exam: false, exva: 0 },
       { value: 0, id: "Fremmedspråk", exam: false, exva: 0 },
-      { value: 0, id: "Geografi", exam: false, exva: 0 },
-      { value: 0, id: "Historie", exam: false, exva: 0 },
+      { value: 0, id: "Geografi", exam: true, exva: 0 },
+      { value: 0, id: "Historie", exam: true, exva: 0 },
       { value: 0, id: "Naturfag", exam: false, exva: 0 },
       { value: 0, id: "Kroppsøving", exam: false, exva: 0 },
       { value: 0, id: "Matematikk 1T/1P", exam: false, exva: 0 },
