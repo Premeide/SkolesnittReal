@@ -10,7 +10,6 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import { localData } from "../../assets/data/GlobalData";
-import * as Animatable from "react-native-animatable";
 
 const EducationDetailsScreen = ({ route, navigation }) => {
   const { postStudiekode: subjectId } = route.params;
@@ -45,7 +44,11 @@ const EducationDetailsScreen = ({ route, navigation }) => {
             renderItem={({ item }) => (
               <View style={GlobalStyles.row}>
                 <Text style={[GlobalStyles.listText, { fontWeight: "bold" }]}>
-                  {item.name}
+                  {item.name == "Poenggrense"
+                    ? "Ordinær poenggrense"
+                    : item.name == "Poenggrense_f"
+                    ? "Primær poenggrense"
+                    : item.name}
                 </Text>
                 <View style={GlobalStyles.listEndContainer}>
                   <Text style={GlobalStyles.listText}>{item.value}</Text>
@@ -101,7 +104,7 @@ const EducationDetailsScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  title: { fontSize: 20, fontWeight: "bold" },
+  title: { fontSize: 20, fontWeight: "bold", marginTop: 20 },
 });
 
 export default EducationDetailsScreen;

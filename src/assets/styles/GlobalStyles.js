@@ -1,5 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
-
+import { StyleSheet, Dimensions, Platform, StatusBar } from "react-native";
 const { width: WIDTH } = Dimensions.get("window");
 
 const theme = {
@@ -11,6 +10,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgroundColor,
+  },
+  safeContainer: {
+    flex: 1,
+    backgroundColor: theme.backgroundColor,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   whiteContainer: {
     backgroundColor: "white",

@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import {
@@ -15,25 +16,38 @@ import {
 import { useIsFocused } from "@react-navigation/native";
 import SegmentedControl from "rn-segmented-control";
 
+const DATA = [
+  { name: "Alderspoeng", value: 50 },
+  { name: "Tilleggspoeng", value: 300 },
+  { name: "Real- og språkpoeng", value: 30 },
+  { name: "Karaktersnitt", value: 2000 },
+];
+
 const RecommendScreen = ({ navigation }) => {
-  const [activeSegment2, setActiveSegment2] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [retakePoeng, setRetakePoeng] = useState(3000);
+  const [data, setData] = useState(DATA);
+
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
   const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
-  let [retakePoeng, setRetakePoeng] = useState(3000);
-  useEffect(() => {
-    updatePoeng2(activeSegment2);
-  }, [isFocused]);
 
+  useEffect(() => {
+    if (isFocused) {
+      console.log("RECOMMEND: updatePoeng");
+      updatePoeng2(tabIndex);
+    }
+  }, [isFocused]);
   const updatePoeng2 = (segIndex) => {
     let _grades = localData.grades.value;
     let _rgrades = localData.retakeClasses;
+    let newRetakePoeng = retakePoeng;
+    let isRetakingThisClass = false;
+
     let sum = 0;
     let numOfClasses = 0;
     let karakterSnitt = 0;
-    let newData1 = 0;
-    let newRetakePoeng = retakePoeng;
-    let isRetakingThisClass = false;
     let newRealSpråkPoeng = 0;
+    let newdata = [];
 
     switch (segIndex) {
       case 0:
@@ -104,21 +118,29 @@ const RecommendScreen = ({ navigation }) => {
       default:
         null;
     }
+    newdata = [
+      { name: "Alderspoeng", value: alderspoeng(segIndex) },
+      { name: "Tilleggspoeng", value: localData.extraPoints.value },
+      { name: "Real- og språkpoeng", value: Math.min(4, newRealSpråkPoeng) },
+      { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
+    ];
     newRetakePoeng =
       karakterSnitt +
       localData.extraPoints.value +
       alderspoeng(segIndex) +
       Math.min(4, newRealSpråkPoeng);
+
     setRetakePoeng(newRetakePoeng);
+    setData(newdata);
   };
   function alderspoeng(segIndex) {
     let fødselsår = localData.born.value;
-    let _alderspoeng = ((segIndex == 1 ? 1998 : 2002) - fødselsår) * 2;
+    let _alderspoeng = ((segIndex == 1 ? 1999 : 2003) - fødselsår) * 2; // husk const
     _alderspoeng = Math.min(Math.max(_alderspoeng, 0), 8);
     return _alderspoeng;
   }
   const handleSegmentedControl2 = (i) => {
-    setActiveSegment2(i);
+    setTabIndex(i);
     updatePoeng2(i);
   };
   function oldGradeFinder(newName) {
@@ -142,19 +164,96 @@ const RecommendScreen = ({ navigation }) => {
           })
         }
       >
-        <Text style={[GlobalStyles.listText, { width: "85%" }]}>
+        <Text style={[GlobalStyles.listText, { width: "70%" }]}>
           {thisEd.studienavn} ({thisEd.lærerstedskode})
         </Text>
         <View style={GlobalStyles.listEndContainer}>
-          <Text style={GlobalStyles.listText}>{thisEd.poenggrense}</Text>
+          <Text style={GlobalStyles.listText}>
+            {thisEd.poenggrense} ({thisEd.poenggrense_f})
+          </Text>
         </View>
       </TouchableOpacity>
     );
   }
+  function alertInformation(name) {
+    let text = "";
+    switch (name) {
+      case "Alderspoeng":
+        text += "Fødselsår: " + localData.born.value;
+        text += "\n\n (+2 poeng fra og med året du fyller 20)";
+        break;
+      case "Tilleggspoeng":
+        text = "Tilleggsponeg";
+        break;
+      case "Real- og språkpoeng":
+        let tempLst = [];
+        let _grades = localData.grades.value;
+        for (const [i, e] of _grades.entries()) {
+          for (const [idx, ele] of allClasseslist.entries()) {
+            if (e.id == ele.name && ele.type > 0) {
+              tempLst.push(e.id + ": " + ele.type);
+            }
+          }
+        }
+        text += "Fag du har som gir poeng:\n\n";
+        text += tempLst.join("\n");
+        break;
+      case "Karaktersnitt":
+        text += "Karaktersnitt";
+        break;
+      default:
+        text = "????";
+    }
+    return text;
+  }
+
   return (
-    <View style={GlobalStyles.container}>
-      <View style={{ height: "5%" }} />
+    <View style={GlobalStyles.safeContainer}>
       <ScrollView>
+        {localData.retakeClasses.length >= 1 ? (
+          <View style={GlobalStyles.whiteContainer}>
+            <SegmentedControl
+              tabs={["Konkurransepoeng", "23/5-poeng"]}
+              textStyle={{ fontSize: 10 }}
+              currentIndex={tabIndex}
+              onChange={(index) => handleSegmentedControl2(index)}
+              paddingVertical={10}
+              segmentedControlBackgroundColor="gainsboro"
+              activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
+              activeTextColor="white"
+              activeTextWeight="bold"
+              textColor="black"
+              containerStyle={{ marginTop: 10 }}
+            />
+            <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
+              Dine poeng med nye fag
+            </Text>
+            <Text style={styles.poeng}>{retakePoeng.toFixed(2)}</Text>
+
+            <View style={GlobalStyles.greyContainer}>
+              {data.map((item, index) => (
+                <TouchableOpacity
+                  key={item.name}
+                  onPress={() => {
+                    Alert.alert(item.name, alertInformation(item.name), [
+                      { text: "Ok" },
+                    ]);
+                  }}
+                >
+                  <View style={GlobalStyles.row}>
+                    <Text style={GlobalStyles.listText}>{item.name}</Text>
+                    <View style={GlobalStyles.listEndContainer}>
+                      <Text style={GlobalStyles.listText}>{item.value}</Text>
+                    </View>
+                  </View>
+                  {index >= data.length - 1 ? null : (
+                    <View style={GlobalStyles.ItemSeparatorComponent}></View>
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        ) : null}
         <View style={GlobalStyles.whiteContainer}>
           <Text
             style={GlobalStyles.underTitleText}
@@ -189,27 +288,6 @@ const RecommendScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          {localData.retakeClasses.length >= 1 ? (
-            <View>
-              <SegmentedControl
-                tabs={["Konkurransepoeng", "23/5-poeng"]}
-                textStyle={{ fontSize: 10 }}
-                currentIndex={activeSegment2}
-                onChange={(index) => handleSegmentedControl2(index)}
-                paddingVertical={7}
-                segmentedControlBackgroundColor="gainsboro"
-                activeSegmentBackgroundColor="#4A90E2"
-                activeTextColor="white"
-                activeTextWeight="bold"
-                textColor="black"
-                containerStyle={{ marginTop: 10 }}
-              />
-              <Text style={styles.poeng}>{retakePoeng.toFixed(2)}</Text>
-              <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
-                Dine poeng med nye fag
-              </Text>
-            </View>
-          ) : null}
         </View>
 
         <View style={GlobalStyles.whiteContainer}>

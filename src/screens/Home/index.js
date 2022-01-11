@@ -4,16 +4,14 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Image,
-  Modal,
   StyleSheet,
+  Alert,
 } from "react-native";
 import {
   allClasseslist,
   localData,
   basisClasses,
 } from "../../assets/data/GlobalData";
-import { Alert } from "react-native";
 import CustomHeader from "../../components/CustomHeader";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import SegmentedControl from "rn-segmented-control";
@@ -21,19 +19,26 @@ import { useIsFocused } from "@react-navigation/native";
 import CustomBtn from "../../components/CustomBtn";
 import * as Animatable from "react-native-animatable";
 
+const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
+const DATA1 = [
+  { name: "Alderspoeng", value: 50 },
+  { name: "Tilleggspoeng", value: 300 },
+  { name: "Real- og språkpoeng", value: 30 },
+  { name: "Karaktersnitt", value: 2000 },
+];
+
 const HomeScreen = ({ navigation }) => {
-  const [showArrow, setShowArrow] = useState(false);
   const [activeSegment, setActiveSegment] = useState(0);
+  const [mainPoeng, setMainPoeng] = useState(2000);
+  const [data1, setData1] = useState(DATA1);
+
   const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
-  let [mainPoeng, setMainPoeng] = useState(2000);
-  let [data1, setData1] = useState([
-    { name: "Alderspoeng", value: 50 },
-    { name: "Tilleggspoeng", value: localData.extraPoints.value },
-    { name: "Real- og språkpoeng", value: 30 },
-    { name: "Karaktersnitt", value: 2000 },
-  ]);
+
   useEffect(() => {
-    updatePoeng(activeSegment);
+    if (isFocused) {
+      console.log("HOME: useeffect updatingPoeng");
+      updatePoeng(activeSegment);
+    }
   }, [isFocused]);
   function realogspråkpoeng() {
     let sum = 0;
@@ -49,7 +54,12 @@ const HomeScreen = ({ navigation }) => {
   }
   function alderspoeng(segIndex) {
     let fødselsår = localData.born.value;
-    let _alderspoeng = ((segIndex == 1 ? 1998 : 2002) - fødselsår) * 2;
+    let _alderspoeng =
+      ((segIndex == 1
+        ? YEAR_WITH_NO_ALDERSPOENG - 4
+        : YEAR_WITH_NO_ALDERSPOENG) -
+        fødselsår) *
+      2;
     _alderspoeng = Math.min(Math.max(_alderspoeng, 0), 8);
     return _alderspoeng;
   }
@@ -115,7 +125,7 @@ const HomeScreen = ({ navigation }) => {
         break;
       case "Real- og språkpoeng":
         let tempLst = [];
-        let _grades = localData.grades.value;
+        let _grades = localData.retakeClasses;
         for (const [i, e] of _grades.entries()) {
           for (const [idx, ele] of allClasseslist.entries()) {
             if (e.id == ele.name && ele.type > 0) {
@@ -134,7 +144,6 @@ const HomeScreen = ({ navigation }) => {
     }
     return text;
   }
-
   const handleSegmentedControl = (i) => {
     setActiveSegment(i);
     updatePoeng(i);
@@ -184,8 +193,6 @@ const HomeScreen = ({ navigation }) => {
             ))}
           </View>
         </View>
-
-        <Text style={{ fontSize: 50 }}></Text>
       </ScrollView>
       {localData.firstLogIn.value ? (
         <TouchableOpacity

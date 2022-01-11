@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
@@ -38,9 +39,8 @@ const DiscoverScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={GlobalStyles.container}>
+    <SafeAreaView style={GlobalStyles.safeContainer}>
       <View style={GlobalStyles.whiteContainer2}>
-        <View style={{ height: localData.firstLogIn.value ? "1%" : "7%" }} />
         <TextInput
           style={GlobalStyles.textInput2}
           placeholder="Søk utdanninger"
@@ -80,7 +80,7 @@ const DiscoverScreen = ({ navigation }) => {
           )}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

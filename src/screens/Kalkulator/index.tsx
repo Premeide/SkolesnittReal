@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
+import {} from "expo-status-bar";
 import {
   Text,
   View,
@@ -24,7 +24,7 @@ import GradeItem from "../../components/GradeItem";
 import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const KalkulatorScreen = ({ navigation }) => {
+const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   const [grades, setGrades] = useState(localData.grades.value);
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -148,7 +148,6 @@ const KalkulatorScreen = ({ navigation }) => {
   }
   return (
     <SafeAreaView style={GlobalStyles.container}>
-      <StatusBar style="auto" />
       <View style={styles.karakterElevationContainer}>
         <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
           Karaktersnitt:
