@@ -12,8 +12,10 @@ import GlobalStyles from "../../assets/styles/GlobalStyles";
 const RecommendDetailsScreen = ({ route, navigation }) => {
   const { postStudiekode: subjectId } = route.params;
   const karakterGrenser = require("../../assets/data/karaktergrense.json");
-  const thisEd = karakterGrenser.find(
-    (karakterGrenser) => karakterGrenser.studiekode === subjectId
+  const allopptakskrav = require("../../assets/data/opptakskrav.json");
+  const thisEd = karakterGrenser.find((item) => item.studiekode === subjectId);
+  const opptakskrav = allopptakskrav.find(
+    (item) => item.opptakskrav == thisEd.opptakskrav
   );
   const educationData = [
     { name: "Studiekode", value: thisEd.studiekode },
@@ -52,7 +54,9 @@ const RecommendDetailsScreen = ({ route, navigation }) => {
             )}
           />
         </View>
-        <Text>SLIK ØKER DU SNITTET: DU KANKE</Text>
+        <Text>
+          Fra opptakskrav "{opptakskrav.opptakskrav}": {opptakskrav.description}
+        </Text>
       </View>
     </View>
   );
