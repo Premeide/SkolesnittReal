@@ -23,8 +23,8 @@ const RecommendDetailsScreen = ({ route, navigation }) => {
     { name: "Studiested", value: thisEd.studiested },
     { name: "Felt", value: thisEd.felt },
     { name: "Opptakskrav", value: thisEd.opptakskrav },
-    { name: "Poenggrense", value: thisEd.poenggrense },
-    { name: "Poenggrense_f", value: thisEd.poenggrense_f },
+    { name: "Ordinær Poenggrense", value: thisEd.poenggrense },
+    { name: "Primær poenggrense", value: thisEd.poenggrense_f },
     { name: "Antall venteliste", value: thisEd.antall_venteliste },
   ];
   return (
@@ -41,11 +41,7 @@ const RecommendDetailsScreen = ({ route, navigation }) => {
             renderItem={({ item }) => (
               <View style={GlobalStyles.row}>
                 <Text style={[GlobalStyles.listText, { fontWeight: "bold" }]}>
-                  {item.name == "Poenggrense"
-                    ? "Ordinær poenggrense"
-                    : item.name == "Poenggrense_f"
-                    ? "Primær poenggrense"
-                    : item.name}
+                  {item.name}
                 </Text>
                 <View style={GlobalStyles.listEndContainer}>
                   <Text style={GlobalStyles.listText}>{item.value}</Text>

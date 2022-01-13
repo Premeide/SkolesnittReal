@@ -24,6 +24,8 @@ import GradeItem from "../../components/GradeItem";
 import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+const DEFAULT_GRADE = { id: "-", value: 0, exam: false, exva: 0 };
+
 const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   const [grades, setGrades] = useState(localData.grades.value);
   const [isEditing, setIsEditing] = useState(false);
@@ -36,7 +38,7 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   const keyExtractorModal = useCallback((item) => item.name, []);
 
   useEffect(() => {
-    console.log("-----------------useEffect..");
+    console.log("KALK: -----------------useEffect..");
     setSnitt(snittCalculator(grades));
     localData.grades.value = grades;
   }, [grades]);
@@ -48,61 +50,32 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   }, []);
   const tabAdd = (name: string) => {
     console.log("tabAdd..", name);
-
-    let isDuplicate = false;
-    let isDuplicateElement = { value: 0, id: "_", exam: false, exva: 0 };
-    for (const [index, element] of grades.entries()) {
-      if (element.id === name) {
-        isDuplicate = true;
-        isDuplicateElement = element;
-      }
-    }
-    if (!isDuplicate) {
-      let newGrades = grades;
-      newGrades.push({ value: 0, id: name, exam: false, exva: 0 });
-
-      setGrades(newGrades);
+    if (grades.find((item) => item.id === name) === undefined) {
+      setGrades((prevGrades) => [
+        ...prevGrades,
+        { ...DEFAULT_GRADE, id: name },
+      ]);
     } else {
-      tabDelete(isDuplicateElement);
+      tabDelete({ ...DEFAULT_GRADE, id: name });
     }
-    forceUpdate();
   };
   const tabChange = useCallback((newGrade: GradesInterface) => {
     console.log("tabChange..", newGrade.id);
 
-    setGrades((grades: any) => {
-      let tmpGrades = [];
-      for (const [_, element] of grades.entries()) {
-        if (element.id === newGrade.id) {
-          tmpGrades.push({
-            id: newGrade.id,
-            value: newGrade.value,
-            exam: newGrade.exam,
-            exva: newGrade.exva,
-          });
-        } else {
-          tmpGrades.push(element);
-        }
-      }
+    setGrades((grades) => {
+      let tmpGrades = [...grades];
+      tmpGrades[grades.findIndex((item) => item.id === newGrade.id)] = newGrade;
       return tmpGrades;
     });
   }, []);
   const hadExamChange = useCallback((grade: GradesInterface) => {
     console.log("hadExamChange..", grade.id);
-    setGrades((grades: any) => {
-      let tmpGrades = [];
-      for (const [_, element] of grades.entries()) {
-        if (element.id === grade.id) {
-          tmpGrades.push({
-            id: grade.id,
-            value: grade.value,
-            exam: !grade.exam,
-            exva: grade.exva,
-          });
-        } else {
-          tmpGrades.push(element);
-        }
-      }
+    setGrades((grades) => {
+      let tmpGrades = [...grades];
+      tmpGrades[grades.findIndex((item) => item.id === grade.id)] = {
+        ...grade,
+        exam: !grade.exam,
+      };
       return tmpGrades;
     });
   }, []);
@@ -146,6 +119,15 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     }
     return ((sum * 10) / numOfClasses).toFixed(2);
   }
+  const renderItem = ({ item }: { item: GradesInterface }) => (
+    <GradeItem
+      grade={item}
+      tabChange={tabChange}
+      tabDelete={tabDelete}
+      hadExamChange={hadExamChange}
+      translateX={translateX}
+    />
+  );
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.karakterElevationContainer}>
@@ -157,18 +139,11 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
       <FlatList
         data={grades}
         showsVerticalScrollIndicator={false}
+        maxToRenderPerBatch={6}
         ListFooterComponent={() => <Text style={{ fontSize: 65 }}> </Text>}
         ListHeaderComponent={() => <Text style={{ fontSize: 60 }}> </Text>}
         keyExtractor={keyExtractorGrades}
-        renderItem={({ item }) => (
-          <GradeItem
-            grade={item}
-            tabChange={tabChange}
-            tabDelete={tabDelete}
-            hadExamChange={hadExamChange}
-            translateX={translateX}
-          />
-        )}
+        renderItem={renderItem}
       />
 
       <Modal transparent={true} visible={showModal}>
