@@ -25,7 +25,7 @@ let data2 = [
 ];
 
 const ProfileScreen = ({ navigation }) => {
-  const [age, setAge] = useState(localData.born.value.toString());
+  const [age, setAge] = useState(localData.yearOfBirth.toString());
   const [checkArray, setCheckArray] = useState(initcheckarray());
   const [extraPoints, setExtraPoints] = useState(0); // for forceUpdate
   const test = React.useRef();
@@ -34,7 +34,7 @@ const ProfileScreen = ({ navigation }) => {
     setAge(t);
     if (t.length > 3) {
       test.current.blur();
-      localData.born.value = t;
+      localData.yearOfBirth = t;
     }
   };
   const selectThis = (index) => {

@@ -22,9 +22,9 @@ const ForsideScreen = ({ navigation }) => {
         <TouchableOpacity
           style={{ width: "30%", top: 70, position: "absolute" }}
           onPress={() => {
-            localData.firstLogIn.value = true;
-            localData.firstTimeKalk.value = true;
-            localData.firstTimeHome.value = true;
+            localData.firstTime.logIn = true;
+            localData.firstTime.Kalk = true;
+            localData.firstTime.home = true;
           }}
         >
           <Text>RESET</Text>

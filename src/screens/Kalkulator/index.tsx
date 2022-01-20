@@ -24,13 +24,13 @@ import GradeItem from "../../components/GradeItem";
 import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-const DEFAULT_GRADE = { id: "-", value: 0, exam: false, exva: 0 };
+const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
 
 const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
-  const [grades, setGrades] = useState(localData.grades.value);
+  const [grades, setGrades] = useState(localData.grades);
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [snitt, setSnitt] = useState(snittCalculator(localData.grades.value));
+  const [snitt, setSnitt] = useState(snittCalculator(localData.grades));
 
   const translateX = useSharedValue(0);
 
@@ -40,7 +40,7 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   useEffect(() => {
     console.log("KALK: -----------------useEffect..");
     setSnitt(snittCalculator(grades));
-    localData.grades.value = grades;
+    localData.grades = grades;
   }, [grades]);
   const tabDelete = useCallback((delGrade: GradesInterface) => {
     console.log("tabDelete..", delGrade.id);
@@ -74,7 +74,7 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
       let tmpGrades = [...grades];
       tmpGrades[grades.findIndex((item) => item.id === grade.id)] = {
         ...grade,
-        exam: !grade.exam,
+        includeExam: !grade.includeExam,
       };
       return tmpGrades;
     });
@@ -112,8 +112,8 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     for (const [i, e] of gradeList.entries()) {
       sum += e.value + 1;
       numOfClasses += 1;
-      if (e.exam) {
-        sum += e.exva + 1;
+      if (e.includeExam) {
+        sum += e.examValue + 1;
         numOfClasses += 1;
       }
     }
@@ -197,14 +197,14 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
           <CustomBtn text="Ferdig" />
         </TouchableOpacity>
       </Modal>
-      {localData.firstTimeKalk.value ? (
+      {localData.firstTime.Kalk ? (
         <TouchableOpacity
           style={[
             GlobalStyles.customBtnContainer,
             { bottom: GlobalStyles.customBtn2Bottom.bottom },
           ]}
           onPress={() => {
-            localData.firstTimeKalk.value = false;
+            localData.firstTime.Kalk = false;
             navigation.navigate("Tab", { screen: "Hjem" });
           }}
         >

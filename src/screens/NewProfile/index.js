@@ -39,7 +39,7 @@ const NewProfileScreen = ({ navigation }) => {
     if (t.length > 3) {
       ageInputRef.current.blur();
       setShowPoints(true);
-      localData.born.value = t;
+      localData.yearOfBirth = t;
     }
   };
   const selectThis = (index) => {

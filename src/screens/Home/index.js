@@ -42,18 +42,18 @@ const HomeScreen = ({ navigation }) => {
   }, [isFocused]);
   function realogspråkpoeng() {
     let sum = 0;
-    let _grades = localData.grades.value;
+    let _grades = localData.grades;
     for (const [i, e] of _grades.entries()) {
       for (const [idx, ele] of allClasseslist.entries()) {
         if (e.id == ele.name) {
-          sum += ele.type;
+          sum += ele.rPoints;
         }
       }
     }
     return Math.min(4, sum);
   }
   function alderspoeng(segIndex) {
-    let fødselsår = localData.born.value;
+    let fødselsår = localData.yearOfBirth;
     let _alderspoeng =
       ((segIndex == 1
         ? YEAR_WITH_NO_ALDERSPOENG - 4
@@ -64,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
     return _alderspoeng;
   }
   const updatePoeng = (segIndex) => {
-    let _grades = localData.grades.value;
+    let _grades = localData.grades;
     let sum = 0;
     let numOfClasses = 0;
     let karakterSnitt = 0;
@@ -76,8 +76,8 @@ const HomeScreen = ({ navigation }) => {
         for (const [i, e] of _grades.entries()) {
           sum += e.value + 1;
           numOfClasses += 1;
-          if (e.exam) {
-            sum += e.exva + 1;
+          if (e.includeExam) {
+            sum += e.examValue + 1;
             numOfClasses += 1;
           }
         }
@@ -89,8 +89,8 @@ const HomeScreen = ({ navigation }) => {
             if (ele == e.id) {
               sum += e.value + 1;
               numOfClasses += 1;
-              if (e.exam) {
-                sum += e.exva + 1;
+              if (e.includeExam) {
+                sum += e.examValue + 1;
                 numOfClasses += 1;
               }
               break;
@@ -117,7 +117,7 @@ const HomeScreen = ({ navigation }) => {
     let text = "";
     switch (name) {
       case "Alderspoeng":
-        text += "Fødselsår: " + localData.born.value;
+        text += "Fødselsår: " + localData.yearOfBirth;
         text += "\n\n (+2 poeng fra og med året du fyller 20)";
         break;
       case "Tilleggspoeng":
@@ -128,8 +128,8 @@ const HomeScreen = ({ navigation }) => {
         let _grades = localData.retakeClasses;
         for (const [i, e] of _grades.entries()) {
           for (const [idx, ele] of allClasseslist.entries()) {
-            if (e.id == ele.name && ele.type > 0) {
-              tempLst.push(e.id + ": " + ele.type);
+            if (e.id == ele.name && ele.rPoints > 0) {
+              tempLst.push(e.id + ": " + ele.rPoints);
             }
           }
         }
@@ -194,7 +194,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-      {localData.firstLogIn.value ? (
+      {localData.firstTime.logIn ? (
         <TouchableOpacity
           onPress={() => navigation.navigate("Discover")}
           style={[GlobalStyles.customBtnContainer, { position: "relative" }]}

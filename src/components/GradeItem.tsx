@@ -34,10 +34,10 @@ const GradeItem: React.FC<GradeItemProps> = ({
   hadExamChange,
   translateX,
 }) => {
-  const examContainerOpacity = useSharedValue(grade.exam ? 1 : 0);
+  const examContainerOpacity = useSharedValue(grade.includeExam ? 1 : 0);
   const translateXContainer = useSharedValue(0);
   const heightContainer = useSharedValue(
-    grade.exam ? HEIGHT_CONTAINER_INCLUDING_EXAM : HEIGHT_CONTAINER
+    grade.includeExam ? HEIGHT_CONTAINER_INCLUDING_EXAM : HEIGHT_CONTAINER
   );
 
   const rStyleContainer = useAnimatedStyle(() => ({
@@ -57,15 +57,15 @@ const GradeItem: React.FC<GradeItemProps> = ({
       runOnJS(tabChange)({
         id: grade.id,
         value: grade.value,
-        exam: grade.exam,
-        exva: index,
+        includeExam: grade.includeExam,
+        examValue: index,
       });
     } else {
       runOnJS(tabChange)({
         id: grade.id,
         value: index,
-        exam: grade.exam,
-        exva: grade.exva,
+        includeExam: grade.includeExam,
+        examValue: grade.examValue,
       });
     }
   };
@@ -82,7 +82,7 @@ const GradeItem: React.FC<GradeItemProps> = ({
     );
   };
   const hadExamChangeHandler = () => {
-    if (grade.exam) {
+    if (grade.includeExam) {
       examContainerOpacity.value = withTiming(0, undefined, (isFinished) => {
         if (isFinished) {
           runOnJS(hadExamChange)(grade);
@@ -125,16 +125,18 @@ const GradeItem: React.FC<GradeItemProps> = ({
         <View style={{ flexDirection: "row" }}>
           <Text style={{ color: "grey" }}>Hatt eksamen? </Text>
           <TouchableOpacity onPress={hadExamChangeHandler}>
-            <Text style={styles.hadExamText}>{grade.exam ? "Nei" : "Ja"}</Text>
+            <Text style={styles.hadExamText}>
+              {grade.includeExam ? "Nei" : "Ja"}
+            </Text>
           </TouchableOpacity>
         </View>
-        {grade.exam ? (
+        {grade.includeExam ? (
           <Animated.View style={rStyleExamContainer}>
             <Text style={styles.gradeName}>{grade.id} [EKSAMEN]</Text>
             <SegmentedControl
               paddingVertical={5}
               tabs={GRADE_TABS}
-              currentIndex={grade.exva}
+              currentIndex={grade.examValue}
               onChange={(index) => tabChangeHandler(index, true)}
               segmentedControlBackgroundColor="gainsboro"
               activeSegmentBackgroundColor={GlobalStyles.blueColor.color}

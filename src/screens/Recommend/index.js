@@ -38,7 +38,7 @@ const RecommendScreen = ({ navigation }) => {
     }
   }, [isFocused]);
   const updatePoeng2 = (segIndex) => {
-    let _grades = localData.grades.value;
+    let _grades = localData.grades;
     let _rgrades = localData.retakeClasses;
     let newRetakePoeng = retakePoeng;
     let isRetakingThisClass = false;
@@ -56,7 +56,7 @@ const RecommendScreen = ({ navigation }) => {
             if (e.name == ele.id) {
               sum += ele.value + 1;
               numOfClasses += 1;
-              newRealSpråkPoeng += e.type;
+              newRealSpråkPoeng += e.rPoints;
               isRetakingThisClass = true;
               break;
             }
@@ -66,10 +66,10 @@ const RecommendScreen = ({ navigation }) => {
               if (e.name == ele.id) {
                 sum += ele.value + 1;
                 numOfClasses += 1;
-                newRealSpråkPoeng += e.type;
+                newRealSpråkPoeng += e.rPoints;
                 isRetakingThisClass = true;
-                if (ele.exam) {
-                  sum += ele.exva;
+                if (ele.includeExam) {
+                  sum += ele.examValue;
                   numOfClasses += 1;
                 }
                 break;
@@ -88,7 +88,7 @@ const RecommendScreen = ({ navigation }) => {
                 if (e.name == ele.id) {
                   sum += ele.value + 1;
                   numOfClasses += 1;
-                  newRealSpråkPoeng += e.type;
+                  newRealSpråkPoeng += e.rPoints;
                   isRetakingThisClass = true;
                   break;
                 }
@@ -98,10 +98,10 @@ const RecommendScreen = ({ navigation }) => {
                   if (e.name == ele.id) {
                     sum += ele.value + 1;
                     numOfClasses += 1;
-                    newRealSpråkPoeng += e.type;
+                    newRealSpråkPoeng += e.rPoints;
                     isRetakingThisClass = true;
-                    if (ele.exam) {
-                      sum += ele.exva;
+                    if (ele.includeExam) {
+                      sum += ele.examValue;
                       numOfClasses += 1;
                     }
                     break;
@@ -134,7 +134,7 @@ const RecommendScreen = ({ navigation }) => {
     setData(newdata);
   };
   function alderspoeng(segIndex) {
-    let fødselsår = localData.born.value;
+    let fødselsår = localData.yearOfBirth;
     let _alderspoeng = ((segIndex == 1 ? 1999 : 2003) - fødselsår) * 2; // husk const
     _alderspoeng = Math.min(Math.max(_alderspoeng, 0), 8);
     return _alderspoeng;
@@ -144,7 +144,7 @@ const RecommendScreen = ({ navigation }) => {
     updatePoeng2(i);
   };
   function oldGradeFinder(newName) {
-    for (const [i, e] of localData.grades.value.entries()) {
+    for (const [i, e] of localData.grades.entries()) {
       if (e.id == newName) {
         return (e.value + 1).toString() + " til";
       }
@@ -179,7 +179,7 @@ const RecommendScreen = ({ navigation }) => {
     let text = "";
     switch (name) {
       case "Alderspoeng":
-        text += "Fødselsår: " + localData.born.value;
+        text += "Fødselsår: " + localData.yearOfBirth;
         text += "\n\n (+2 poeng fra og med året du fyller 20)";
         break;
       case "Tilleggspoeng":
@@ -187,11 +187,11 @@ const RecommendScreen = ({ navigation }) => {
         break;
       case "Real- og språkpoeng":
         let tempLst = [];
-        let _grades = localData.grades.value;
+        let _grades = localData.grades;
         for (const [i, e] of _grades.entries()) {
           for (const [idx, ele] of allClasseslist.entries()) {
-            if (e.id == ele.name && ele.type > 0) {
-              tempLst.push(e.id + ": " + ele.type);
+            if (e.id == ele.name && ele.rPoints > 0) {
+              tempLst.push(e.id + ": " + ele.rPoints);
             }
           }
         }

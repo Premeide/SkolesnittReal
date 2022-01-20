@@ -1,8 +1,8 @@
 interface GradesInterface {
   id: string;
   value: number;
-  exam: boolean;
-  exva: number;
+  includeExam: boolean;
+  examValue: number;
 }
 
 export { GradesInterface };

@@ -63,8 +63,8 @@ const EducationDetailsScreen = ({ route, navigation }) => {
           onPress={() => {
             localData.wantedEducations.studiekode.push(thisEd.studiekode);
             setEdAlreadyAdded(true);
-            if (localData.firstLogIn.value) {
-              localData.firstLogIn.value = false;
+            if (localData.firstTime.logIn) {
+              localData.firstTime.logIn = false;
               navigation.navigate("RecommendStack");
             }
           }}
