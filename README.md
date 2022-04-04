@@ -13,15 +13,21 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 
 <p float="left">
   <img src="https://i.imgur.com/fPeIqSo.jpg" width="200" />
-  <img src="https://i.imgur.com/azixm50.jpg" width="500" /> 
+  <img src="https://i.imgur.com/azixm50.jpg" width="540" /> 
 </p>
 
-## Preview
+# Preview
 
-### Registrer deg
+# Registrer deg
 
 #### Legg til fag
 
+[img]https://i.imgur.com/rzYnmia.gif[/img]
+<br/>
+
 <p float="left">
-  <img src="https://im.ezgif.com/tmp/ezgif-1-da86b8ff33.gif" width="300" /> 
+  <img src="https://i.imgur.com/rzYnmia.gif" width="200" />
+  <img src="https://i.imgur.com/rzYnmia.gif" width="200" />
+  <img src="https://i.imgur.com/rzYnmia.gif" width="200" />
 </p>
+<br/>
