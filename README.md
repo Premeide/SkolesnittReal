@@ -23,5 +23,5 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 #### Legg til fag
 
 <p float="left">
-  <img src="https://i.imgur.com/4yj7PTW.mp4" width="300" /> 
+  <img src="https://imgur.com/CmFefXK" width="300" /> 
 </p>
