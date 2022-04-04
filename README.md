@@ -20,25 +20,25 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 
 ## Registrer deg
 
-### Legg til, endre og fjern fag
+## Legg til, endre og fjern fag
+
+[img]https://i.imgur.com/Sxye0bB.mp4[/img]
 
 <p float="left">
   <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
-  <img src="https://imgur.com/Sxye0bB.gif" width="330" />
-  <img src="https://imgur.com/0A063xF.gif" width="330" />
+  <img src="https://imgur.com/qCGPog1.gif" width="330" />
+  <img src="https://imgur.com/L0gufr0.gif" width="330" />
 </p>
 <br/>
 
-======
-
-### Konkurransepoeng eller 23/5-poeng
+## Konkurransepoeng eller 23/5-poeng
 
 <p float="left">
   <img src="https://imgur.com/J9IRjk7.gif" width="330" />
 </p>
 <br/>
 
-### Legg til fag
+## Legg til fag
 
 <p float="left">
   <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
