@@ -18,29 +18,40 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 
 # Preview
 
-## Registrer deg
-
-## Legg til, endre og fjern fag
-
-[img]https://i.imgur.com/Sxye0bB.mp4[/img]
+## Registrer deg (alder og tilleggspoeng):
 
 <p float="left">
-  <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
-  <img src="https://imgur.com/qCGPog1.gif" width="330" />
-  <img src="https://imgur.com/L0gufr0.gif" width="330" />
+  <img src="https://imgur.com/kcKfGNx.gif" width="300" />
 </p>
 <br/>
 
-## Konkurransepoeng eller 23/5-poeng
+## Legg til fag, endre fag eller fjern fag:
 
 <p float="left">
-  <img src="https://imgur.com/J9IRjk7.gif" width="330" />
+  <img src="https://i.imgur.com/rzYnmia.gif" width="300" />
+  <img src="https://imgur.com/qCGPog1.gif" width="300" />
+  <img src="https://imgur.com/L0gufr0.gif" width="300" />
 </p>
 <br/>
 
-## Legg til fag
+## Se konkurransepoeng eller 23/5-poeng:
 
 <p float="left">
-  <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
+  <img src="https://imgur.com/PatoJp7.gif" width="300" />
+</p>
+<br/>
+
+## Ta opp fag og beregn nytt snitt (poeng før - poeng etter):
+
+<p float="left">
+  <img src="https://i.imgur.com/3m6gcTY.jpg.jpg" width="300" />
+  <img src="https://imgur.com/izTtU1T.jpg" width="300" />
+</p>
+<br/>
+
+## Se infomasjon om utdanninger:
+
+<p float="left">
+  <img src="https://imgur.com/tSw6z8K.jpg" width="300" />
 </p>
 <br/>
