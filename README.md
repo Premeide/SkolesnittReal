@@ -21,7 +21,7 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 ## Registrer deg (alder og tilleggspoeng):
 
 <p float="left">
-  <img src="https://imgur.com/kcKfGNx.gif" width="300" />
+  <img src="https://imgur.com/kcKfGNx.jpg" width="300" />
 </p>
 <br/>
 
