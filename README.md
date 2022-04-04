@@ -1,25 +1,27 @@
 # SkoleSnitt
 
-Er du søker til Universitet eller høyskole? Lurer du på hvilke muligheter du har? Da har vi verktøyet for deg!
+Er du søker til Universitet eller høyskole? Lurer du på hvilke muligheter du har? Da har vi verktøyet for deg! <br/>
+<br/>
 Hva skal appen kunne gjøre?
 Finne universitet som er egnet søkers ønske.
-Spesifisere hva søkeren trenger for å komme inn på et spesfikt studie.
+Spesifisere hva søkeren trenger for å komme inn på et spesfikt studie.<br/>
+<br/>
 Poengsum til søker, opptakskrav fra høyskole/universitet.
-Poenget er å digitalisere listen som samordna opptak legger ut.
-
-Mer info, sjekk ![facebook](https://www.facebook.com/SkoleSnitt)
+Poenget er å digitalisere listen som samordna opptak legger ut.<br/>
+<br/>
+Mer info, sjekk https://www.facebook.com/SkoleSnitt
 
 <p float="left">
   <img src="https://i.imgur.com/fPeIqSo.jpg" width="200" />
-  <img src="https://i.imgur.com/azixm50.jpg" width="450" /> 
+  <img src="https://i.imgur.com/azixm50.jpg" width="500" /> 
 </p>
 
 ## Preview
 
-<p float="left">
-    Hello
-    <Text>Test</Text>
+### Registrer deg
 
-  <img src="https://i.imgur.com/fPeIqSo.jpg" width="200" />
-  <img src="https://i.imgur.com/azixm50.jpg" width="450" /> 
+#### Legg til fag
+
+<p float="left">
+  <img src="https://i.imgur.com/4yj7PTW.mp4" width="300" /> 
 </p>
