@@ -24,10 +24,12 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 
 <p float="left">
   <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
-  <img src="https://imgur.com/Sxye0bB" width="330" />
+  <img src="https://imgur.com/Sxye0bB.gif" width="330" />
   <img src="https://imgur.com/0A063xF.gif" width="330" />
 </p>
 <br/>
+
+======
 
 ### Konkurransepoeng eller 23/5-poeng
 
