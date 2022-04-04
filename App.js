@@ -13,6 +13,5 @@ const App = () => {
 };
 export default App;
 
-{
-  /* <DrawerNavigator/> */
-}
+//leggtil/fjern background ting
+//kontakt oss qs

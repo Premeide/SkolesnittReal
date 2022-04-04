@@ -6,12 +6,12 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { localData } from "../../assets/data/GlobalData";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import ArrowButton from "../../components/ArrowButton";
 import * as Animatable from "react-native-animatable";
 import { useIsFocused } from "@react-navigation/native";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 let newProfileData = [
   { name: "Folkehøyskole" },
@@ -139,9 +139,13 @@ const NewProfileScreen = ({ navigation }) => {
                   <Text style={GlobalStyles.listText}>{item.name}</Text>
                   <View style={GlobalStyles.listEndContainer}>
                     {checkArray.includes(index + 1) ? (
-                      <Icon name="check-square" size={25} />
+                      <FontAwesome5
+                        name={"check-circle"}
+                        size={25}
+                        color="black"
+                      />
                     ) : (
-                      <Icon name="square" size={25} />
+                      <FontAwesome5 name={"circle"} size={25} color="black" />
                     )}
                   </View>
                 </TouchableOpacity>

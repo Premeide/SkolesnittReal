@@ -1,5 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
 import {} from "expo-status-bar";
+import GradeItem from "../../components/GradeItem";
+import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { localData, allClasseslist } from "../../assets/data/GlobalData";
+import GlobalStyles from "../../assets/styles/GlobalStyles";
+import CustomBtn from "../../components/CustomBtn";
+import * as Animatable from "react-native-animatable";
+import { GradesInterface } from "../../assets/data/Interfaces";
 import {
   Text,
   View,
@@ -10,19 +18,12 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import { localData, allClasseslist } from "../../assets/data/GlobalData";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
-import * as Animatable from "react-native-animatable";
-import { GradesInterface } from "../../assets/data/Interfaces";
+
 import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import GradeItem from "../../components/GradeItem";
-import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
 
@@ -31,6 +32,7 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [snitt, setSnitt] = useState(snittCalculator(localData.grades));
+  const [searchText, setSearchText] = useState("");
 
   const translateX = useSharedValue(0);
 
@@ -101,10 +103,15 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     }
     return true;
   };
-  const forceUpdate = () => {
-    console.log("-- ForceUpdate -- ");
-    grades.length == 0 ? setGrades([]) : tabChange(grades[0]);
-  };
+  const renderItem = ({ item }: { item: GradesInterface }) => (
+    <GradeItem
+      grade={item}
+      tabChange={tabChange}
+      tabDelete={tabDelete}
+      hadExamChange={hadExamChange}
+      translateX={translateX}
+    />
+  );
   function snittCalculator(gradeList: any) {
     let sum = 0;
     let numOfClasses = 0;
@@ -119,15 +126,18 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     }
     return ((sum * 10) / numOfClasses).toFixed(2);
   }
-  const renderItem = ({ item }: { item: GradesInterface }) => (
-    <GradeItem
-      grade={item}
-      tabChange={tabChange}
-      tabDelete={tabDelete}
-      hadExamChange={hadExamChange}
-      translateX={translateX}
-    />
-  );
+  function searchFilter(txt: string) {
+    if (txt) {
+      let newList = [];
+      for (const [index, element] of allClasseslist.entries()) {
+        if (element.name.toLowerCase().includes(txt.toLowerCase())) {
+          newList.push(element);
+        }
+      }
+      return newList;
+    }
+    return allClasseslist;
+  }
   return (
     <SafeAreaView style={GlobalStyles.container}>
       <View style={styles.karakterElevationContainer}>
@@ -156,11 +166,11 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
             <TextInput
               style={GlobalStyles.textInput2}
               placeholder="Søk fag"
-              onChangeText={(text) => console.log("Here1")} // setSearchText(text)
+              onChangeText={(text) => setSearchText(text)} // setSearchText(text)
             />
             <View style={[GlobalStyles.greyContainer, { height: "90%" }]}>
               <FlatList
-                data={allClasseslist}
+                data={searchFilter(searchText)}
                 ItemSeparatorComponent={() => (
                   <View style={GlobalStyles.ItemSeparatorComponent} />
                 )}
@@ -242,3 +252,8 @@ const styles = StyleSheet.create({
 });
 
 export default KalkulatorScreen;
+
+// const forceUpdate = () => {
+//   console.log("-- ForceUpdate -- ");
+//   grades.length == 0 ? setGrades([]) : tabChange(grades[0]);
+// };
