@@ -18,16 +18,27 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 
 # Preview
 
-# Registrer deg
+## Registrer deg
 
-#### Legg til fag
-
-[img]https://i.imgur.com/rzYnmia.gif[/img]
-<br/>
+### Legg til, endre og fjern fag
 
 <p float="left">
-  <img src="https://i.imgur.com/rzYnmia.gif" width="200" />
-  <img src="https://i.imgur.com/rzYnmia.gif" width="200" />
-  <img src="https://i.imgur.com/rzYnmia.gif" width="200" />
+  <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
+  <img src="https://imgur.com/Sxye0bB" width="330" />
+  <img src="https://imgur.com/0A063xF.gif" width="330" />
+</p>
+<br/>
+
+### Konkurransepoeng eller 23/5-poeng
+
+<p float="left">
+  <img src="https://imgur.com/J9IRjk7.gif" width="330" />
+</p>
+<br/>
+
+### Legg til fag
+
+<p float="left">
+  <img src="https://i.imgur.com/rzYnmia.gif" width="330" />
 </p>
 <br/>
