@@ -21,31 +21,31 @@ Mer info, sjekk https://www.facebook.com/SkoleSnitt
 ## Registrer deg (alder og tilleggspoeng):
 
 <p float="left">
-  <img src="https://imgur.com/kcKfGNx.jpg" width="300" />
+  <img src="https://imgur.com/kcKfGNx.gif" width="250" />
 </p>
 <br/>
 
 ## Legg til fag, endre fag eller fjern fag:
 
 <p float="left">
-  <img src="https://i.imgur.com/rzYnmia.gif" width="300" />
-  <img src="https://imgur.com/qCGPog1.gif" width="300" />
-  <img src="https://imgur.com/L0gufr0.gif" width="300" />
+  <img src="https://i.imgur.com/rzYnmia.gif" width="250" />
+  <img src="https://imgur.com/qCGPog1.gif" width="250" />
+  <img src="https://imgur.com/L0gufr0.gif" width="250" />
 </p>
 <br/>
 
 ## Se konkurransepoeng eller 23/5-poeng:
 
 <p float="left">
-  <img src="https://imgur.com/PatoJp7.gif" width="300" />
+  <img src="https://imgur.com/PatoJp7.gif" width="250" />
 </p>
 <br/>
 
 ## Ta opp fag og beregn nytt snitt (poeng før - poeng etter):
 
 <p float="left">
-  <img src="https://i.imgur.com/3m6gcTY.jpg.jpg" width="300" />
-  <img src="https://imgur.com/izTtU1T.jpg" width="300" />
+  <img src="https://i.imgur.com/3m6gcTY.jpg.jpg" width="250" />
+  <img src="https://imgur.com/izTtU1T.jpg" width="250" />
 </p>
 <br/>
 
