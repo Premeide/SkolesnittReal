@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     top: "6%",
     right: "3%",
     position: "absolute",
+    zIndex: 100,
   },
 });
 

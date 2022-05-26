@@ -8,7 +8,6 @@ import GlobalStyles from "../assets/styles/GlobalStyles";
 import BottomTabNavigator from "./BottomTabNavigator";
 
 import KalkulatorScreen from "../screens/Kalkulator";
-
 import NewProfileScreen from "../screens/NewProfile";
 import AboutScreen from "../screens/About";
 import DiscoverScreen from "../screens/Discover";
@@ -48,17 +47,6 @@ const Router = () => {
       />
 
       <Stack.Screen
-        name="_Kalkulator"
-        component={KalkulatorScreen}
-        options={{
-          headerTitle: "Legg til fagene dine",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-          headerShown: false,
-        }}
-      />
-
-      <Stack.Screen
         name="Questions"
         component={QuestionsScreen}
         options={{
@@ -75,6 +63,16 @@ const Router = () => {
           headerTitle: "Ny profil",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+      <Stack.Screen
+        name="_Kalkulator"
+        component={KalkulatorScreen}
+        options={{
+          headerTitle: "Legg til fagene dine",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
         }}
       />
 
