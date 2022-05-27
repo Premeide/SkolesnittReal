@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
+import { IExtraPoints } from "./src/assets/data/Interfaces";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Router from "./src/navigation/Router";
-
-interface IExtraPoints {
-  value: number;
-  Military: boolean;
-  Folkehøyskole: boolean;
-  _30points: boolean;
-  _60points: boolean;
-}
 
 const initialState = {
   yearOfBirth: "",
@@ -22,6 +14,24 @@ const initialState = {
     _30points: false,
     _60points: false,
   },
+  grades: [
+    { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
+    { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
+    { value: 0, id: "Geografi", includeExam: false, examValue: 0 },
+    { value: 0, id: "Historie", includeExam: false, examValue: 0 },
+    { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
+    { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
+    { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
+    { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
+    { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
+    { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
+    { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
+    { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
+    { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
+  ],
+  snitt: 60.0,
+  retakeGrades: [],
+  educations: [0, 150140],
 };
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
@@ -32,6 +42,11 @@ const reducer = (state = initialState, action: any) => {
         ...state,
         extraPoints: calculateExtraPoints(state.extraPoints, action.payload),
       };
+    case "SET_EDUCATIONS":
+      return {
+        ...state,
+        educations: setEducations(state.educations, action.payload),
+      };
     default:
       return state;
   }
@@ -39,6 +54,16 @@ const reducer = (state = initialState, action: any) => {
 
 const store = createStore(reducer);
 
+function setEducations(educations: number[], studiekode: number) {
+  if (educations.includes(studiekode)) {
+    console.log("removing");
+    educations = educations.filter((o) => o != studiekode);
+  } else {
+    console.log("ADDING");
+    educations.push(studiekode);
+  }
+  return educations;
+}
 function calculateExtraPoints(extraPoints: IExtraPoints, clicked: string) {
   switch (clicked) {
     case "Folkehøyskole":

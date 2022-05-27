@@ -30,6 +30,37 @@ const Router = () => {
       }}
     >
       <Stack.Screen
+        name="Discover"
+        component={DiscoverScreen}
+        options={{
+          headerTitle: "Hva ønsker du å studere?",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: GlobalStyles.blueColor.color,
+            fontSize: 16,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerTitle: "Profil",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+      <Stack.Screen
+        name="NewProfile"
+        component={NewProfileScreen}
+        options={{
+          headerTitle: "Ny profil",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+        }}
+      />
+
+      <Stack.Screen
         name="Forside"
         component={ForsideScreen}
         options={{
@@ -57,15 +88,6 @@ const Router = () => {
       />
 
       <Stack.Screen
-        name="NewProfile"
-        component={NewProfileScreen}
-        options={{
-          headerTitle: "Ny profil",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-        }}
-      />
-      <Stack.Screen
         name="_Kalkulator"
         component={KalkulatorScreen}
         options={{
@@ -88,18 +110,7 @@ const Router = () => {
           },
         }}
       />
-      <Stack.Screen
-        name="Discover"
-        component={DiscoverScreen}
-        options={{
-          headerTitle: "Hva ønsker du å studere?",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: GlobalStyles.blueColor.color,
-            fontSize: 16,
-          },
-        }}
-      />
+
       <Stack.Screen
         name="_EducationDetails"
         component={EducationDetailsScreen}
@@ -119,15 +130,6 @@ const Router = () => {
         }}
       />
 
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerTitle: "Profil",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-        }}
-      />
       <Stack.Screen
         name="About"
         component={AboutScreen}

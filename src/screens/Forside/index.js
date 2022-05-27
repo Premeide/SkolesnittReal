@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import ArrowButton from "../../components/ArrowButton";
+// import ArrowButton from "../../components/ArrowButton";
 import { localData, defaultLocalData } from "../../assets/data/GlobalData";
 
 const ForsideScreen = ({ navigation }) => {
@@ -35,7 +35,7 @@ const ForsideScreen = ({ navigation }) => {
           }}
           style={GlobalStyles.customBtnContainer}
         >
-          <ArrowButton />
+          {/* <ArrowButton /> */}
         </TouchableOpacity>
       </ImageBackground>
     </View>

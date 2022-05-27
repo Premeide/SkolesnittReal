@@ -40,18 +40,15 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
   const keyExtractorModal = useCallback((item) => item.name, []);
 
   useEffect(() => {
-    console.log("KALK: -----------------useEffect..");
     setSnitt(snittCalculator(grades));
     localData.grades = grades;
   }, [grades]);
   const tabDelete = useCallback((delGrade: GradesInterface) => {
-    console.log("tabDelete..", delGrade.id);
     setGrades((grades) =>
       grades.filter((element) => element.id !== delGrade.id)
     );
   }, []);
   const tabAdd = (name: string) => {
-    console.log("tabAdd..", name);
     if (grades.find((item) => item.id === name) === undefined) {
       setGrades((prevGrades) => [
         ...prevGrades,
@@ -62,8 +59,6 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     }
   };
   const tabChange = useCallback((newGrade: GradesInterface) => {
-    console.log("tabChange..", newGrade.id);
-
     setGrades((grades) => {
       let tmpGrades = [...grades];
       tmpGrades[grades.findIndex((item) => item.id === newGrade.id)] = newGrade;
@@ -71,7 +66,6 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     });
   }, []);
   const hadExamChange = useCallback((grade: GradesInterface) => {
-    console.log("hadExamChange..", grade.id);
     setGrades((grades) => {
       let tmpGrades = [...grades];
       tmpGrades[grades.findIndex((item) => item.id === grade.id)] = {
@@ -82,8 +76,6 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     });
   }, []);
   const toggleIsEditing = useCallback(() => {
-    console.log("toggleIsEditing..");
-
     setIsEditing((isEditing) => {
       isEditing
         ? (translateX.value = withSpring(0))
@@ -92,8 +84,6 @@ const KalkulatorScreen = ({ navigation }: { navigation: any }) => {
     });
   }, []);
   const toggleModal = useCallback(() => {
-    console.log("toggleModal..");
-
     setShowModal((showModal) => !showModal);
   }, []);
   const checkboxHandler = (name: string) => {
