@@ -15,23 +15,34 @@ interface ICustomBtn {
   onclick: () => void;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  height?: string | number;
 }
 class CustomBtn extends Component<ICustomBtn> {
+  state = {
+    height: this.props?.height
+      ? this.props.height
+      : GlobalStyles.customBtnContainer.height,
+  };
   render() {
     return (
-      <TouchableOpacity
-        onPress={this.props.onclick}
-        style={GlobalStyles.customBtnContainer}
+      <Animatable.View
+        style={[
+          GlobalStyles.customBtnContainer,
+          {
+            height: this.state.height,
+          },
+        ]}
+        animation="slideInUp"
       >
-        <Animatable.View
-          animation="slideInUp"
+        <TouchableOpacity
+          onPress={this.props.onclick}
           style={[styles.container, this.props.style]}
         >
           <Text style={[styles.text, this.props.textStyle]}>
             {this.props.text}
           </Text>
-        </Animatable.View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </Animatable.View>
     );
   }
 }

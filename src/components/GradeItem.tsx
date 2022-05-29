@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, {
@@ -7,19 +7,22 @@ import Animated, {
   useSharedValue,
   withTiming,
   withDelay,
+  withSpring,
 } from "react-native-reanimated";
 import SegmentedControl from "rn-segmented-control";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { GradesInterface } from "../assets/data/Interfaces";
 import * as Animatable from "react-native-animatable";
+import { connect } from "react-redux";
 
 interface GradeItemProps {
   grade: GradesInterface;
   tabChange: (grade: GradesInterface) => void;
-  tabDelete: (grade: GradesInterface) => void;
+  tabDelete: (id: string) => void;
   hadExamChange: (grade: GradesInterface) => void;
-  translateX: any;
+  isEditing: boolean;
+  updateSnitt: () => void;
 }
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -32,13 +35,26 @@ const GradeItem: React.FC<GradeItemProps> = ({
   tabChange,
   tabDelete,
   hadExamChange,
-  translateX,
+  isEditing,
+  updateSnitt,
 }) => {
+  const [, updateState] = React.useState(false);
+  const forceUpdate = React.useCallback(() => updateState((v) => !v), []);
+
   const examContainerOpacity = useSharedValue(grade.includeExam ? 1 : 0);
   const translateXContainer = useSharedValue(0);
+  const translateX = useSharedValue(0);
   const heightContainer = useSharedValue(
     grade.includeExam ? HEIGHT_CONTAINER_INCLUDING_EXAM : HEIGHT_CONTAINER
   );
+  useEffect(() => {
+    isEditing
+      ? (translateX.value = withSpring(100))
+      : (translateX.value = withSpring(0));
+  }, [isEditing]);
+  useEffect(() => {
+    updateSnitt();
+  }, [grade]);
 
   const rStyleContainer = useAnimatedStyle(() => ({
     transform: [{ translateX: translateXContainer.value }],
@@ -68,6 +84,7 @@ const GradeItem: React.FC<GradeItemProps> = ({
         examValue: grade.examValue,
       });
     }
+    forceUpdate();
   };
   const tabDeleteHandler = () => {
     heightContainer.value = withTiming(0, undefined);
@@ -76,7 +93,7 @@ const GradeItem: React.FC<GradeItemProps> = ({
       undefined,
       (isFinished) => {
         if (isFinished) {
-          runOnJS(tabDelete)(grade);
+          runOnJS(tabDelete)(grade.id);
         }
       }
     );
@@ -101,6 +118,7 @@ const GradeItem: React.FC<GradeItemProps> = ({
         }
       );
     }
+    forceUpdate();
   };
   return (
     <Animated.View style={[styles.gradeContainer, rStyleContainer]}>
@@ -110,7 +128,9 @@ const GradeItem: React.FC<GradeItemProps> = ({
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={[styles.grade, rStyle]}>
-        <Text style={styles.gradeName}>{grade.id}</Text>
+        <TouchableOpacity onPress={() => console.log(grade)}>
+          <Text style={styles.gradeName}>{grade.id}</Text>
+        </TouchableOpacity>
         <SegmentedControl
           tabs={GRADE_TABS}
           currentIndex={grade.value}
@@ -180,4 +200,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GradeItem;
+function mapStateToProps(state: any) {
+  return {};
+}
+function mapDispatchToProps(dispatch: any) {
+  return {
+    // setYearOfBirth: (text: string) =>
+    //   dispatch({ type: "SET_YEAR_OF_BIRTH", payload: text }),
+    updateSnitt: () => dispatch({ type: "UPDATE_SNITT", payload: null }),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(GradeItem);

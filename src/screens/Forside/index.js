@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Button,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { View, ImageBackground } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-// import ArrowButton from "../../components/ArrowButton";
-import { localData, defaultLocalData } from "../../assets/data/GlobalData";
+import ArrowBtn from "../../components/ArrowBtn";
 
 const ForsideScreen = ({ navigation }) => {
   return (
@@ -19,24 +11,11 @@ const ForsideScreen = ({ navigation }) => {
         resizeMode="cover"
         style={{ flex: 1, justifyContent: "center" }}
       >
-        <TouchableOpacity
-          style={{ width: "30%", top: 70, position: "absolute" }}
-          onPress={() => {
-            localData.firstTime.logIn = true;
-            localData.firstTime.Kalk = true;
-            localData.firstTime.home = true;
-          }}
-        >
-          <Text>RESET</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
+        <ArrowBtn
+          onclick={() => {
             navigation.navigate("NewProfile");
           }}
-          style={GlobalStyles.customBtnContainer}
-        >
-          {/* <ArrowButton /> */}
-        </TouchableOpacity>
+        />
       </ImageBackground>
     </View>
   );

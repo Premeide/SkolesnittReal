@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, { runOnJS } from "react-native-reanimated";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import GlobalStyles from "../assets/styles/GlobalStyles";
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 interface AddOrDeleteBtnProps {
@@ -24,7 +24,7 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
     runOnJS(toggleIsEditing)();
   };
   return (
-    <View style={styles.customBtnContainer}>
+    <View style={[GlobalStyles.customBtnContainer, { flexDirection: "row" }]}>
       <TouchableOpacity
         onPress={toggleModalHandler}
         style={[styles.btn, { backgroundColor: "#3EB489" }]}
@@ -41,11 +41,6 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
   );
 };
 const styles = StyleSheet.create({
-  customBtnContainer: {
-    justifyContent: "center",
-    bottom: "3%",
-    flexDirection: "row",
-  },
   btn: {
     padding: 10,
     borderRadius: 15,

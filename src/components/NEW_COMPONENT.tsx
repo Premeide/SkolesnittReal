@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -31,8 +31,7 @@ function mapStateToProps(state: any) {
 }
 function mapDispatchToProps(dispatch: any) {
   return {
-    // setYearOfBirth: (text: string) =>
-    //   dispatch({ type: "SET_YEAR_OF_BIRTH", payload: text }),
+    // updateSnitt: () => dispatch({ type: "UPDATE_SNITT", payload: null }),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(COMPONENT_NAME);

@@ -1,215 +1,40 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import {
-  allClasseslist,
-  localData,
-  basisClasses,
-} from "../../assets/data/GlobalData";
-import { useIsFocused } from "@react-navigation/native";
-import SegmentedControl from "rn-segmented-control";
-
-const DATA = [
-  { name: "Alderspoeng", value: 50 },
-  { name: "Tilleggspoeng", value: 300 },
-  { name: "Real- og språkpoeng", value: 30 },
-  { name: "Karaktersnitt", value: 2000 },
-];
 
 const RecommendScreen = ({ navigation }) => {
-  const [tabIndex, setTabIndex] = useState(0);
-  const [retakePoeng, setRetakePoeng] = useState(3000);
-  const [data, setData] = useState(DATA);
-
-  const karakterGrenser = require("../../assets/data/karaktergrense.json");
-  const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
-
-  useEffect(() => {
-    if (isFocused) {
-      console.log("RECOMMEND: updatePoeng");
-      updatePoeng2(tabIndex);
-    }
-  }, [isFocused]);
-  const updatePoeng2 = (segIndex) => {
-    let _grades = localData.grades;
-    let _rgrades = localData.retakeClasses;
-    let newRetakePoeng = retakePoeng;
-    let isRetakingThisClass = false;
-
-    let sum = 0;
-    let numOfClasses = 0;
-    let karakterSnitt = 0;
-    let newRealSpråkPoeng = 0;
-    let newdata = [];
-
-    switch (segIndex) {
-      case 0:
-        for (const [i, e] of allClasseslist.entries()) {
-          for (const [idx, ele] of _rgrades.entries()) {
-            if (e.name == ele.id) {
-              sum += ele.value + 1;
-              numOfClasses += 1;
-              newRealSpråkPoeng += e.rPoints;
-              isRetakingThisClass = true;
-              break;
-            }
-          }
-          if (!isRetakingThisClass) {
-            for (const [idx, ele] of _grades.entries()) {
-              if (e.name == ele.id) {
-                sum += ele.value + 1;
-                numOfClasses += 1;
-                newRealSpråkPoeng += e.rPoints;
-                isRetakingThisClass = true;
-                if (ele.includeExam) {
-                  sum += ele.examValue;
-                  numOfClasses += 1;
-                }
-                break;
-              }
-            }
-          }
-          isRetakingThisClass = false;
-        }
-        karakterSnitt = (sum * 10) / numOfClasses;
-        break;
-      case 1:
-        for (const [i, e] of allClasseslist.entries()) {
-          for (const [index, element] of basisClasses.entries()) {
-            if (element == e.name) {
-              for (const [idx, ele] of _rgrades.entries()) {
-                if (e.name == ele.id) {
-                  sum += ele.value + 1;
-                  numOfClasses += 1;
-                  newRealSpråkPoeng += e.rPoints;
-                  isRetakingThisClass = true;
-                  break;
-                }
-              }
-              if (!isRetakingThisClass) {
-                for (const [idx, ele] of _grades.entries()) {
-                  if (e.name == ele.id) {
-                    sum += ele.value + 1;
-                    numOfClasses += 1;
-                    newRealSpråkPoeng += e.rPoints;
-                    isRetakingThisClass = true;
-                    if (ele.includeExam) {
-                      sum += ele.examValue;
-                      numOfClasses += 1;
-                    }
-                    break;
-                  }
-                }
-              }
-              isRetakingThisClass = false;
-              break;
-            }
-          }
-        }
-        karakterSnitt = (sum * 10) / numOfClasses;
-        break;
-      default:
-        null;
-    }
-    newdata = [
-      { name: "Alderspoeng", value: alderspoeng(segIndex) },
-      { name: "Tilleggspoeng", value: localData.extraPoints.value },
-      { name: "Real- og språkpoeng", value: Math.min(4, newRealSpråkPoeng) },
-      { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
-    ];
-    newRetakePoeng =
-      karakterSnitt +
-      localData.extraPoints.value +
-      alderspoeng(segIndex) +
-      Math.min(4, newRealSpråkPoeng);
-
-    setRetakePoeng(newRetakePoeng);
-    setData(newdata);
-  };
-  function alderspoeng(segIndex) {
-    let fødselsår = localData.yearOfBirth;
-    let _alderspoeng = ((segIndex == 1 ? 1999 : 2003) - fødselsår) * 2; // husk const
-    _alderspoeng = Math.min(Math.max(_alderspoeng, 0), 8);
-    return _alderspoeng;
-  }
-  const handleSegmentedControl2 = (i) => {
-    setTabIndex(i);
-    updatePoeng2(i);
-  };
-  function oldGradeFinder(newName) {
-    for (const [i, e] of localData.grades.entries()) {
-      if (e.id == newName) {
-        return (e.value + 1).toString() + " til";
-      }
-    }
-    return "Ny";
-  }
-  function printUtdanninger(s) {
-    const thisEd = karakterGrenser.find(
-      (karakterGrenser) => karakterGrenser.studiekode === s
-    );
-    return (
-      <TouchableOpacity
-        style={GlobalStyles.row}
-        onPress={() =>
-          navigation.navigate("RecommendDetails", {
-            postStudiekode: thisEd.studiekode,
-          })
-        }
-      >
-        <Text style={[GlobalStyles.listText, { width: "70%" }]}>
-          {thisEd.studienavn} ({thisEd.lærerstedskode})
-        </Text>
-        <View style={GlobalStyles.listEndContainer}>
-          <Text style={GlobalStyles.listText}>
-            {thisEd.poenggrense} ({thisEd.poenggrense_f})
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-  function alertInformation(name) {
-    let text = "";
-    switch (name) {
-      case "Alderspoeng":
-        text += "Fødselsår: " + localData.yearOfBirth;
-        text += "\n\n (+2 poeng fra og med året du fyller 20)";
-        break;
-      case "Tilleggspoeng":
-        text = "Tilleggsponeg";
-        break;
-      case "Real- og språkpoeng":
-        let tempLst = [];
-        let _grades = localData.grades;
-        for (const [i, e] of _grades.entries()) {
-          for (const [idx, ele] of allClasseslist.entries()) {
-            if (e.id == ele.name && ele.rPoints > 0) {
-              tempLst.push(e.id + ": " + ele.rPoints);
-            }
-          }
-        }
-        text += "Fag du har som gir poeng:\n\n";
-        text += tempLst.join("\n");
-        break;
-      case "Karaktersnitt":
-        text += "Karaktersnitt";
-        break;
-      default:
-        text = "????";
-    }
-    return text;
-  }
-
   return (
     <View style={GlobalStyles.safeContainer}>
-      <ScrollView>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+      <Text>RECOMMENDSCREEN</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  // poeng: {
+  //   fontSize: 35,
+  //   fontWeight: "bold",
+  //   textAlign: "center",
+  //   color: "black",
+  // },
+});
+
+export default RecommendScreen;
+
+{
+  /* <ScrollView>
         {localData.retakeClasses.length >= 1 ? (
           <View style={GlobalStyles.whiteContainer}>
             <SegmentedControl
@@ -312,21 +137,88 @@ const RecommendScreen = ({ navigation }) => {
             )}
           </View>
         </View>
-      </ScrollView>
-    </View>
-  );
-};
+      </ScrollView> */
+}
+// function alderspoeng(segIndex) {
+//   let fødselsår = localData.yearOfBirth;
+//   let _alderspoeng = ((segIndex == 1 ? 1999 : 2003) - fødselsår) * 2; // husk const
+//   _alderspoeng = Math.min(Math.max(_alderspoeng, 0), 8);
+//   return _alderspoeng;
+// }
+// const handleSegmentedControl2 = (i) => {
+//   setTabIndex(i);
+//   updatePoeng2(i);
+// };
+// function oldGradeFinder(newName) {
+//   for (const [i, e] of localData.grades.entries()) {
+//     if (e.id == newName) {
+//       return (e.value + 1).toString() + " til";
+//     }
+//   }
+//   return "Ny";
+// }
+// function printUtdanninger(s) {
+//   const thisEd = karakterGrenser.find(
+//     (karakterGrenser) => karakterGrenser.studiekode === s
+//   );
+//   return (
+//     <TouchableOpacity
+//       style={GlobalStyles.row}
+//       onPress={() =>
+//         navigation.navigate("RecommendDetails", {
+//           postStudiekode: thisEd.studiekode,
+//         })
+//       }
+//     >
+//       <Text style={[GlobalStyles.listText, { width: "70%" }]}>
+//         {thisEd.studienavn} ({thisEd.lærerstedskode})
+//       </Text>
+//       <View style={GlobalStyles.listEndContainer}>
+//         <Text style={GlobalStyles.listText}>
+//           {thisEd.poenggrense} ({thisEd.poenggrense_f})
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// }
+// function alertInformation(name) {
+//   let text = "";
+//   switch (name) {
+//     case "Alderspoeng":
+//       text += "Fødselsår: " + localData.yearOfBirth;
+//       text += "\n\n (+2 poeng fra og med året du fyller 20)";
+//       break;
+//     case "Tilleggspoeng":
+//       text = "Tilleggsponeg";
+//       break;
+//     case "Real- og språkpoeng":
+//       let tempLst = [];
+//       let _grades = localData.grades;
+//       for (const [i, e] of _grades.entries()) {
+//         for (const [idx, ele] of allClasseslist.entries()) {
+//           if (e.id == ele.name && ele.rPoints > 0) {
+//             tempLst.push(e.id + ": " + ele.rPoints);
+//           }
+//         }
+//       }
+//       text += "Fag du har som gir poeng:\n\n";
+//       text += tempLst.join("\n");
+//       break;
+//     case "Karaktersnitt":
+//       text += "Karaktersnitt";
+//       break;
+//     default:
+//       text = "????";
+//   }
+//   return text;
+// }
+// const DATA = [
+//   { name: "Alderspoeng", value: 50 },
+//   { name: "Tilleggspoeng", value: 300 },
+//   { name: "Real- og språkpoeng", value: 30 },
+//   { name: "Karaktersnitt", value: 2000 },
+// ];
 
-const styles = StyleSheet.create({
-  poeng: {
-    fontSize: 35,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "black",
-  },
-});
-
-export default RecommendScreen;
 {
   /* <View style={GlobalStyles.whiteContainer}>
           <Text style={GlobalStyles.underTitleText}>
@@ -407,3 +299,113 @@ export default RecommendScreen;
 //   { to: "Rettslære 1", from: "Naturfag" },
 //   { to: "Sosialkunnskap", from: "Geografi" },
 // ];
+
+// const [tabIndex, setTabIndex] = useState(0);
+// const [retakePoeng, setRetakePoeng] = useState(3000);
+// const [data, setData] = useState(DATA);
+
+// const karakterGrenser = require("../../assets/data/karaktergrense.json");
+// const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
+
+// useEffect(() => {
+//   if (isFocused) {
+//     console.log("RECOMMEND: updatePoeng");
+//     updatePoeng2(tabIndex);
+//   }
+// }, [isFocused]);
+// const updatePoeng2 = (segIndex) => {
+//   let _grades = localData.grades;
+//   let _rgrades = localData.retakeClasses;
+//   let newRetakePoeng = retakePoeng;
+//   let isRetakingThisClass = false;
+
+//   let sum = 0;
+//   let numOfClasses = 0;
+//   let karakterSnitt = 0;
+//   let newRealSpråkPoeng = 0;
+//   let newdata = [];
+
+//   switch (segIndex) {
+//     case 0:
+//       for (const [i, e] of allClasseslist.entries()) {
+//         for (const [idx, ele] of _rgrades.entries()) {
+//           if (e.name == ele.id) {
+//             sum += ele.value + 1;
+//             numOfClasses += 1;
+//             newRealSpråkPoeng += e.rPoints;
+//             isRetakingThisClass = true;
+//             break;
+//           }
+//         }
+//         if (!isRetakingThisClass) {
+//           for (const [idx, ele] of _grades.entries()) {
+//             if (e.name == ele.id) {
+//               sum += ele.value + 1;
+//               numOfClasses += 1;
+//               newRealSpråkPoeng += e.rPoints;
+//               isRetakingThisClass = true;
+//               if (ele.includeExam) {
+//                 sum += ele.examValue;
+//                 numOfClasses += 1;
+//               }
+//               break;
+//             }
+//           }
+//         }
+//         isRetakingThisClass = false;
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     case 1:
+//       for (const [i, e] of allClasseslist.entries()) {
+//         for (const [index, element] of basisClasses.entries()) {
+//           if (element == e.name) {
+//             for (const [idx, ele] of _rgrades.entries()) {
+//               if (e.name == ele.id) {
+//                 sum += ele.value + 1;
+//                 numOfClasses += 1;
+//                 newRealSpråkPoeng += e.rPoints;
+//                 isRetakingThisClass = true;
+//                 break;
+//               }
+//             }
+//             if (!isRetakingThisClass) {
+//               for (const [idx, ele] of _grades.entries()) {
+//                 if (e.name == ele.id) {
+//                   sum += ele.value + 1;
+//                   numOfClasses += 1;
+//                   newRealSpråkPoeng += e.rPoints;
+//                   isRetakingThisClass = true;
+//                   if (ele.includeExam) {
+//                     sum += ele.examValue;
+//                     numOfClasses += 1;
+//                   }
+//                   break;
+//                 }
+//               }
+//             }
+//             isRetakingThisClass = false;
+//             break;
+//           }
+//         }
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     default:
+//       null;
+//   }
+//   newdata = [
+//     { name: "Alderspoeng", value: alderspoeng(segIndex) },
+//     { name: "Tilleggspoeng", value: localData.extraPoints.value },
+//     { name: "Real- og språkpoeng", value: Math.min(4, newRealSpråkPoeng) },
+//     { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
+//   ];
+//   newRetakePoeng =
+//     karakterSnitt +
+//     localData.extraPoints.value +
+//     alderspoeng(segIndex) +
+//     Math.min(4, newRealSpråkPoeng);
+
+//   setRetakePoeng(newRetakePoeng);
+//   setData(newdata);
+// };

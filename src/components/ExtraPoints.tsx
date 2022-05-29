@@ -13,11 +13,16 @@ import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
 const INGEN_AV_DISSE = "Ingen av disse";
+const FOLKEHØYSKOLE = "Folkehøyskole";
+const MILITÆRET = "Militæret";
+const STUDIEPOENG_30 = "30 til 59 studiepoeng";
+const STUDIEPOENG_60 = "60 studiepoeng";
+
 let extraPointsAlternatives = [
-  { name: "Folkehøyskole" },
-  { name: "Militæret" },
-  { name: "30 til 59 studiepoeng" },
-  { name: "60 studiepoeng" },
+  { name: FOLKEHØYSKOLE },
+  { name: MILITÆRET },
+  { name: STUDIEPOENG_30 },
+  { name: STUDIEPOENG_60 },
   { name: INGEN_AV_DISSE },
 ];
 interface ExtraPointsProps {
@@ -26,8 +31,16 @@ interface ExtraPointsProps {
 }
 
 class ExtraPoints extends Component<ExtraPointsProps> {
+  initCheckArray = () => {
+    let newCheckArray = [];
+    if (this.props.extraPoints.Folkehøyskole) newCheckArray.push(FOLKEHØYSKOLE);
+    if (this.props.extraPoints.Military) newCheckArray.push(MILITÆRET);
+    if (this.props.extraPoints._30points) newCheckArray.push(STUDIEPOENG_30);
+    if (this.props.extraPoints._60points) newCheckArray.push(STUDIEPOENG_60);
+    return newCheckArray;
+  };
   state = {
-    checkArray: [""],
+    checkArray: this.initCheckArray(),
   };
   changeCheckArray = (text: string) => {
     let newCheckArray = this.state.checkArray;

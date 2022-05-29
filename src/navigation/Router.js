@@ -30,6 +30,31 @@ const Router = () => {
       }}
     >
       <Stack.Screen
+        name="Forside"
+        component={ForsideScreen}
+        options={{
+          headerTitle: "FORSIDE as",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Tab"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="_Kalkulator"
+        component={KalkulatorScreen}
+        options={{
+          headerTitle: "Legg til fagene dine",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Discover"
         component={DiscoverScreen}
         options={{
@@ -61,40 +86,12 @@ const Router = () => {
       />
 
       <Stack.Screen
-        name="Forside"
-        component={ForsideScreen}
-        options={{
-          headerTitle: "FORSIDE as",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-          headerShown: false,
-        }}
-      />
-
-      <Stack.Screen
-        name="Tab"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
         name="Questions"
         component={QuestionsScreen}
         options={{
           headerTitle: "Vanlige spørsmål",
           headerTitleAlign: "center",
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
-        }}
-      />
-
-      <Stack.Screen
-        name="_Kalkulator"
-        component={KalkulatorScreen}
-        options={{
-          headerTitle: "Legg til fagene dine",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-          headerShown: false,
         }}
       />
 

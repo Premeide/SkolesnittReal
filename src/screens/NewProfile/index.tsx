@@ -1,16 +1,7 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import ArrowBtn from "../../components/ArrowBtn";
-import * as Animatable from "react-native-animatable";
-import { useIsFocused } from "@react-navigation/native";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import ExtraPoints from "../../components/ExtraPoints";
 import AgeInput from "../../components/AgeInput";
@@ -28,7 +19,9 @@ class NewProfileScreen extends Component<INewProfileProps> {
     if (text.length >= 4) this.setState({ showPoints: true });
   };
   navigateToKalkulator = () => {
-    this.props.navigation.navigate("_Kalkulator");
+    this.props.navigation.navigate("_Kalkulator", {
+      showContinueBtn: true,
+    });
   };
 
   render() {

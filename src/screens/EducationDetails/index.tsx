@@ -16,9 +16,11 @@ import { IEducation } from "../../assets/data/Interfaces";
 interface IEducationDetailsScreen {
   route: any;
   navigation: any;
+  tutorial: boolean;
   studiekode: number;
   educations: number[];
   setEducations: (studiekode: number) => {};
+  tutorialDone: () => {};
 }
 const KARAKTERGRENSER = require("../../assets/data/karaktergrense.json");
 
@@ -29,6 +31,15 @@ class EducationDetailsScreen extends Component<IEducationDetailsScreen> {
     ),
     isAdded: this.props.educations.includes(this.props.route.params.studiekode),
   };
+
+  onClickAddEducation() {
+    this.props.setEducations(this.state.education.studiekode);
+    this.setState({ isAdded: true });
+    if (this.props.tutorial) {
+      this.props.tutorialDone();
+      this.props.navigation.navigate("RecommendStack");
+    }
+  }
 
   render() {
     return (
@@ -47,10 +58,7 @@ class EducationDetailsScreen extends Component<IEducationDetailsScreen> {
         ) : (
           <CustomBtn
             text="Legg til utdanning"
-            onclick={() => {
-              this.props.setEducations(this.state.education.studiekode);
-              this.setState({ isAdded: true });
-            }}
+            onclick={() => this.onClickAddEducation()}
           />
         )}
       </View>
@@ -63,12 +71,14 @@ const styles = StyleSheet.create({});
 function mapStateToProps(state: any) {
   return {
     educations: state.educations,
+    tutorial: state.tutorial,
   };
 }
 function mapDispatchToProps(dispatch: any) {
   return {
     setEducations: (studiekode: number) =>
       dispatch({ type: "SET_EDUCATIONS", payload: studiekode }),
+    tutorialDone: () => dispatch({ type: "TUTORIAL_DONE", payload: null }),
   };
 }
 export default connect(
