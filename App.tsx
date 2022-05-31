@@ -4,8 +4,10 @@ import { GradesInterface, IExtraPoints } from "./src/assets/data/Interfaces";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Router from "./src/navigation/Router";
+import { allClasseslist } from "./src/assets/data/GlobalData";
 
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
+const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
 
 const initialState = {
   tutorial: true,
@@ -21,25 +23,30 @@ const initialState = {
     { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
     { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
     { value: 0, id: "Geografi", includeExam: true, examValue: 0 },
-    // { value: 0, id: "Historie", includeExam: true, examValue: 0 },
-    // { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
-    // { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
+    { value: 0, id: "Historie", includeExam: true, examValue: 0 },
+    { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
+    { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
+    { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
+    { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
+    { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
+    { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
+    { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
+    { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
+    { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
   ],
   retakeGrades: [],
   educations: [0],
 
   snitt: 70.0,
-  realfagspoeng: 100,
-
   retakeSnitt: 70.0,
+
+  realfagspoeng: 100,
   retakeRealfagspoeng: 100,
+
+  totalPoints: 100,
+  totalPoints235: 100,
+
+  alderspoeng: 100,
 };
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
@@ -70,6 +77,20 @@ const reducer = (state = initialState, action: any) => {
       return { ...state, snitt: snitt(state.grades) };
     case "TUTORIAL_DONE":
       return { ...state, tutorial: false };
+    case "UPDATE_ALDERSPOENG":
+      return { ...state, alderspoeng: alderspoeng(state.yearOfBirth) };
+    case "UPDATE_TOTAL_POINTS":
+      return {
+        ...state,
+        totalPoints: totalPoints(
+          state.snitt,
+          state.alderspoeng,
+          state.extraPoints.value,
+          state.realfagspoeng
+        ),
+      };
+    case "UPDATE_REALFAGSPOENG":
+      return { ...state, realfagspoeng: realfagspoeng(state.grades) };
     default:
       return state;
   }
@@ -89,6 +110,47 @@ class App extends Component {
   }
 }
 export default App;
+
+function totalPoints(
+  snitt: number,
+  alderspoeng: number,
+  tilleggspoeng: number,
+  realfagspoeng: number
+) {
+  let newTotalPoints = 0;
+  newTotalPoints += snitt + alderspoeng + tilleggspoeng + realfagspoeng;
+  return newTotalPoints;
+}
+function realfagspoeng(grades: GradesInterface[]) {
+  let realfagspoeng = 0;
+  for (const grade of grades) {
+    let thisGradeRealfagspoeng = allClasseslist.find(
+      (o) => o.name === grade.id
+    )?.rPoints;
+    if (thisGradeRealfagspoeng) realfagspoeng += thisGradeRealfagspoeng;
+  }
+  return realfagspoeng; //Math.min(realfagspoeng, 4);
+}
+function alderspoeng(yearOfBirth: string, _235: boolean = false) {
+  let fødselsår = isPositiveInteger(yearOfBirth) ? Number(yearOfBirth) : 2020;
+  let alderspoeng =
+    ((_235 ? YEAR_WITH_NO_ALDERSPOENG - 4 : YEAR_WITH_NO_ALDERSPOENG) -
+      fødselsår) *
+    2;
+  alderspoeng = Math.min(Math.max(alderspoeng, 0), 8);
+  return alderspoeng;
+}
+function isPositiveInteger(str: string) {
+  //helper function
+  if (typeof str !== "string") {
+    return false;
+  }
+  const num = Number(str);
+  if (Number.isInteger(num) && num > 0) {
+    return true;
+  }
+  return false;
+}
 function changeHadExam(grades: GradesInterface[], grade: GradesInterface) {
   let newGrades = [...grades];
   newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {

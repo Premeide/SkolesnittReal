@@ -33,7 +33,9 @@ class EducationList extends Component<EducationListProps> {
 
   searchFilter(s: string, l: IEducation[]) {
     if (s == "") return l;
-    return l.filter((v: any) => v.studienavn.toLowerCase().includes(s));
+    return l.filter((v: any) =>
+      v.studienavn.toLowerCase().includes(s.toLowerCase())
+    );
   }
   render() {
     return (

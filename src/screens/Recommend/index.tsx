@@ -1,26 +1,23 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-
-const RecommendScreen = ({ navigation }) => {
-  return (
-    <View style={GlobalStyles.safeContainer}>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-      <Text>RECOMMENDSCREEN</Text>
-    </View>
-  );
-};
+import GradeSummary from "../../components/GradeSummary";
+import RetakeClassesList from "../../components/RetakeClassesList";
+interface IRecommendScreen {
+  navigation: any;
+}
+class RecommendScreen extends Component<IRecommendScreen> {
+  render() {
+    return (
+      <View style={GlobalStyles.safeContainer}>
+        <Text>RECOMMENDSCREEN</Text>
+        <Text>RECOMMENDSCREEN</Text>
+        <GradeSummary />
+        <RetakeClassesList navigation={this.props.navigation} />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   // poeng: {

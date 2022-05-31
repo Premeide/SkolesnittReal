@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  Dimensions,
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import Animated, {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  withDelay,
-  withSpring,
-} from "react-native-reanimated";
 import GlobalStyles from "../assets/styles/GlobalStyles";
-import { FontAwesome5 } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
-import SegmentedControl from "rn-segmented-control";
 import { IExtraPoints } from "../assets/data/Interfaces";
 import { useIsFocused } from "@react-navigation/native";
-
-const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
 
 const ALDERSPOENG = "Alderspoeng";
 const TILLEGGSPOENG = "Tilleggspoeng";
@@ -32,79 +18,59 @@ const REAL_OG_SPRÅKPOENG = "Real- og språkpoeng";
 const KARAKTERSNITT = "Karaktersnitt";
 
 interface GradeSummaryProps {
-  snitt: number;
-  realfagspoeng: number;
+  totalPoints: number;
+  alderspoeng: number;
   extraPoints: IExtraPoints;
+  realfagspoeng: number;
+  snitt: number;
+  updateAlderspoeng: () => void;
+  updateTotalPoints: () => void;
+  updateRealfagspoeng: () => void;
 
-  retakeSnitt: number;
-  retakeRealfagspoeng: number;
-
-  yearOfBirth: string;
+  // retakeSnitt: number;
+  // retakeRealfagspoeng: number;
+  // totalPoints235: number;
 }
 
 const GradeSummary: React.FC<GradeSummaryProps> = ({
-  snitt,
-  realfagspoeng,
+  totalPoints,
+  alderspoeng,
   extraPoints,
-  retakeSnitt,
-  retakeRealfagspoeng,
-  yearOfBirth,
+  realfagspoeng,
+  snitt,
+  updateAlderspoeng,
+  updateTotalPoints,
+  updateRealfagspoeng,
 }) => {
-  const [activeSegment, setActiveSegment] = useState(0);
-  const [summaryList, setSummaryList] = useState(updateSummaryList());
-  const [summaryList235, setSummaryList235] = useState(updateSummaryList235());
+  const [summaryList, setSummaryList] = useState([{ name: "", value: 0 }]);
   const isFocused = useIsFocused();
+
   useEffect(() => {
     if (isFocused) {
-      console.log("ISFOCUSING AND UPDATEING");
-      setSummaryList(updateSummaryList);
-      setSummaryList235(updateSummaryList235);
+      updateAlderspoeng();
+      updateRealfagspoeng();
+      updateTotalPoints();
+      setSummaryList(updateSummaryList());
     }
   }, [isFocused]);
   function updateSummaryList() {
     return [
-      {
-        name: ALDERSPOENG,
-        value: alderspoeng(activeSegment, yearOfBirth, isFocused),
-      },
-      { name: TILLEGGSPOENG, value: 100 },
-      { name: REAL_OG_SPRÅKPOENG, value: 100 },
-      { name: KARAKTERSNITT, value: 100 },
-    ];
-  }
-  function updateSummaryList235() {
-    return [
-      {
-        name: ALDERSPOENG,
-        value: alderspoeng(activeSegment, yearOfBirth, isFocused),
-      },
-      { name: TILLEGGSPOENG, value: 1000 },
-      { name: REAL_OG_SPRÅKPOENG, value: 2000 },
-      { name: KARAKTERSNITT, value: 3000 },
+      { name: ALDERSPOENG, value: alderspoeng },
+      { name: TILLEGGSPOENG, value: extraPoints.value },
+      { name: REAL_OG_SPRÅKPOENG, value: realfagspoeng },
+      { name: KARAKTERSNITT, value: snitt },
     ];
   }
 
   return (
     <View style={GlobalStyles.whiteContainer}>
-      <SegmentedControl
-        tabs={["Konkurransepoeng", "23/5-poeng"]}
-        textStyle={{ fontSize: 10 }}
-        currentIndex={activeSegment}
-        onChange={(i) => setActiveSegment(i)}
-        paddingVertical={10}
-        segmentedControlBackgroundColor="gainsboro"
-        activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
-        activeTextColor="white"
-        activeTextWeight="bold"
-        textColor="black"
-      />
       <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
         Dine poeng:
       </Text>
-      <Text style={styles.poeng}>{snitt}</Text>
+      <Text style={styles.poeng}>{totalPoints}</Text>
       <View style={GlobalStyles.greyContainer}>
         <FlatList
-          data={activeSegment == 0 ? summaryList : summaryList235}
+          data={summaryList}
           keyExtractor={(e: any) => e.name}
           ItemSeparatorComponent={() => (
             <View style={GlobalStyles.ItemSeparatorComponent} />
@@ -137,54 +103,30 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     textAlign: "center",
-    color: "black",
+    color: GlobalStyles.blueColor.color,
   },
 });
 
 function mapStateToProps(state: any) {
   return {
-    snitt: state.snitt,
-    realfagspoeng: state.realfagspoeng,
+    totalPoints: state.totalPoints,
+    alderspoeng: state.alderspoeng,
     extraPoints: state.extraPoints,
-
-    retakeSnitt: state.retakeSnitt,
-    retakeRealfagspoeng: state.retakeRealfagspoeng,
-
-    yearOfBirth: state.yearOfBirth,
+    realfagspoeng: state.realfagspoeng,
+    snitt: state.snitt,
   };
 }
 function mapDispatchToProps(dispatch: any) {
-  return {};
+  return {
+    updateAlderspoeng: () =>
+      dispatch({ type: "UPDATE_ALDERSPOENG", payload: null }),
+    updateTotalPoints: () =>
+      dispatch({ type: "UPDATE_TOTAL_POINTS", payload: null }),
+    updateRealfagspoeng: () =>
+      dispatch({ type: "UPDATE_REALFAGSPOENG", payload: null }),
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GradeSummary);
-
-function alderspoeng(
-  segIndex: number,
-  yearOfBirth: string,
-  isVisible: boolean
-) {
-  if (!isVisible) return 0;
-
-  let fødselsår = isPositiveInteger(yearOfBirth) ? Number(yearOfBirth) : 2020;
-  let alderspoeng =
-    ((segIndex == 1 ? YEAR_WITH_NO_ALDERSPOENG - 4 : YEAR_WITH_NO_ALDERSPOENG) -
-      fødselsår) *
-    2;
-  alderspoeng = Math.min(Math.max(alderspoeng, 0), 8);
-  console.log("calculating alderspoeng", alderspoeng);
-  return alderspoeng;
-}
-function isPositiveInteger(str: string) {
-  //helper function
-  if (typeof str !== "string") {
-    return false;
-  }
-  const num = Number(str);
-  if (Number.isInteger(num) && num > 0) {
-    return true;
-  }
-  return false;
-}
 
 function alertInformation(name: string) {
   let text = "";
@@ -197,6 +139,7 @@ function alertInformation(name: string) {
       text = "<TILLEGSPOENG INFORMASJON>";
       break;
     case REAL_OG_SPRÅKPOENG:
+      text = "<REAL- OG SPRÅLPOENG INFORMASJON>";
       // let tempLst = [];
       // let _grades = localData.retakeClasses;
       // for (const [i, e] of _grades.entries()) {

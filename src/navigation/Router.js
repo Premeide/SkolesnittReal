@@ -44,6 +44,7 @@ const Router = () => {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name="_Kalkulator"
         component={KalkulatorScreen}

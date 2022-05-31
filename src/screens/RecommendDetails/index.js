@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 
 const RecommendDetailsScreen = ({ route, navigation }) => {
@@ -17,6 +10,7 @@ const RecommendDetailsScreen = ({ route, navigation }) => {
   const opptakskrav = allopptakskrav.find(
     (item) => item.opptakskrav == thisEd.opptakskrav
   );
+
   const educationData = [
     { name: "Studiekode", value: thisEd.studiekode },
     { name: "Lærerstedskode", value: thisEd.lærerstedskode },

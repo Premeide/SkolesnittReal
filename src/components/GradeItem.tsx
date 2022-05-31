@@ -128,9 +128,7 @@ const GradeItem: React.FC<GradeItemProps> = ({
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={[styles.grade, rStyle]}>
-        <TouchableOpacity onPress={() => console.log(grade)}>
-          <Text style={styles.gradeName}>{grade.id}</Text>
-        </TouchableOpacity>
+        <Text style={styles.gradeName}>{grade.id}</Text>
         <SegmentedControl
           tabs={GRADE_TABS}
           currentIndex={grade.value}
