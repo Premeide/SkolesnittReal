@@ -345,7 +345,7 @@ function snitt(grades: IGrade[]) {
   const initialVals = { avg: 0, n: 0 };
   const averageGrade = grades.reduce(averageScores, initialVals);
 
-  return (averageGrade.avg + 1) * 10;
+  return Math.round((averageGrade.avg + 1) * 100 * 10) / 100;
 }
 
 function averageScores({ avg, n }: any, o: IGrade) {

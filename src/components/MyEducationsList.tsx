@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { connect } from "react-redux";
-import { FontAwesome5 } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
-import { IGrade, IEducation } from "../assets/data/Interfaces";
+import { IEducation } from "../assets/data/Interfaces";
+import { useIsFocused } from "@react-navigation/native";
 
 const KARAKTERGRENSER = require("../assets/data/karaktergrense.json");
 
@@ -19,15 +18,16 @@ interface MyEducationsListProps {
   educations: number[];
 }
 
-class MyEducationsList extends Component<MyEducationsListProps> {
-  state = {};
-  printUtdanninger(s: number) {
+const MyEducationsList: React.FC<MyEducationsListProps> = (props) => {
+  const isFocused = useIsFocused();
+
+  function printUtdanninger(s: number) {
     const thisEd = KARAKTERGRENSER.find((e: IEducation) => e.studiekode === s);
     return (
       <TouchableOpacity
         style={GlobalStyles.row}
         onPress={() =>
-          this.props.navigation.navigate("RecommendDetails", {
+          props.navigation.navigate("RecommendDetails", {
             postStudiekode: thisEd.studiekode,
           })
         }
@@ -43,34 +43,32 @@ class MyEducationsList extends Component<MyEducationsListProps> {
       </TouchableOpacity>
     );
   }
-  render() {
-    return (
-      <View style={GlobalStyles.whiteContainer}>
-        <Text style={GlobalStyles.underTitleText}>Mine utdanninger:</Text>
-        <View style={GlobalStyles.greyContainer}>
-          {this.props.educations.length >= 1 ? (
-            this.props.educations.map((item, index) => (
-              <View key={item}>
-                {this.printUtdanninger(item)}
-                {index >= this.props.educations.length - 1 ? null : (
-                  <View style={GlobalStyles.ItemSeparatorComponent}></View>
-                )}
-              </View>
-            ))
-          ) : (
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Utforsk")}
-            >
-              <Text style={GlobalStyles.listText}>
-                Trykk for å legge til utdanninger
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
+  return (
+    <View style={GlobalStyles.whiteContainer}>
+      <Text style={GlobalStyles.underTitleText}>Mine utdanninger:</Text>
+      <View style={GlobalStyles.greyContainer}>
+        {props.educations.length >= 1 ? (
+          props.educations.map((item, index) => (
+            <View key={item}>
+              {printUtdanninger(item)}
+              {index >= props.educations.length - 1 ? null : (
+                <View style={GlobalStyles.ItemSeparatorComponent}></View>
+              )}
+            </View>
+          ))
+        ) : (
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("Utforsk")}
+          >
+            <Text style={GlobalStyles.listText}>
+              Trykk for å legge til utdanninger
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 const styles = StyleSheet.create({});
 
 function mapStateToProps(state: any) {

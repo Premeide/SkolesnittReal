@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 
 import CustomHeader from "../../components/CustomHeader";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
 import GradeSummary from "../../components/GradeSummary";
 import { connect } from "react-redux";
+import MyEducationsList from "../../components/MyEducationsList";
 
 interface IHomeScreen {
   navigation: any;
@@ -18,6 +19,7 @@ class HomeScreen extends Component<IHomeScreen> {
       <View style={GlobalStyles.container}>
         <CustomHeader />
         <GradeSummary />
+        <MyEducationsList navigation={this.props.navigation} />
         {this.props.tutorial ? (
           <CustomBtn
             text="Legg til utdanning"
