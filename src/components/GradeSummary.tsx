@@ -26,48 +26,40 @@ interface GradeSummaryProps {
   updateAlderspoeng: () => void;
   updateTotalPoints: () => void;
   updateRealfagspoeng: () => void;
-
-  // retakeSnitt: number;
-  // retakeRealfagspoeng: number;
-  // totalPoints235: number;
 }
 
-const GradeSummary: React.FC<GradeSummaryProps> = ({
-  totalPoints,
-  alderspoeng,
-  extraPoints,
-  realfagspoeng,
-  snitt,
-  updateAlderspoeng,
-  updateTotalPoints,
-  updateRealfagspoeng,
-}) => {
+const GradeSummary: React.FC<GradeSummaryProps> = (props) => {
   const [summaryList, setSummaryList] = useState([{ name: "", value: 0 }]);
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
-      updateAlderspoeng();
-      updateRealfagspoeng();
-      updateTotalPoints();
+      props.updateAlderspoeng();
+      props.updateRealfagspoeng();
+      props.updateTotalPoints();
       setSummaryList(updateSummaryList());
     }
   }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      setSummaryList(updateSummaryList());
+    }
+  }, [props.alderspoeng, props.extraPoints.value, props.realfagspoeng]);
   function updateSummaryList() {
     return [
-      { name: ALDERSPOENG, value: alderspoeng },
-      { name: TILLEGGSPOENG, value: extraPoints.value },
-      { name: REAL_OG_SPRÅKPOENG, value: realfagspoeng },
-      { name: KARAKTERSNITT, value: snitt },
+      { name: ALDERSPOENG, value: props.alderspoeng },
+      { name: TILLEGGSPOENG, value: props.extraPoints.value },
+      { name: REAL_OG_SPRÅKPOENG, value: props.realfagspoeng },
+      { name: KARAKTERSNITT, value: props.snitt },
     ];
   }
 
   return (
     <View style={GlobalStyles.whiteContainer}>
       <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
-        Dine poeng:
+        Dine poeng
       </Text>
-      <Text style={styles.poeng}>{totalPoints}</Text>
+      <Text style={styles.poeng}>{props.totalPoints}</Text>
       <View style={GlobalStyles.greyContainer}>
         <FlatList
           data={summaryList}
@@ -76,21 +68,14 @@ const GradeSummary: React.FC<GradeSummaryProps> = ({
             <View style={GlobalStyles.ItemSeparatorComponent} />
           )}
           renderItem={({ item, index }) => (
-            <TouchableOpacity
-              key={item.name}
-              onPress={() => {
-                Alert.alert(item.name, alertInformation(item.name), [
-                  { text: "Ok" },
-                ]);
-              }}
-            >
+            <View>
               <View style={GlobalStyles.row}>
                 <Text style={GlobalStyles.listText}>{item.name}</Text>
                 <View style={GlobalStyles.listEndContainer}>
                   <Text style={GlobalStyles.listText}>{item.value}</Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </View>
           )}
         />
       </View>
@@ -127,112 +112,3 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GradeSummary);
-
-function alertInformation(name: string) {
-  let text = "";
-  switch (name) {
-    case ALDERSPOENG:
-      // text += "Fødselsår: " + localData.yearOfBirth;
-      text += "\n\n (+2 poeng fra og med året du fyller 20)";
-      break;
-    case TILLEGGSPOENG:
-      text = "<TILLEGSPOENG INFORMASJON>";
-      break;
-    case REAL_OG_SPRÅKPOENG:
-      text = "<REAL- OG SPRÅLPOENG INFORMASJON>";
-      // let tempLst = [];
-      // let _grades = localData.retakeClasses;
-      // for (const [i, e] of _grades.entries()) {
-      //   for (const [idx, ele] of allClasseslist.entries()) {
-      //     if (e.id == ele.name && ele.rPoints > 0) {
-      //       tempLst.push(e.id + ": " + ele.rPoints);
-      //     }
-      //   }
-      // }
-      // text += "Fag du har som gir poeng:\n\n";
-      // text += tempLst.join("\n");
-      break;
-    case "Karaktersnitt":
-      text += "<KARAKTERSNITT INFORMASJON>";
-      break;
-    default:
-      text = "<WHAT>";
-  }
-  return text;
-}
-// const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
-
-// useEffect(() => {
-//   if (isFocused) {
-//     console.log("HOME: useeffect updatingPoeng");
-//     updatePoeng(activeSegment);
-//   }
-// }, [isFocused]);
-// function realogspråkpoeng() {
-//   let sum = 0;
-//   let _grades = localData.grades;
-//   for (const [i, e] of _grades.entries()) {
-//     for (const [idx, ele] of allClasseslist.entries()) {
-//       if (e.id == ele.name) {
-//         sum += ele.rPoints;
-//       }
-//     }
-//   }
-//   return Math.min(4, sum);
-// }
-
-// const updatePoeng = (segIndex) => {
-//   let _grades = localData.grades;
-//   let sum = 0;
-//   let numOfClasses = 0;
-//   let karakterSnitt = 0;
-//   let newData1 = 0;
-//   let newMainPoeng = mainPoeng;
-
-//   switch (segIndex) {
-//     case 0:
-//       for (const [i, e] of _grades.entries()) {
-//         sum += e.value + 1;
-//         numOfClasses += 1;
-//         if (e.includeExam) {
-//           sum += e.examValue + 1;
-//           numOfClasses += 1;
-//         }
-//       }
-//       karakterSnitt = (sum * 10) / numOfClasses;
-//       break;
-//     case 1:
-//       for (const [i, e] of _grades.entries()) {
-//         for (const [idx, ele] of basisClasses.entries()) {
-//           if (ele == e.id) {
-//             sum += e.value + 1;
-//             numOfClasses += 1;
-//             if (e.includeExam) {
-//               sum += e.examValue + 1;
-//               numOfClasses += 1;
-//             }
-//             break;
-//           }
-//         }
-//       }
-//       karakterSnitt = (sum * 10) / numOfClasses;
-//       break;
-//     default:
-//       null;
-//   }
-//   newData1 = [
-//     { name: "Alderspoeng", value: alderspoeng(segIndex) },
-//     { name: "Tilleggspoeng", value: localData.extraPoints.value },
-//     { name: "Real- og språkpoeng", value: realogspråkpoeng() },
-//     { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
-//   ];
-//   newMainPoeng =
-//     karakterSnitt + newData1[0].value + newData1[1].value + newData1[2].value;
-//   setData1(newData1);
-//   setMainPoeng(newMainPoeng);
-// };
-
-// const handleSegmentedControl = (i) => {
-//   setActiveSegment(i);
-//   updatePoeng(i);
-// };

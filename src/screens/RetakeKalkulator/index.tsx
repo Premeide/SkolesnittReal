@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
 import { IGrade } from "../../assets/data/Interfaces";
 import { Modal, StyleSheet, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import GradesList from "../../components/GradesList";
-import AddClass from "../../components/AddClass";
 import ElevatingSnitt from "../../components/ElevatingSnitt";
+import { Component } from "react";
+import RetakeGradesList from "../../components/RetakeGradesList";
+import AddRetakeClass from "../../components/AddRetakeClass";
 
-interface IKalkulatorScreen {
+interface IRetakeKalkulatorScreen {
   navigation: any;
   route: any;
-  tutorial: boolean;
 
-  grades: IGrade[];
+  retakeGrades: IGrade[];
+  retakeSnitt: number;
 }
-class KalkulatorScreen extends Component<IKalkulatorScreen> {
+class RetakeKalkulatorScreen extends Component<IRetakeKalkulatorScreen> {
   state = {
     isEditing: false,
     showModal: false,
@@ -33,11 +33,13 @@ class KalkulatorScreen extends Component<IKalkulatorScreen> {
   render() {
     return (
       <SafeAreaView style={GlobalStyles.container}>
-        <ElevatingSnitt />
-        <GradesList isEditing={this.state.isEditing} />
+        <ElevatingSnitt isRetake={true} />
+        <RetakeGradesList isEditing={this.state.isEditing} />
 
         <Modal transparent={true} visible={this.state.showModal}>
-          <AddClass hideModal={() => this.setState({ showModal: false })} />
+          <AddRetakeClass
+            hideModal={() => this.setState({ showModal: false })}
+          />
         </Modal>
 
         <AddOrDeleteBtn
@@ -45,17 +47,6 @@ class KalkulatorScreen extends Component<IKalkulatorScreen> {
           toggleModal={this.toggleModal}
           isEditing={this.state.isEditing}
         />
-        {this.props.tutorial ? (
-          <CustomBtn
-            text="Fortsett"
-            height={"25%"}
-            onclick={() =>
-              this.props.navigation.navigate("Tab", {
-                screen: "Hjem",
-              })
-            }
-          />
-        ) : null}
       </SafeAreaView>
     );
   }
@@ -65,11 +56,13 @@ const styles = StyleSheet.create({});
 
 function mapStateToProps(state: any) {
   return {
-    grades: state.grades,
-    tutorial: state.tutorial,
+    retakeGrades: state.retakeGrades,
   };
 }
 function mapDispatchToProps(dispatch: any) {
   return {};
 }
-export default connect(mapStateToProps, mapDispatchToProps)(KalkulatorScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RetakeKalkulatorScreen);

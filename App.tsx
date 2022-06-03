@@ -1,17 +1,39 @@
 import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { GradesInterface, IExtraPoints } from "./src/assets/data/Interfaces";
+import { IGrade, IExtraPoints } from "./src/assets/data/Interfaces";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Router from "./src/navigation/Router";
-import { allClasseslist } from "./src/assets/data/GlobalData";
+import { ALL_CLASSES_LIST } from "./src/assets/data/GlobalData";
 
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
 const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
+const INITIAL_GRADES = [
+  { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
+  { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
+  { value: 2, id: "Geografi", includeExam: true, examValue: 0 },
+  { value: 2, id: "Historie", includeExam: true, examValue: 0 },
+  { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
+  { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
+  { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
+  { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
+  { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
+  { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
+  { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
+  { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
+  { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
+];
 
 const initialState = {
   tutorial: true,
   yearOfBirth: "",
+  grades: INITIAL_GRADES,
+  retakeGrades: [{ value: 4, id: "Engelsk", includeExam: false, examValue: 0 }],
+  educations: [254642, 254651],
+
+  //current grades summary
+  totalPoints: 100,
+  alderspoeng: 100,
   extraPoints: {
     value: 0,
     Military: false,
@@ -19,34 +41,15 @@ const initialState = {
     _30points: false,
     _60points: false,
   },
-  grades: [
-    { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
-    { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
-    { value: 0, id: "Geografi", includeExam: true, examValue: 0 },
-    { value: 0, id: "Historie", includeExam: true, examValue: 0 },
-    { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
-    { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
-    { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
-    { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
-    { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
-    { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
-    { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
-    { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
-    { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
-  ],
-  retakeGrades: [],
-  educations: [0],
-
-  snitt: 70.0,
-  retakeSnitt: 70.0,
-
   realfagspoeng: 100,
+  snitt: 70.0,
+
+  //retake grades summary
+  retakeTotalPoints: 100,
+  retakeAlderspoeng: 0,
+  retakeExtraPoints: 0,
   retakeRealfagspoeng: 100,
-
-  totalPoints: 100,
-  totalPoints235: 100,
-
-  alderspoeng: 100,
+  retakeSnitt: 70.0,
 };
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
@@ -75,6 +78,11 @@ const reducer = (state = initialState, action: any) => {
       return { ...state, grades: changeHadExam(state.grades, action.payload) };
     case "UPDATE_SNITT":
       return { ...state, snitt: snitt(state.grades) };
+    case "UPDATE_RETAKE_SNITT":
+      return {
+        ...state,
+        retakeSnitt: retakeSnitt(state.grades, state.retakeGrades),
+      };
     case "TUTORIAL_DONE":
       return { ...state, tutorial: false };
     case "UPDATE_ALDERSPOENG":
@@ -91,6 +99,77 @@ const reducer = (state = initialState, action: any) => {
       };
     case "UPDATE_REALFAGSPOENG":
       return { ...state, realfagspoeng: realfagspoeng(state.grades) };
+    case "UPDATE_RETAKE_ALDERSPOENG":
+      return {
+        ...state,
+        retakeAlderspoeng: updateRetakeAlderspoeng(
+          state.alderspoeng,
+          state.retakeAlderspoeng
+        ),
+      };
+    case "UPDATE_RETAKE_EXTRA_POINTS":
+      return {
+        ...state,
+        retakeExtraPoints: updateRetakeExtraPoints(
+          state.extraPoints.value,
+          state.retakeExtraPoints
+        ),
+      };
+    case "UPDATE_RETAKE_TOTAL_POINTS":
+      return {
+        ...state,
+        retakeTotalPoints: updateRetakeTotalPoints(
+          state.retakeSnitt,
+          state.retakeAlderspoeng,
+          state.retakeExtraPoints,
+          state.retakeRealfagspoeng
+        ),
+      };
+    case "UPDATE_RETAKE_REALFAGSPOENG":
+      return {
+        ...state,
+        retakeRealfagspoeng: updateRetakeRealfagspoeng(
+          state.grades,
+          state.retakeGrades
+        ),
+      };
+
+    case "INCREASE_RETAKE_ALDERSPOENG":
+      return {
+        ...state,
+        retakeAlderspoeng: increaseRetakeAlderspoeng(
+          state.retakeAlderspoeng,
+          action.payload
+        ),
+      };
+    case "INCREASE_RETAKE_EXTRA_POINTS":
+      return {
+        ...state,
+        retakeExtraPoints: increaseRetakeExtraPoints(
+          state.retakeExtraPoints,
+          action.payload
+        ),
+      };
+    case "ADD_RETAKE_GRADE":
+      return {
+        ...state,
+        retakeGrades: addRetakeGrade(state.retakeGrades, action.payload),
+      };
+    case "DELETE_RETAKE_GRADE":
+      return {
+        ...state,
+        retakeGrades: deleteRetakeGrade(state.retakeGrades, action.payload),
+      };
+    case "CHANGE_RETAKE_HAD_EXAM":
+      return {
+        ...state,
+        retakeGrades: changeRetakeHadExam(state.retakeGrades, action.payload),
+      };
+    case "CHANGE_RETAKE_GRADE":
+      return {
+        ...state,
+        retakeGrades: changeRetakeGrade(state.retakeGrades, action.payload),
+      };
     default:
       return state;
   }
@@ -111,6 +190,116 @@ class App extends Component {
 }
 export default App;
 
+function addGrade(grades: IGrade[], id: string) {
+  if (grades.find((e) => e.id === id)) return grades; //deleteGrade(grades, id);
+  let newGrade = DEFAULT_GRADE;
+  newGrade = { ...newGrade, id: id };
+
+  let newGrades = [...grades, newGrade];
+  return newGrades;
+}
+
+function deleteGrade(grades: IGrade[], id: string) {
+  let newGrades = [...grades];
+  newGrades = newGrades.filter((e) => e.id !== id);
+  return newGrades;
+}
+
+function changeGrade(grades: IGrade[], grade: IGrade) {
+  let newGrades = [...grades];
+  newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {
+    ...grade,
+    value: grade.value,
+    examValue: grade.examValue,
+  };
+  return newGrades;
+}
+function changeHadExam(grades: IGrade[], grade: IGrade) {
+  let newGrades = [...grades];
+  newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {
+    ...grade,
+    includeExam: !grade.includeExam,
+  };
+  return newGrades;
+}
+function addRetakeGrade(retakeGrades: IGrade[], id: string) {
+  if (retakeGrades.find((e) => e.id === id)) return retakeGrades; //deleteGrade(grades, id);
+  let newGrade = DEFAULT_GRADE;
+  newGrade = { ...newGrade, id: id };
+
+  let newGrades = [...retakeGrades, newGrade];
+  return newGrades;
+}
+
+function deleteRetakeGrade(retakeGrades: IGrade[], id: string) {
+  let newGrades = [...retakeGrades];
+  newGrades = newGrades.filter((e) => e.id !== id);
+  return newGrades;
+}
+
+function changeRetakeHadExam(retakeGrades: IGrade[], grade: IGrade) {
+  let newGrades = [...retakeGrades];
+  newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {
+    ...grade,
+    includeExam: !grade.includeExam,
+  };
+  return newGrades;
+}
+function changeRetakeGrade(retakeGrades: IGrade[], grade: IGrade) {
+  let newGrades = [...retakeGrades];
+  newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {
+    ...grade,
+    value: grade.value,
+    examValue: grade.examValue,
+  };
+  return newGrades;
+}
+
+function updateRetakeAlderspoeng(
+  alderspoeng: number,
+  retakeAlderspoeng: number
+) {
+  return Math.max(alderspoeng, retakeAlderspoeng);
+}
+function updateRetakeExtraPoints(
+  extraPoints: number,
+  retakeExtraPoints: number
+) {
+  return Math.max(extraPoints, retakeExtraPoints);
+}
+
+function updateRetakeTotalPoints(
+  retakeSnitt: number,
+  retakeAlderspoeng: number,
+  retakeTilleggspoeng: number,
+  retakeRealfagspoeng: number
+) {
+  let newTotalPoints = 0;
+  newTotalPoints +=
+    retakeSnitt + retakeAlderspoeng + retakeTilleggspoeng + retakeRealfagspoeng;
+  return newTotalPoints;
+}
+function updateRetakeRealfagspoeng(grades: IGrade[], retakeGrades: IGrade[]) {
+  let combinesGrades = [...retakeGrades];
+  for (const g of grades) {
+    if (!retakeGrades.find((r) => r.id === g.id)) {
+      combinesGrades.push(g);
+    }
+  }
+  return realfagspoeng(combinesGrades);
+}
+function increaseRetakeAlderspoeng(retakeAlderspoeng: number, dx: number) {
+  let v = 0;
+  v += retakeAlderspoeng + dx;
+  return Math.min(Math.max(v, 0), 8);
+}
+function increaseRetakeExtraPoints(retakeExtraPoints: number, dx: number) {
+  console.log("extra here");
+  let v = 0;
+  v += retakeExtraPoints + dx;
+  return Math.min(Math.max(v, 0), 2);
+}
+
 function totalPoints(
   snitt: number,
   alderspoeng: number,
@@ -121,10 +310,10 @@ function totalPoints(
   newTotalPoints += snitt + alderspoeng + tilleggspoeng + realfagspoeng;
   return newTotalPoints;
 }
-function realfagspoeng(grades: GradesInterface[]) {
+function realfagspoeng(grades: IGrade[]) {
   let realfagspoeng = 0;
   for (const grade of grades) {
-    let thisGradeRealfagspoeng = allClasseslist.find(
+    let thisGradeRealfagspoeng = ALL_CLASSES_LIST.find(
       (o) => o.name === grade.id
     )?.rPoints;
     if (thisGradeRealfagspoeng) realfagspoeng += thisGradeRealfagspoeng;
@@ -151,22 +340,15 @@ function isPositiveInteger(str: string) {
   }
   return false;
 }
-function changeHadExam(grades: GradesInterface[], grade: GradesInterface) {
-  let newGrades = [...grades];
-  newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {
-    ...grade,
-    includeExam: !grade.includeExam,
-  };
-  return newGrades;
-}
-function snitt(grades: GradesInterface[]) {
+
+function snitt(grades: IGrade[]) {
   const initialVals = { avg: 0, n: 0 };
   const averageGrade = grades.reduce(averageScores, initialVals);
 
   return (averageGrade.avg + 1) * 10;
 }
 
-function averageScores({ avg, n }: any, o: GradesInterface) {
+function averageScores({ avg, n }: any, o: IGrade) {
   // helper function
   if (o.includeExam) {
     const newVals = averageScoresExam({ avg, n }, o);
@@ -180,38 +362,25 @@ function averageScores({ avg, n }: any, o: GradesInterface) {
     n: n + 1,
   };
 }
-function averageScoresExam({ avg, n }: any, o: GradesInterface) {
+function averageScoresExam({ avg, n }: any, o: IGrade) {
   // helper function
   return {
     avg: (o.examValue + n * avg) / (n + 1),
     n: n + 1,
   };
 }
-function addGrade(grades: GradesInterface[], id: string) {
-  if (grades.find((e) => e.id === id)) return grades; //deleteGrade(grades, id);
-  let newGrade = DEFAULT_GRADE;
-  newGrade = { ...newGrade, id: id };
+function retakeSnitt(grades: IGrade[], retakeGrades: IGrade[]) {
+  let combinesGrades = [...retakeGrades];
+  for (const g of grades) {
+    if (!retakeGrades.find((r) => r.id === g.id)) {
+      combinesGrades.push(g);
+    }
+  }
+  const initialVals = { avg: 0, n: 0 };
+  const averageGrade = combinesGrades.reduce(averageScores, initialVals);
 
-  let newGrades = [...grades, newGrade];
-  return newGrades;
+  return Math.round((averageGrade.avg + 1) * 100 * 10) / 100;
 }
-
-function deleteGrade(grades: GradesInterface[], id: string) {
-  let newGrades = [...grades];
-  newGrades = newGrades.filter((e) => e.id !== id);
-  return newGrades;
-}
-
-function changeGrade(grades: GradesInterface[], grade: GradesInterface) {
-  let newGrades = [...grades];
-  newGrades[newGrades.findIndex((e) => e.id === grade.id)] = {
-    ...grade,
-    value: grade.value,
-    examValue: grade.examValue,
-  };
-  return newGrades;
-}
-
 function setEducations(educations: number[], studiekode: number) {
   if (educations.includes(studiekode)) {
     educations = educations.filter((o) => o != studiekode);

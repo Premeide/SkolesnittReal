@@ -1,25 +1,16 @@
-import React, { Component, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { connect } from "react-redux";
-import { FontAwesome5 } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
-import GlobalStyles from "../assets/styles/GlobalStyles";
-import { GradesInterface } from "../assets/data/Interfaces";
+import { IGrade } from "../assets/data/Interfaces";
 import GradeItem from "./GradeItem";
 
 interface GradesListProps {
-  grades: GradesInterface[];
+  grades: IGrade[];
   isEditing: boolean;
   addGrade: (id: string) => void;
   deleteGrade: (id: string) => void;
-  changeHadExam: (grade: GradesInterface) => void;
-  changeGrade: (grade: GradesInterface) => void;
+  changeHadExam: (grade: IGrade) => void;
+  changeGrade: (grade: IGrade) => void;
 }
 
 class GradesList extends Component<GradesListProps> {
@@ -63,9 +54,9 @@ function mapDispatchToProps(dispatch: any) {
     addGrade: (id: string) => dispatch({ type: "ADD_GRADE", payload: id }),
     deleteGrade: (id: string) =>
       dispatch({ type: "DELETE_GRADE", payload: id }),
-    changeHadExam: (grade: GradesInterface) =>
+    changeHadExam: (grade: IGrade) =>
       dispatch({ type: "CHANGE_HAD_EXAM", payload: grade }),
-    changeGrade: (grade: GradesInterface) =>
+    changeGrade: (grade: IGrade) =>
       dispatch({ type: "CHANGE_GRADE", payload: grade }),
   };
 }

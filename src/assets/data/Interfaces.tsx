@@ -1,4 +1,4 @@
-interface GradesInterface {
+interface IGrade {
   id: string;
   value: number;
   includeExam: boolean;
@@ -25,4 +25,4 @@ interface IEducation {
   venteliste_f: number;
 }
 
-export { GradesInterface, IExtraPoints, IEducation };
+export { IGrade, IExtraPoints, IEducation };

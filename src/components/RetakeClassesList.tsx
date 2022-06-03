@@ -19,12 +19,12 @@ import GlobalStyles from "../assets/styles/GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
-import { GradesInterface } from "../assets/data/Interfaces";
+import { IGrade } from "../assets/data/Interfaces";
 
 interface RetakeClassesListProps {
   navigation: any;
-  retakeGrades: GradesInterface[];
-  grades: GradesInterface[];
+  retakeGrades: IGrade[];
+  grades: IGrade[];
 }
 
 const RetakeClassesList: React.FC<RetakeClassesListProps> = ({

@@ -15,16 +15,16 @@ import { IGrade } from "../assets/data/Interfaces";
 import { ALL_CLASSES_LIST } from "../assets/data/GlobalData";
 import CustomBtn from "./CustomBtn";
 
-interface AddClassProps {
-  grades: IGrade[];
-  addGrade: (id: string) => void;
+interface AddRetakeClassProps {
+  retakeGrades: IGrade[];
+  addRetakeGrade: (id: string) => void;
   hideModal: () => void;
-  deleteGrade: (id: string) => void;
+  deleteRetakeGrade: (id: string) => void;
 }
 
-class AddClass extends Component<AddClassProps> {
+class AddRetakeClass extends Component<AddRetakeClassProps> {
   initCheckArray = () => {
-    let newCheckArray = this.props.grades.map((o) => o.id);
+    let newCheckArray = this.props.retakeGrades.map((o) => o.id);
     return newCheckArray;
   };
 
@@ -41,13 +41,13 @@ class AddClass extends Component<AddClassProps> {
   updateSelectedGrades() {
     this.props.hideModal();
     for (const id of this.state.checkArray) {
-      if (this.props.grades.find((o) => o.id === id) === undefined) {
-        this.props.addGrade(id);
+      if (this.props.retakeGrades.find((o) => o.id === id) === undefined) {
+        this.props.addRetakeGrade(id);
       }
     }
-    for (const o of this.props.grades) {
+    for (const o of this.props.retakeGrades) {
       if (!this.state.checkArray.includes(o.id)) {
-        this.props.deleteGrade(o.id);
+        this.props.deleteRetakeGrade(o.id);
       }
     }
   }
@@ -117,14 +117,15 @@ const styles = StyleSheet.create({});
 
 function mapStateToProps(state: any) {
   return {
-    grades: state.grades,
+    retakeGrades: state.retakeGrades,
   };
 }
 function mapDispatchToProps(dispatch: any) {
   return {
-    addGrade: (id: string) => dispatch({ type: "ADD_GRADE", payload: id }),
-    deleteGrade: (id: string) =>
-      dispatch({ type: "DELETE_GRADE", payload: id }),
+    addRetakeGrade: (id: string) =>
+      dispatch({ type: "ADD_RETAKE_GRADE", payload: id }),
+    deleteRetakeGrade: (id: string) =>
+      dispatch({ type: "DELETE_RETAKE_GRADE", payload: id }),
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AddClass);
+export default connect(mapStateToProps, mapDispatchToProps)(AddRetakeClass);

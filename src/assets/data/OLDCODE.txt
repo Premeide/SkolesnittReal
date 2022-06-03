@@ -1,0 +1,1078 @@
+import React, { useCallback, useRef, useState } from "react";
+// import {
+//   Button,
+//   Text,
+//   View,
+//   FlatList,
+//   Modal,
+//   TouchableOpacity,
+//   TextInput,
+//   Animated,
+//   StyleSheet,
+// } from "react-native";
+// import SegmentedControl from "rn-segmented-control";
+// import Icon from "react-native-vector-icons/FontAwesome";
+// import { localData, allClasseslist } from "../../assets/data/GlobalData";
+// import GlobalStyles from "../../assets/styles/GlobalStyles";
+// import CustomBtn from "../../components/CustomBtn";
+// import * as Animatable from "react-native-animatable";
+
+// const gradeTabs = ["1", "2", "3", "4", "5", "6"];
+
+// const RetakeKalkulatorScreen = ({ navigation }) => {
+//   const [showModal, setShowModal] = useState(
+//     localData.retakeClasses.length >= 1 ? false : true
+//   );
+//   const [searchText, setSearchText] = useState("");
+//   const [isEditing, setIsEditing] = useState(false);
+//   let [grades, setGrades] = useState(localData.retakeClasses);
+//   const keyExtractorGrades = useCallback((item) => item.id, []);
+//   const keyExtractorModal = useCallback((item) => item.name, []);
+//   const editWidth = useRef(new Animated.Value(0)).current;
+
+//   function addEditWidth() {
+//     Animated.spring(editWidth, {
+//       toValue: 1,
+//       duration: 1000,
+//       useNativeDriver: false,
+//     }).start();
+//   }
+//   function removeEditWidth() {
+//     Animated.timing(editWidth, {
+//       toValue: 0,
+//       duration: 600,
+//       useNativeDriver: false,
+//     }).start();
+//   }
+//   function forceingUpdate() {
+//     grades.length == 0
+//       ? setGrades([])
+//       : tabChange(grades[0].value, grades[0].id);
+//     return null;
+//   }
+//   function tabAdd(name) {
+//     let isDuplicate = false;
+
+//     for (const [index, element] of grades.entries()) {
+//       if (element.id === name) {
+//         isDuplicate = true;
+//       }
+//     }
+//     if (!isDuplicate) {
+//       let _grades = grades;
+//       _grades.push({ value: 0, id: name });
+//       setGrades(_grades);
+//       localData.retakeClasses = _grades;
+//     } else {
+//       null;
+//     }
+//     forceingUpdate();
+//   }
+//   function tabChange(idx, name) {
+//     let _grades = [];
+//     for (const [index, element] of grades.entries()) {
+//       if (element.id === name) {
+//         _grades.push({
+//           value: idx,
+//           id: name,
+//         });
+//       } else {
+//         _grades.push(grades[index]);
+//       }
+//     }
+
+//     setGrades(_grades);
+//     localData.retakeClasses = _grades;
+
+//     return null;
+//   }
+//   function tabDelete(name) {
+//     let _grades = grades;
+
+//     for (const [index, element] of grades.entries()) {
+//       if (element.id === name) {
+//         _grades.splice(index, 1);
+//       }
+//     }
+//     setGrades(_grades);
+//     localData.retakeClasses = _grades;
+
+//     forceingUpdate();
+//     return null;
+//   }
+//   function searchFilter(txt) {
+//     if (txt) {
+//       let newList = [];
+//       for (const [index, element] of allClasseslist.entries()) {
+//         if (element.name.toLowerCase().includes(txt.toLowerCase())) {
+//           newList.push(element);
+//         }
+//       }
+//       return newList;
+//     }
+//     return allClasseslist;
+//   }
+//   function checkboxHandler(name) {
+//     let isIncluded = grades.find((grades) => grades.id === name);
+//     if (isIncluded == undefined) {
+//       return false;
+//     }
+//     return true;
+//   }
+//   const toggleIsEditing = () => {
+//     isEditing ? removeEditWidth() : addEditWidth();
+//     setIsEditing(!isEditing);
+//   };
+
+//   return (
+//     <View style={GlobalStyles.container}>
+//       <View style={GlobalStyles.whiteContainer2}>
+//         <FlatList
+//           data={grades}
+//           ListFooterComponent={() => <Text style={{ fontSize: 160 }}> </Text>}
+//           ItemSeparatorComponent={() => (
+//             <View
+//               style={[
+//                 GlobalStyles.ItemSeparatorComponent,
+//                 { marginVertical: 5 },
+//               ]}
+//             />
+//           )}
+//           keyExtractor={keyExtractorGrades}
+//           renderItem={({ item, index }) => (
+//             <View style={{ flexDirection: "row" }}>
+//               <Animated.View
+//                 style={{
+//                   width: editWidth.interpolate({
+//                     inputRange: [0, 1],
+//                     outputRange: ["0%", "20%"],
+//                   }),
+//                   justifyContent: "center",
+//                   alignItems: "center",
+//                 }}
+//               >
+//                 <Icon
+//                   name="remove"
+//                   size={45}
+//                   color="red"
+//                   onPress={() => tabDelete(item.id)}
+//                 />
+//               </Animated.View>
+//               <View>
+//                 <Text style={GlobalStyles.kalkText}>{item.id}</Text>
+
+//                 <SegmentedControl
+//                   tabs={gradeTabs}
+//                   currentIndex={item.value}
+//                   onChange={(index) => tabChange(index, item.id, false)}
+//                   paddingVertical={5}
+//                   segmentedControlBackgroundColor="gainsboro"
+//                   activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
+//                   activeTextColor="white"
+//                   textColor="black"
+//                   activeTextWeight="bold"
+//                 />
+//               </View>
+//             </View>
+//           )}
+//         />
+//         <Modal transparent={true} visible={showModal}>
+//           <Animatable.View
+//             style={{ backgroundColor: "grey", flex: 1 }}
+//             animation="fadeIn"
+//             duration={300}
+//           >
+//             <View style={GlobalStyles.modalContainer}>
+//               <TextInput
+//                 style={GlobalStyles.textInput2}
+//                 placeholder="Søk utdanninger"
+//                 onChangeText={(text) => setSearchText(text)}
+//               />
+//               <View style={[GlobalStyles.greyContainer, { height: "90%" }]}>
+//                 <FlatList
+//                   data={searchFilter(searchText)}
+//                   ItemSeparatorComponent={() => (
+//                     <View style={GlobalStyles.ItemSeparatorComponent} />
+//                   )}
+//                   keyExtractor={keyExtractorModal}
+//                   renderItem={({ item, index }) => (
+//                     <TouchableOpacity
+//                       style={GlobalStyles.row}
+//                       onPress={() => tabAdd(item.name)}
+//                     >
+//                       <Text style={GlobalStyles.listText}>{item.name}</Text>
+//                       <View style={GlobalStyles.listEndContainer}>
+//                         {checkboxHandler(item.name) ? (
+//                           <Icon name="check-square" size={25} />
+//                         ) : (
+//                           <Icon name="square" size={25} />
+//                         )}
+//                       </View>
+//                     </TouchableOpacity>
+//                   )}
+//                 />
+//               </View>
+//             </View>
+//           </Animatable.View>
+//           <TouchableOpacity
+//             onPress={() => setShowModal(false)}
+//             style={GlobalStyles.customBtnContainer}
+//           >
+//             <CustomBtn text="Ferdig" />
+//           </TouchableOpacity>
+//         </Modal>
+//       </View>
+
+//       <View style={[GlobalStyles.customBtnContainer, { flexDirection: "row" }]}>
+//         <TouchableOpacity
+//           style={[splitBtnStyle.container, { backgroundColor: "green" }]}
+//           onPress={() => setShowModal(true)}
+//         >
+//           <Text style={splitBtnStyle.text}>Legg til fag</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={[splitBtnStyle.container, { backgroundColor: "red" }]}
+//           onPress={toggleIsEditing}
+//         >
+//           <Text style={splitBtnStyle.text}>
+//             {isEditing ? "Ferdig" : "Fjern fag"}
+//           </Text>
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({});
+
+// const splitBtnStyle = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 10,
+//     borderWidth: 1,
+//     borderColor: "white",
+//   },
+//   text: {
+//     alignSelf: "center",
+//     justifyContent: "center",
+//     fontWeight: "bold",
+//     color: "white",
+//   },
+// });
+// export default RetakeKalkulatorScreen;
+
+// onclick={() =>
+//   this.props.navigation.navigate("Tab", {
+//     screen: "Hjem",
+//     params: { showEducationBtn: true },
+//   })
+// }
+// const forceUpdate = () => {
+//   console.log("-- ForceUpdate -- ");
+//   grades.length == 0 ? setGrades([]) : tabChange(grades[0]);
+// };
+{
+  /* {localData.firstTime.Kalk ? (
+          <TouchableOpacity
+            style={[
+              GlobalStyles.customBtnContainer,
+              { bottom: GlobalStyles.customBtn2Bottom.bottom },
+            ]}
+            onPress={() => {
+              localData.firstTime.Kalk = false;
+              navigation.navigate("Tab", { screen: "Hjem" });
+            }}
+          >
+            <View style={GlobalStyles.addBtn}>
+              <Text style={GlobalStyles.addText}>Fortsett</Text>
+            </View>
+          </TouchableOpacity>
+        ) : null} */
+}
+// useEffect(() => {
+//   setSnitt(snittCalculator(grades));
+//   localData.grades = grades;
+// }, [grades]);
+// const tabDelete = useCallback((delGrade: GradesInterface) => {
+//   setGrades((grades) =>
+//     grades.filter((element) => element.id !== delGrade.id)
+//   );
+// }, []);
+// const renderItem = ({ item }: { item: GradesInterface }) => (
+//   <GradeItem
+//     grade={item}
+//     tabChange={tabChange}
+//     tabDelete={tabDelete}
+//     hadExamChange={hadExamChange}
+//     translateX={translateX}
+//   />
+// );
+// function snittCalculator(gradeList: any) {
+//   let sum = 0;
+//   let numOfClasses = 0;
+
+//   for (const [i, e] of gradeList.entries()) {
+//     sum += e.value + 1;
+//     numOfClasses += 1;
+//     if (e.includeExam) {
+//       sum += e.examValue + 1;
+//       numOfClasses += 1;
+//     }
+//   }
+//   return ((sum * 10) / numOfClasses).toFixed(2);
+// }
+// function alertInformation(name: string) {
+//   let text = "";
+//   switch (name) {
+//     case NYE_ALDERSPOENG:
+//       // text += "Fødselsår: " + localData.yearOfBirth;
+//       text += "\n\n (+2 poeng fra og med året du fyller 20)";
+//       break;
+//     case NYE_TILLEGGSPOENG:
+//       text = "<TILLEGSPOENG INFORMASJON>";
+//       break;
+//     case NYE_REAL_OG_SPRÅKPOENG:
+//       text = "<REAL- OG SPRÅLPOENG INFORMASJON>";
+//       // let tempLst = [];
+//       // let _grades = localData.retakeClasses;
+//       // for (const [i, e] of _grades.entries()) {
+//       //   for (const [idx, ele] of allClasseslist.entries()) {
+//       //     if (e.id == ele.name && ele.rPoints > 0) {
+//       //       tempLst.push(e.id + ": " + ele.rPoints);
+//       //     }
+//       //   }
+//       // }
+//       // text += "Fag du har som gir poeng:\n\n";
+//       // text += tempLst.join("\n");
+//       break;
+//     case NYE_KARAKTERSNITT:
+//       text += "<KARAKTERSNITT INFORMASJON>";
+//       break;
+//     default:
+//       text = "<WHAT>";
+//   }
+//   return text;
+// }
+
+// key={item.name}
+//               onPress={() => {
+//                 Alert.alert(item.name, alertInformation(item.name), [
+//                   { text: "Ok" },
+//                 ]);
+//               }}
+// const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
+
+// useEffect(() => {
+//   if (isFocused) {
+//     console.log("HOME: useeffect updatingPoeng");
+//     updatePoeng(activeSegment);
+//   }
+// }, [isFocused]);
+// function realogspråkpoeng() {
+//   let sum = 0;
+//   let _grades = localData.grades;
+//   for (const [i, e] of _grades.entries()) {
+//     for (const [idx, ele] of allClasseslist.entries()) {
+//       if (e.id == ele.name) {
+//         sum += ele.rPoints;
+//       }
+//     }
+//   }
+//   return Math.min(4, sum);
+// }
+
+// const updatePoeng = (segIndex) => {
+//   let _grades = localData.grades;
+//   let sum = 0;
+//   let numOfClasses = 0;
+//   let karakterSnitt = 0;
+//   let newData1 = 0;
+//   let newMainPoeng = mainPoeng;
+
+//   switch (segIndex) {
+//     case 0:
+//       for (const [i, e] of _grades.entries()) {
+//         sum += e.value + 1;
+//         numOfClasses += 1;
+//         if (e.includeExam) {
+//           sum += e.examValue + 1;
+//           numOfClasses += 1;
+//         }
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     case 1:
+//       for (const [i, e] of _grades.entries()) {
+//         for (const [idx, ele] of basisClasses.entries()) {
+//           if (ele == e.id) {
+//             sum += e.value + 1;
+//             numOfClasses += 1;
+//             if (e.includeExam) {
+//               sum += e.examValue + 1;
+//               numOfClasses += 1;
+//             }
+//             break;
+//           }
+//         }
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     default:
+//       null;
+//   }
+//   newData1 = [
+//     { name: "Alderspoeng", value: alderspoeng(segIndex) },
+//     { name: "Tilleggspoeng", value: localData.extraPoints.value },
+//     { name: "Real- og språkpoeng", value: realogspråkpoeng() },
+//     { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
+//   ];
+//   newMainPoeng =
+//     karakterSnitt + newData1[0].value + newData1[1].value + newData1[2].value;
+//   setData1(newData1);
+//   setMainPoeng(newMainPoeng);
+// };
+
+// const handleSegmentedControl = (i) => {
+//   setActiveSegment(i);
+//   updatePoeng(i);
+// };
+
+//<View style={GlobalStyles.whiteContainer2}>
+//
+//   <View style={GlobalStyles.greyContainer}>
+//     <FlatList
+//       data={educationData}
+//       keyExtractor={(item) => item.name}
+//       ItemSeparatorComponent={() => (
+//         <View style={GlobalStyles.ItemSeparatorComponent} />
+//       )}
+//       renderItem={({ item }) => (
+//         <View style={GlobalStyles.row}>
+//           <Text style={[GlobalStyles.listText, { fontWeight: "bold" }]}>
+//             {item.name == "Poenggrense"
+//               ? "Ordinær poenggrense"
+//               : item.name == "Poenggrense_f"
+//               ? "Primær poenggrense"
+//               : item.name}
+//           </Text>
+//           <View style={GlobalStyles.listEndContainer}>
+//             <Text style={GlobalStyles.listText}>{item.value}</Text>
+//           </View>
+//         </View>
+//       )}
+//     />
+//   </View>
+// </View>
+
+// {edAlreadyAdded ? null : (
+//   <TouchableOpacity
+//     onPress={() => {
+//       localData.wantedEducations.studiekode.push(thisEd.studiekode);
+//       setEdAlreadyAdded(true);
+//       if (localData.firstTime.logIn) {
+//         localData.firstTime.logIn = false;
+//         navigation.navigate("RecommendStack");
+//       }
+//     }}
+//     style={GlobalStyles.customBtnContainer}
+//   >
+//     <CustomBtn text="Legg til utdanning" />
+//   </TouchableOpacity>
+// )}
+
+//   {edAlreadyAdded ? (
+//     <TouchableOpacity
+//       style={GlobalStyles.customBtnContainer}
+//       onPress={() => {
+//         localData.wantedEducations.studiekode =
+//           localData.wantedEducations.studiekode.filter(function (
+//             value,
+//             index,
+//             arr
+//           ) {
+//             return value != thisEd.studiekode;
+//           });
+//         setEdAlreadyAdded(false);
+//       }}
+//     >
+//       <View
+//         style={[
+//           GlobalStyles.addBtn,
+//           { flexDirection: "row", borderColor: "red" },
+//         ]}
+//       >
+//         <FontAwesome5 name="remove" size={25} color="red" />
+//         <Text style={{ color: "red" }}> Fjern utdanning</Text>
+//       </View>
+//     </TouchableOpacity>
+//   ) : null}
+// function alertInformation(name: string) {
+//   let text = "";
+//   switch (name) {
+//     case ALDERSPOENG:
+//       // text += "Fødselsår: " + localData.yearOfBirth;
+//       text += "\n\n (+2 poeng fra og med året du fyller 20)";
+//       break;
+//     case TILLEGGSPOENG:
+//       text = "<TILLEGSPOENG INFORMASJON>";
+//       break;
+//     case REAL_OG_SPRÅKPOENG:
+//       text = "<REAL- OG SPRÅLPOENG INFORMASJON>";
+//       // let tempLst = [];
+//       // let _grades = localData.retakeClasses;
+//       // for (const [i, e] of _grades.entries()) {
+//       //   for (const [idx, ele] of allClasseslist.entries()) {
+//       //     if (e.id == ele.name && ele.rPoints > 0) {
+//       //       tempLst.push(e.id + ": " + ele.rPoints);
+//       //     }
+//       //   }
+//       // }
+//       // text += "Fag du har som gir poeng:\n\n";
+//       // text += tempLst.join("\n");
+//       break;
+//     case KARAKTERSNITT:
+//       text += "<KARAKTERSNITT INFORMASJON>";
+//       break;
+//     default:
+//       text = "<WHAT>";
+//   }
+//   return text;
+// }
+// const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
+
+// useEffect(() => {
+//   if (isFocused) {
+//     console.log("HOME: useeffect updatingPoeng");
+//     updatePoeng(activeSegment);
+//   }
+// }, [isFocused]);
+// function realogspråkpoeng() {
+//   let sum = 0;
+//   let _grades = localData.grades;
+//   for (const [i, e] of _grades.entries()) {
+//     for (const [idx, ele] of allClasseslist.entries()) {
+//       if (e.id == ele.name) {
+//         sum += ele.rPoints;
+//       }
+//     }
+//   }
+//   return Math.min(4, sum);
+// }
+
+// const updatePoeng = (segIndex) => {
+//   let _grades = localData.grades;
+//   let sum = 0;
+//   let numOfClasses = 0;
+//   let karakterSnitt = 0;
+//   let newData1 = 0;
+//   let newMainPoeng = mainPoeng;
+
+//   switch (segIndex) {
+//     case 0:
+//       for (const [i, e] of _grades.entries()) {
+//         sum += e.value + 1;
+//         numOfClasses += 1;
+//         if (e.includeExam) {
+//           sum += e.examValue + 1;
+//           numOfClasses += 1;
+//         }
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     case 1:
+//       for (const [i, e] of _grades.entries()) {
+//         for (const [idx, ele] of basisClasses.entries()) {
+//           if (ele == e.id) {
+//             sum += e.value + 1;
+//             numOfClasses += 1;
+//             if (e.includeExam) {
+//               sum += e.examValue + 1;
+//               numOfClasses += 1;
+//             }
+//             break;
+//           }
+//         }
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     default:
+//       null;
+//   }
+//   newData1 = [
+//     { name: "Alderspoeng", value: alderspoeng(segIndex) },
+//     { name: "Tilleggspoeng", value: localData.extraPoints.value },
+//     { name: "Real- og språkpoeng", value: realogspråkpoeng() },
+//     { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
+//   ];
+//   newMainPoeng =
+//     karakterSnitt + newData1[0].value + newData1[1].value + newData1[2].value;
+//   setData1(newData1);
+//   setMainPoeng(newMainPoeng);
+// };
+
+// const handleSegmentedControl = (i) => {
+//   setActiveSegment(i);
+//   updatePoeng(i);
+// };
+
+{
+  /* <ScrollView>
+        {localData.retakeClasses.length >= 1 ? (
+          <View style={GlobalStyles.whiteContainer}>
+            <SegmentedControl
+              tabs={["Konkurransepoeng", "23/5-poeng"]}
+              textStyle={{ fontSize: 10 }}
+              currentIndex={tabIndex}
+              onChange={(index) => handleSegmentedControl2(index)}
+              paddingVertical={10}
+              segmentedControlBackgroundColor="gainsboro"
+              activeSegmentBackgroundColor={GlobalStyles.blueColor.color}
+              activeTextColor="white"
+              activeTextWeight="bold"
+              textColor="black"
+              containerStyle={{ marginTop: 10 }}
+            />
+            <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
+              Dine poeng med nye fag
+            </Text>
+            <Text style={styles.poeng}>{retakePoeng.toFixed(2)}</Text>
+
+            <View style={GlobalStyles.greyContainer}>
+              {data.map((item, index) => (
+                <TouchableOpacity
+                  key={item.name}
+                  onPress={() => {
+                    Alert.alert(item.name, alertInformation(item.name), [
+                      { text: "Ok" },
+                    ]);
+                  }}
+                >
+                  <View style={GlobalStyles.row}>
+                    <Text style={GlobalStyles.listText}>{item.name}</Text>
+                    <View style={GlobalStyles.listEndContainer}>
+                      <Text style={GlobalStyles.listText}>{item.value}</Text>
+                    </View>
+                  </View>
+                  {index >= data.length - 1 ? null : (
+                    <View style={GlobalStyles.ItemSeparatorComponent}></View>
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        ) : null}
+        <View style={GlobalStyles.whiteContainer}>
+          <Text
+            style={GlobalStyles.underTitleText}
+            onPress={() => navigation.navigate("RetakeKalkulator")}
+          >
+            Disse fagene skal jeg ta opp:
+          </Text>
+          <View style={GlobalStyles.greyContainer}>
+            {localData.retakeClasses.map((item, index) => (
+              <View key={item.id}>
+                <TouchableOpacity
+                  style={GlobalStyles.row}
+                  onPress={() => navigation.navigate("RetakeKalkulator")}
+                >
+                  <Text style={[GlobalStyles.listText, { width: "82%" }]}>
+                    {item.id}
+                  </Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    <Text style={GlobalStyles.listText}>
+                      {oldGradeFinder(item.id)} {item.value + 1}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <View style={GlobalStyles.ItemSeparatorComponent}></View>
+              </View>
+            ))}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RetakeKalkulator")}
+            >
+              <Text style={GlobalStyles.listText}>
+                Trykk for å legge til fag
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={GlobalStyles.whiteContainer}>
+          <Text style={GlobalStyles.underTitleText}>Mine utdanninger:</Text>
+          <View style={GlobalStyles.greyContainer}>
+            {localData.wantedEducations.studiekode.length >= 1 ? (
+              localData.wantedEducations.studiekode.map((item, index) => (
+                <View key={item}>
+                  {printUtdanninger(item)}
+                  {index >=
+                  localData.wantedEducations.studiekode.length - 1 ? null : (
+                    <View style={GlobalStyles.ItemSeparatorComponent}></View>
+                  )}
+                </View>
+              ))
+            ) : (
+              <TouchableOpacity onPress={() => navigation.navigate("Utforsk")}>
+                <Text style={GlobalStyles.listText}>
+                  Trykk for å legge til utdanninger
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </ScrollView> */
+}
+// function alderspoeng(segIndex) {
+//   let fødselsår = localData.yearOfBirth;
+//   let _alderspoeng = ((segIndex == 1 ? 1999 : 2003) - fødselsår) * 2; // husk const
+//   _alderspoeng = Math.min(Math.max(_alderspoeng, 0), 8);
+//   return _alderspoeng;
+// }
+// const handleSegmentedControl2 = (i) => {
+//   setTabIndex(i);
+//   updatePoeng2(i);
+// };
+// function oldGradeFinder(newName) {
+//   for (const [i, e] of localData.grades.entries()) {
+//     if (e.id == newName) {
+//       return (e.value + 1).toString() + " til";
+//     }
+//   }
+//   return "Ny";
+// }
+// function printUtdanninger(s) {
+//   const thisEd = karakterGrenser.find(
+//     (karakterGrenser) => karakterGrenser.studiekode === s
+//   );
+//   return (
+//     <TouchableOpacity
+//       style={GlobalStyles.row}
+//       onPress={() =>
+//         navigation.navigate("RecommendDetails", {
+//           postStudiekode: thisEd.studiekode,
+//         })
+//       }
+//     >
+//       <Text style={[GlobalStyles.listText, { width: "70%" }]}>
+//         {thisEd.studienavn} ({thisEd.lærerstedskode})
+//       </Text>
+//       <View style={GlobalStyles.listEndContainer}>
+//         <Text style={GlobalStyles.listText}>
+//           {thisEd.poenggrense} ({thisEd.poenggrense_f})
+//         </Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+// }
+// function alertInformation(name) {
+//   let text = "";
+//   switch (name) {
+//     case "Alderspoeng":
+//       text += "Fødselsår: " + localData.yearOfBirth;
+//       text += "\n\n (+2 poeng fra og med året du fyller 20)";
+//       break;
+//     case "Tilleggspoeng":
+//       text = "Tilleggsponeg";
+//       break;
+//     case "Real- og språkpoeng":
+//       let tempLst = [];
+//       let _grades = localData.grades;
+//       for (const [i, e] of _grades.entries()) {
+//         for (const [idx, ele] of allClasseslist.entries()) {
+//           if (e.id == ele.name && ele.rPoints > 0) {
+//             tempLst.push(e.id + ": " + ele.rPoints);
+//           }
+//         }
+//       }
+//       text += "Fag du har som gir poeng:\n\n";
+//       text += tempLst.join("\n");
+//       break;
+//     case "Karaktersnitt":
+//       text += "Karaktersnitt";
+//       break;
+//     default:
+//       text = "????";
+//   }
+//   return text;
+// }
+// const DATA = [
+//   { name: "Alderspoeng", value: 50 },
+//   { name: "Tilleggspoeng", value: 300 },
+//   { name: "Real- og språkpoeng", value: 30 },
+//   { name: "Karaktersnitt", value: 2000 },
+// ];
+
+{
+  /* <View style={GlobalStyles.whiteContainer}>
+          <Text style={GlobalStyles.underTitleText}>
+            Disse fagene kan du forbedre:(dummyData)
+          </Text>
+          <View style={GlobalStyles.greyContainer}>
+            {dummyData.map((item, index) => (
+              <View key={item.name}>
+                <View style={GlobalStyles.row}>
+                  <Text style={GlobalStyles.listText}>{item.name}</Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    <Text style={GlobalStyles.listText}>
+                      fra {item.oldValue} til {item.value}
+                    </Text>
+                  </View>
+                </View>
+                {index >= dummyData.length - 1 ? null : (
+                  <View style={GlobalStyles.ItemSeparatorComponent}></View>
+                )}
+              </View>
+            ))}
+          </View>
+        </View>
+        <View style={GlobalStyles.whiteContainer}>
+          <Text style={GlobalStyles.underTitleText}>
+            Disse fagene trenger du:(dummyData)
+          </Text>
+          <View style={GlobalStyles.greyContainer}>
+            {dummyData2.map((item, index) => (
+              <View key={item.name}>
+                <View style={GlobalStyles.row}>
+                  <Text style={GlobalStyles.listText}>{item.name}</Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    <Text style={GlobalStyles.listText}>{item.value}</Text>
+                  </View>
+                </View>
+                {index >= dummyData2.length - 1 ? null : (
+                  <View style={GlobalStyles.ItemSeparatorComponent}></View>
+                )}
+              </View>
+            ))}
+          </View>
+        </View>
+        <View style={GlobalStyles.whiteContainer}>
+          <Text style={GlobalStyles.underTitleText}>
+            Disse fagene kan du bytte:(dummyData)
+          </Text>
+          <View style={GlobalStyles.greyContainer}>
+            {dummyData3.map((item, index) => (
+              <View key={item.to}>
+                <View style={GlobalStyles.row}>
+                  <Text style={GlobalStyles.listText}>fra {item.from}</Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    <Text style={GlobalStyles.listText}>til {item.to}</Text>
+                  </View>
+                </View>
+                {index >= dummyData3.length - 1 ? null : (
+                  <View style={GlobalStyles.ItemSeparatorComponent}></View>
+                )}
+              </View>
+            ))}
+          </View>
+        </View> */
+}
+//const dummyData = [
+//   { name: "Matematikk R2", value: 6, oldValue: 5 },
+//   { name: "Biologi 1", value: 5, oldValue: 4 },
+//   { name: "Samfunnsfag", value: 3, oldValue: 2 },
+//   { name: "Engelsk", value: 3, oldValue: 1 },
+// ];
+// const dummyData2 = [
+//   { name: "Matematikk R2", value: "MEROD" },
+//   { name: "Kjemi 2", value: "MEROD" },
+//   { name: "Samfunnsfag", value: "GENS" },
+// ];
+// const dummyData3 = [
+//   { to: "Matematikk S2", from: "Matematikk R1" },
+//   { to: "Rettslære 1", from: "Naturfag" },
+//   { to: "Sosialkunnskap", from: "Geografi" },
+// ];
+
+// const [tabIndex, setTabIndex] = useState(0);
+// const [retakePoeng, setRetakePoeng] = useState(3000);
+// const [data, setData] = useState(DATA);
+
+// const karakterGrenser = require("../../assets/data/karaktergrense.json");
+// const isFocused = useIsFocused(); //useeffect emptyarrray gjør jobben kansj
+
+// useEffect(() => {
+//   if (isFocused) {
+//     console.log("RECOMMEND: updatePoeng");
+//     updatePoeng2(tabIndex);
+//   }
+// }, [isFocused]);
+// const updatePoeng2 = (segIndex) => {
+//   let _grades = localData.grades;
+//   let _rgrades = localData.retakeClasses;
+//   let newRetakePoeng = retakePoeng;
+//   let isRetakingThisClass = false;
+
+//   let sum = 0;
+//   let numOfClasses = 0;
+//   let karakterSnitt = 0;
+//   let newRealSpråkPoeng = 0;
+//   let newdata = [];
+
+//   switch (segIndex) {
+//     case 0:
+//       for (const [i, e] of allClasseslist.entries()) {
+//         for (const [idx, ele] of _rgrades.entries()) {
+//           if (e.name == ele.id) {
+//             sum += ele.value + 1;
+//             numOfClasses += 1;
+//             newRealSpråkPoeng += e.rPoints;
+//             isRetakingThisClass = true;
+//             break;
+//           }
+//         }
+//         if (!isRetakingThisClass) {
+//           for (const [idx, ele] of _grades.entries()) {
+//             if (e.name == ele.id) {
+//               sum += ele.value + 1;
+//               numOfClasses += 1;
+//               newRealSpråkPoeng += e.rPoints;
+//               isRetakingThisClass = true;
+//               if (ele.includeExam) {
+//                 sum += ele.examValue;
+//                 numOfClasses += 1;
+//               }
+//               break;
+//             }
+//           }
+//         }
+//         isRetakingThisClass = false;
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     case 1:
+//       for (const [i, e] of allClasseslist.entries()) {
+//         for (const [index, element] of basisClasses.entries()) {
+//           if (element == e.name) {
+//             for (const [idx, ele] of _rgrades.entries()) {
+//               if (e.name == ele.id) {
+//                 sum += ele.value + 1;
+//                 numOfClasses += 1;
+//                 newRealSpråkPoeng += e.rPoints;
+//                 isRetakingThisClass = true;
+//                 break;
+//               }
+//             }
+//             if (!isRetakingThisClass) {
+//               for (const [idx, ele] of _grades.entries()) {
+//                 if (e.name == ele.id) {
+//                   sum += ele.value + 1;
+//                   numOfClasses += 1;
+//                   newRealSpråkPoeng += e.rPoints;
+//                   isRetakingThisClass = true;
+//                   if (ele.includeExam) {
+//                     sum += ele.examValue;
+//                     numOfClasses += 1;
+//                   }
+//                   break;
+//                 }
+//               }
+//             }
+//             isRetakingThisClass = false;
+//             break;
+//           }
+//         }
+//       }
+//       karakterSnitt = (sum * 10) / numOfClasses;
+//       break;
+//     default:
+//       null;
+//   }
+//   newdata = [
+//     { name: "Alderspoeng", value: alderspoeng(segIndex) },
+//     { name: "Tilleggspoeng", value: localData.extraPoints.value },
+//     { name: "Real- og språkpoeng", value: Math.min(4, newRealSpråkPoeng) },
+//     { name: "Karaktersnitt", value: karakterSnitt.toFixed(2) },
+//   ];
+//   newRetakePoeng =
+//     karakterSnitt +
+//     localData.extraPoints.value +
+//     alderspoeng(segIndex) +
+//     Math.min(4, newRealSpråkPoeng);
+
+//   setRetakePoeng(newRetakePoeng);
+//   setData(newdata);
+// };
+
+{
+  /* <ScrollView>  <FlatList nestedScrollEnabled /> */
+}
+
+{
+  /* {localData.firstTime.logIn ? (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Discover")}
+            style={[GlobalStyles.customBtnContainer, { position: "relative" }]}
+          >
+            <Animatable.View
+              animation="fadeInUp"
+              duration={700}
+              delay={1000}
+              style={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <CustomBtn text="Legg til utdanning" />
+            </Animatable.View>
+          </TouchableOpacity>
+        ) : null} */
+}
+// let localData = {
+//   yearOfBirth: 2020,
+//   extraPoints: { value: 0, m: false, f: false, tre: false, seks: false },
+//   grades: [
+//     { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Geografi", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Historie", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
+//     { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
+//   ],
+//   firstTime: { logIn: true, Kalk: true, home: true },
+//   wantedEducations: { studiekode: [] },
+//   retakeClasses: [],
+// };
+const basisClasses = [
+//   "Norsk hovedmål",
+//   "Norsk muntlig",
+//   "Norsk sidemål",
+//   "Matematikk 1T/1P",
+//   "Matematikk 2T/2P",
+//   "Naturfag",
+//   "Historie",
+//   "Engelsk",
+//   "Samfunnsfag",
+//   "Kjemi 1",
+//   "Kjemi 2",
+//   "Fysikk 1",
+//   "Fysikk 2",
+//   "Matematikk R1",
+//   "Matematikk R2",
+//   "Matematikk S1",
+//   "Matematikk S2",
+//   "Biologi 1",
+//   "Biologi 2",
+//   "Geofag 1",
+//   "Geofag 2",
+//   "Informasjonsteknologi 1",
+//   "Informasjonsteknologi 2",
+//   "Fransk nivå 1 programfag",
+//   "Fransk nivå 2 programfag",
+//   "Finsk nivå 1 programfag",
+//   "Arabisk nivå 1 programfag",
+//   "Italiensk nivå 1 programfag",
+//   "Japansk nivå 1 programfag",
+//   "Kinesisk nivå 1 programfag",
+//   "Koreansk nivå 1 programfag",
+//   "Lulesamisk nivå 1 programfag",
+//   "Nordsamisk nivå 1 programfag",
+//   "Russisk nivå 1 programfag",
+//   "Russisk nivå 1 programfag",
+//   "Sørsamisk nivå 1 programfag",
+//   "Tegnspråk nivå 1 programfag",
+//   "Teknologi og forskningslære 1",
+//   "Tysk nivå 1 programfag",
+// ];

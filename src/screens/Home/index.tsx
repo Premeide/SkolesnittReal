@@ -40,25 +40,3 @@ function mapDispatchToProps(dispatch: any) {
   return {};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
-
-{
-  /* <ScrollView>  <FlatList nestedScrollEnabled /> */
-}
-
-{
-  /* {localData.firstTime.logIn ? (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Discover")}
-            style={[GlobalStyles.customBtnContainer, { position: "relative" }]}
-          >
-            <Animatable.View
-              animation="fadeInUp"
-              duration={700}
-              delay={1000}
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <CustomBtn text="Legg til utdanning" />
-            </Animatable.View>
-          </TouchableOpacity>
-        ) : null} */
-}

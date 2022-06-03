@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
-import { GradesInterface, IEducation } from "../assets/data/Interfaces";
+import { IGrade, IEducation } from "../assets/data/Interfaces";
 
 const KARAKTERGRENSER = require("../assets/data/karaktergrense.json");
 
