@@ -316,7 +316,6 @@ function increaseRetakeAlderspoeng(retakeAlderspoeng: number, dx: number) {
   return Math.min(Math.max(v, 0), 8);
 }
 function increaseRetakeExtraPoints(retakeExtraPoints: number, dx: number) {
-  console.log("extra here");
   let v = 0;
   v += retakeExtraPoints + dx;
   return Math.min(Math.max(v, 0), 2);
