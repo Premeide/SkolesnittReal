@@ -20,6 +20,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { IGrade } from "../assets/data/Interfaces";
+import List from "./List";
 
 interface RetakeClassesListProps {
   navigation: any;
@@ -49,7 +50,7 @@ const RetakeClassesList: React.FC<RetakeClassesListProps> = ({
         Disse fagene skal jeg ta opp:
       </Text>
       <View style={GlobalStyles.greyContainer}>
-        <FlatList
+        <List
           data={retakeGrades}
           keyExtractor={(o) => o.id}
           ItemSeparatorComponent={() => (

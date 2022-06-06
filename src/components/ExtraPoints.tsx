@@ -11,6 +11,7 @@ import { IExtraPoints } from "../assets/data/Interfaces";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
+import List from "./List";
 
 const INGEN_AV_DISSE = "Ingen av disse";
 const FOLKEHØYSKOLE = "Folkehøyskole";
@@ -64,7 +65,7 @@ class ExtraPoints extends Component<ExtraPointsProps> {
           Tilleggspoeng: {this.props.extraPoints.value}
         </Text>
         <View style={GlobalStyles.greyContainer}>
-          <FlatList
+          <List
             data={extraPointsAlternatives}
             keyExtractor={(item) => item.name}
             ItemSeparatorComponent={() => (
@@ -95,6 +96,37 @@ class ExtraPoints extends Component<ExtraPointsProps> {
               </TouchableOpacity>
             )}
           />
+          {/* <FlatList
+            data={extraPointsAlternatives}
+            keyExtractor={(item) => item.name}
+            ItemSeparatorComponent={() => (
+              <View style={GlobalStyles.ItemSeparatorComponent} />
+            )}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                style={GlobalStyles.row}
+                onPress={() => {
+                  this.props.setExtraPoints(item.name);
+                  this.changeCheckArray(item.name);
+                }}
+              >
+                <Text style={GlobalStyles.listText}>{item.name}</Text>
+                {item.name == INGEN_AV_DISSE ? null : (
+                  <View style={GlobalStyles.listEndContainer}>
+                    {this.state.checkArray.includes(item.name) ? (
+                      <FontAwesome5
+                        name={"check-circle"}
+                        size={25}
+                        color="black"
+                      />
+                    ) : (
+                      <FontAwesome5 name={"circle"} size={25} color="black" />
+                    )}
+                  </View>
+                )}
+              </TouchableOpacity>
+            )}
+          /> */}
         </View>
       </Animatable.View>
     );

@@ -11,6 +11,7 @@ import GlobalStyles from "../assets/styles/GlobalStyles";
 import { connect } from "react-redux";
 import { IExtraPoints } from "../assets/data/Interfaces";
 import { useIsFocused } from "@react-navigation/native";
+import List from "./List";
 
 const ALDERSPOENG = "Alderspoeng";
 const TILLEGGSPOENG = "Tilleggspoeng";
@@ -61,7 +62,7 @@ const GradeSummary: React.FC<GradeSummaryProps> = (props) => {
       </Text>
       <Text style={styles.poeng}>{props.totalPoints}</Text>
       <View style={GlobalStyles.greyContainer}>
-        <FlatList
+        <List
           data={summaryList}
           keyExtractor={(e: any) => e.name}
           ItemSeparatorComponent={() => (

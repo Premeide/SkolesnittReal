@@ -17,9 +17,11 @@ class HomeScreen extends Component<IHomeScreen> {
   render() {
     return (
       <View style={GlobalStyles.container}>
-        <CustomHeader />
-        <GradeSummary />
-        <MyEducationsList navigation={this.props.navigation} />
+        <ScrollView>
+          <CustomHeader />
+          <GradeSummary />
+          <MyEducationsList navigation={this.props.navigation} />
+        </ScrollView>
         {this.props.tutorial ? (
           <CustomBtn
             text="Legg til utdanning"

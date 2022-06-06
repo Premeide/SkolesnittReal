@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
+import List from "./List";
 
 let LISTDATA = [
   { name: "Vanlige spørsmål", screen: "Questions" },
@@ -28,7 +29,7 @@ class ProfileList extends Component<ProfileListProps> {
   render() {
     return (
       <View style={GlobalStyles.whiteContainer}>
-        <FlatList
+        <List
           data={LISTDATA}
           keyExtractor={(item) => item.name}
           ItemSeparatorComponent={() => (

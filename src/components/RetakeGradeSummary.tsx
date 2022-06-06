@@ -11,6 +11,7 @@ import GlobalStyles from "../assets/styles/GlobalStyles";
 import { connect } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import PlussMinusBtns from "./PlussMinusBtns";
+import List from "./List";
 
 const NYE_ALDERSPOENG = "Ny alderspoeng";
 const NYE_TILLEGGSPOENG = "Ny tilleggspoeng";
@@ -96,7 +97,7 @@ const RetakeGradeSummary: React.FC<RetakeGradeSummaryProps> = (props) => {
       </Text>
       <Text style={styles.poeng}>{props.retakeTotalPoints}</Text>
       <View style={GlobalStyles.greyContainer}>
-        <FlatList
+        <List
           data={summaryList}
           keyExtractor={(e: any) => e.name}
           ItemSeparatorComponent={() => (
