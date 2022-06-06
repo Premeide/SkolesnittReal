@@ -57,7 +57,7 @@ class ProfileList extends Component<ProfileListProps> {
                 {
                   text: "Ja, gjør det",
                   onPress: () => {
-                    this.props.navigation.navigate("NewProfile");
+                    this.props.navigation.navigate("_Forside");
                   },
                 },
                 { text: "sry" },

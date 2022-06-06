@@ -3,6 +3,7 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
+import { connect } from "react-redux";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import BottomTabNavigator from "./BottomTabNavigator";
@@ -20,7 +21,7 @@ import ForsideScreen from "../screens/Forside";
 
 const Stack = createStackNavigator();
 
-const Router = () => {
+const Router = (props) => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -29,16 +30,18 @@ const Router = () => {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
-      <Stack.Screen
-        name="Forside"
-        component={ForsideScreen}
-        options={{
-          headerTitle: "FORSIDE as",
-          headerTitleAlign: "center",
-          headerTitleStyle: { color: GlobalStyles.blueColor.color },
-          headerShown: false,
-        }}
-      />
+      {props.tutorial ? (
+        <Stack.Screen
+          name="Forside"
+          component={ForsideScreen}
+          options={{
+            headerTitle: "FORSIDE as",
+            headerTitleAlign: "center",
+            headerTitleStyle: { color: GlobalStyles.blueColor.color },
+            headerShown: false,
+          }}
+        />
+      ) : null}
       <Stack.Screen
         name="Tab"
         component={BottomTabNavigator}
@@ -147,8 +150,27 @@ const Router = () => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}
       />
+      <Stack.Screen
+        name="_Forside"
+        component={ForsideScreen}
+        options={{
+          headerTitle: "FORSIDE as",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };
 
-export default Router;
+function mapStateToProps(state) {
+  return {
+    tutorial: state.tutorial,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Router);

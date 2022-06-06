@@ -1,29 +1,32 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 
-const RecommendDetailsScreen = ({ route, navigation }) => {
-  const { postStudiekode: subjectId } = route.params;
-  const karakterGrenser = require("../../assets/data/karaktergrense.json");
-  const allopptakskrav = require("../../assets/data/opptakskrav.json");
-  const thisEd = karakterGrenser.find((item) => item.studiekode === subjectId);
-  const opptakskrav = allopptakskrav.find(
-    (item) => item.opptakskrav == thisEd.opptakskrav
-  );
+const RecommendDetailsScreen = (props) => {
+  // const { postStudiekode: subjectId } = route.params;
+  // const karakterGrenser = require("../../assets/data/karaktergrense.json");
+  // const allopptakskrav = require("../../assets/data/opptakskrav.json");
+  // const thisEd = karakterGrenser.find((item) => item.studiekode === subjectId);
+  // const opptakskrav = allopptakskrav.find(
+  //   (item) => item.opptakskrav == thisEd.opptakskrav
+  // );
 
-  const educationData = [
-    { name: "Studiekode", value: thisEd.studiekode },
-    { name: "Lærerstedskode", value: thisEd.lærerstedskode },
-    { name: "Studiested", value: thisEd.studiested },
-    { name: "Felt", value: thisEd.felt },
-    { name: "Opptakskrav", value: thisEd.opptakskrav },
-    { name: "Ordinær Poenggrense", value: thisEd.poenggrense },
-    { name: "Primær poenggrense", value: thisEd.poenggrense_f },
-    { name: "Antall venteliste", value: thisEd.antall_venteliste },
-  ];
+  // const educationData = [
+  //   { name: "Studiekode", value: thisEd.studiekode },
+  //   { name: "Lærerstedskode", value: thisEd.lærerstedskode },
+  //   { name: "Studiested", value: thisEd.studiested },
+  //   { name: "Felt", value: thisEd.felt },
+  //   { name: "Opptakskrav", value: thisEd.opptakskrav },
+  //   { name: "Ordinær Poenggrense", value: thisEd.poenggrense },
+  //   { name: "Primær poenggrense", value: thisEd.poenggrense_f },
+  //   { name: "Antall venteliste", value: thisEd.antall_venteliste },
+  // ];
   return (
     <View style={GlobalStyles.container}>
-      <View style={GlobalStyles.whiteContainer2}>
+      <Text>RecommendDetailsScreen</Text>
+      <Text>RecommendDetailsScreen</Text>
+      <Text>RecommendDetailsScreen</Text>
+      {/* <View style={GlobalStyles.whiteContainer2}>
         <Text style={styles.title}>{thisEd.studienavn}</Text>
         <View style={GlobalStyles.greyContainer}>
           <FlatList
@@ -47,13 +50,13 @@ const RecommendDetailsScreen = ({ route, navigation }) => {
         <Text>
           Fra opptakskrav "{opptakskrav.opptakskrav}": {opptakskrav.description}
         </Text>
-      </View>
+      </View> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  title: { fontSize: 20, fontWeight: "bold", marginTop: 20 },
+  // title: { fontSize: 20, fontWeight: "bold", marginTop: 20 },
 });
 
 export default RecommendDetailsScreen;

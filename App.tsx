@@ -1,18 +1,27 @@
 import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { IGrade, IExtraPoints } from "./src/assets/data/Interfaces";
+import {
+  IGrade,
+  IExtraPoints,
+  IInitialState,
+} from "./src/assets/data/Interfaces";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Router from "./src/navigation/Router";
 import { ALL_CLASSES_LIST } from "./src/assets/data/GlobalData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistReducer, persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
+
 const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
+
 const INITIAL_GRADES = [
   { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
   { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
-  { value: 2, id: "Geografi", includeExam: true, examValue: 0 },
-  { value: 2, id: "Historie", includeExam: true, examValue: 0 },
+  { value: 0, id: "Geografi", includeExam: false, examValue: 0 },
+  { value: 0, id: "Historie", includeExam: false, examValue: 0 },
   { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
   { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
   { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
@@ -24,12 +33,12 @@ const INITIAL_GRADES = [
   { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
 ];
 
-const initialState = {
+const initialState: IInitialState = {
   tutorial: true,
   yearOfBirth: "",
   grades: INITIAL_GRADES,
-  retakeGrades: [{ value: 4, id: "Engelsk", includeExam: false, examValue: 0 }],
-  educations: [254642, 254651],
+  retakeGrades: [{ value: 6, id: "Engelsk", includeExam: false, examValue: 0 }],
+  educations: [],
 
   //current grades summary
   totalPoints: 100,
@@ -53,6 +62,8 @@ const initialState = {
 };
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
+    case "RESET_ALL_STATES":
+      return { ...initialState };
     case "SET_YEAR_OF_BIRTH":
       return { ...state, yearOfBirth: action.payload };
     case "SET_EXTRA_POINTS":
@@ -175,15 +186,26 @@ const reducer = (state = initialState, action: any) => {
   }
 };
 
-const store = createStore(reducer);
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+};
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+const store = createStore(persistedReducer);
+// const store = createStore(reducer); //
+
+const persistor = persistStore(store);
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <NavigationContainer>
-          <Router />
-        </NavigationContainer>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            <Router />
+          </NavigationContainer>
+        </PersistGate>
       </Provider>
     );
   }

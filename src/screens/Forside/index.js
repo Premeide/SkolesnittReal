@@ -2,8 +2,10 @@ import React from "react";
 import { View, ImageBackground } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import ArrowBtn from "../../components/ArrowBtn";
+import CustomBtn from "../../components/CustomBtn";
+import { connect } from "react-redux";
 
-const ForsideScreen = ({ navigation }) => {
+const ForsideScreen = (props) => {
   return (
     <View style={GlobalStyles.container}>
       <ImageBackground
@@ -11,9 +13,14 @@ const ForsideScreen = ({ navigation }) => {
         resizeMode="cover"
         style={{ flex: 1, justifyContent: "center" }}
       >
+        <CustomBtn
+          text="<RESET>"
+          onclick={() => props.resetAllStates()}
+          height="30%"
+        />
         <ArrowBtn
           onclick={() => {
-            navigation.navigate("NewProfile");
+            props.navigation.navigate("NewProfile");
           }}
         />
       </ImageBackground>
@@ -21,4 +28,12 @@ const ForsideScreen = ({ navigation }) => {
   );
 };
 
-export default ForsideScreen;
+function mapStateToProps(state) {
+  return {};
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    resetAllStates: () => dispatch({ type: "RESET_ALL_STATES", payload: null }),
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ForsideScreen);

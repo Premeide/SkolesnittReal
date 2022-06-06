@@ -1,11 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import { IEducation } from "../assets/data/Interfaces";
@@ -26,11 +20,7 @@ const MyEducationsList: React.FC<MyEducationsListProps> = (props) => {
     return (
       <TouchableOpacity
         style={GlobalStyles.row}
-        onPress={() =>
-          props.navigation.navigate("RecommendDetails", {
-            postStudiekode: thisEd.studiekode,
-          })
-        }
+        onPress={() => props.navigation.navigate("About")}
       >
         <Text style={[GlobalStyles.listText, { width: "70%" }]}>
           {thisEd.studienavn} ({thisEd.lærerstedskode})
@@ -57,9 +47,7 @@ const MyEducationsList: React.FC<MyEducationsListProps> = (props) => {
             </View>
           ))
         ) : (
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate("Utforsk")}
-          >
+          <TouchableOpacity onPress={() => props.navigation.navigate("About")}>
             <Text style={GlobalStyles.listText}>
               Trykk for å legge til utdanninger
             </Text>

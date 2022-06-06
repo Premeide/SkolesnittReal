@@ -24,5 +24,32 @@ interface IEducation {
   poenggrense_f: string;
   venteliste_f: number;
 }
+interface IInitialState {
+  tutorial: boolean;
+  yearOfBirth: string;
+  grades: IGrade[];
+  retakeGrades: IGrade[];
+  educations: number[];
 
-export { IGrade, IExtraPoints, IEducation };
+  //current grades summary
+  totalPoints: number;
+  alderspoeng: number;
+  extraPoints: {
+    value: number;
+    Military: boolean;
+    Folkehøyskole: boolean;
+    _30points: boolean;
+    _60points: boolean;
+  };
+  realfagspoeng: number;
+  snitt: number;
+
+  //retake grades summary
+  retakeTotalPoints: number;
+  retakeAlderspoeng: number;
+  retakeExtraPoints: number;
+  retakeRealfagspoeng: number;
+  retakeSnitt: number;
+}
+
+export { IGrade, IExtraPoints, IEducation, IInitialState };

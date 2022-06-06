@@ -23,7 +23,7 @@ const List: React.FC<ListProps> = (props) => {
     <View>
       {props?.data
         ? props.data.map((item, index) => (
-            <View key={item.name}>
+            <View key={item.name + index}>
               {props.renderItem({ item, index })}
               {index >=
               (props?.data?.length ? props.data.length : 0) - 1 ? null : (
