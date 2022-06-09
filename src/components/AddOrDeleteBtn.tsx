@@ -35,12 +35,6 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
       >
         <Text style={styles.btnText}>Legg til</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={toggleIsEditingHandler}
-        style={[styles.btn, { backgroundColor: "#FF2400" }]}
-      >
-        <Text style={styles.btnText}>{isEditing ? "Ferdig" : "Fjern"}</Text>
-      </TouchableOpacity>
     </View>
   );
 };

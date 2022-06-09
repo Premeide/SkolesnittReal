@@ -41,11 +41,11 @@ const GradeItem: React.FC<GradeItemProps> = (props) => {
   const heightContainer = useSharedValue(
     props.grade.includeExam ? HEIGHT_CONTAINER_INCLUDING_EXAM : HEIGHT_CONTAINER
   );
-  useEffect(() => {
-    props.isEditing
-      ? (translateX.value = withSpring(100))
-      : (translateX.value = withSpring(0));
-  }, [props.isEditing]);
+  // useEffect(() => {
+  //   props.isEditing
+  //     ? (translateX.value = withSpring(100))
+  //     : (translateX.value = withSpring(0));
+  // }, [props.isEditing]);
   useEffect(() => {
     if (props.isRetake) {
       props.updateRetakeSnitt();
@@ -126,7 +126,14 @@ const GradeItem: React.FC<GradeItemProps> = (props) => {
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={[styles.grade, rStyle]}>
-        <Text style={styles.gradeName}>{props.grade.id}</Text>
+        <View style={GlobalStyles.row}>
+          <Text style={styles.gradeName}>{props.grade.id}</Text>
+          <View style={GlobalStyles.listEndContainer}>
+            <TouchableOpacity onPress={tabDeleteHandler} style={{ padding: 3 }}>
+              <FontAwesome5 name={"trash-alt"} size={20} color="red" />
+            </TouchableOpacity>
+          </View>
+        </View>
         <SegmentedControl
           tabs={GRADE_TABS}
           currentIndex={props.grade.value}
