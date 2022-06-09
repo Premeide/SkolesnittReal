@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  IGrade,
-  IExtraPoints,
-  IInitialState,
-} from "./src/assets/data/Interfaces";
+import { IGrade, IExtraPoints, IState } from "./src/assets/data/Interfaces";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Router from "./src/navigation/Router";
@@ -12,7 +8,8 @@ import { ALL_CLASSES_LIST } from "./src/assets/data/GlobalData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-
+// søppel icon høyre istedet for..
+// BARE snitt (finnes?)
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
 
 const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
@@ -33,11 +30,11 @@ const INITIAL_GRADES = [
   { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
 ];
 
-const initialState: IInitialState = {
+const initialState: IState = {
   tutorial: true,
   yearOfBirth: "",
   grades: INITIAL_GRADES,
-  retakeGrades: [{ value: 6, id: "Engelsk", includeExam: false, examValue: 0 }],
+  retakeGrades: [],
   educations: [],
 
   //current grades summary
@@ -60,7 +57,7 @@ const initialState: IInitialState = {
   retakeRealfagspoeng: 100,
   retakeSnitt: 70.0,
 };
-const reducer = (state = initialState, action: any) => {
+const reducer = (state: IState = initialState, action: any) => {
   switch (action.type) {
     case "RESET_ALL_STATES":
       return { ...initialState };
@@ -213,7 +210,7 @@ class App extends Component {
 export default App;
 
 function addGrade(grades: IGrade[], id: string) {
-  if (grades.find((e) => e.id === id)) return grades; //deleteGrade(grades, id);
+  if (grades.find((e) => e.id === id)) return grades;
   let newGrade = DEFAULT_GRADE;
   newGrade = { ...newGrade, id: id };
 
@@ -312,7 +309,7 @@ function updateRetakeRealfagspoeng(grades: IGrade[], retakeGrades: IGrade[]) {
 }
 function increaseRetakeAlderspoeng(retakeAlderspoeng: number, dx: number) {
   let v = 0;
-  v += retakeAlderspoeng + dx;
+  v += retakeAlderspoeng + 2 * dx;
   return Math.min(Math.max(v, 0), 8);
 }
 function increaseRetakeExtraPoints(retakeExtraPoints: number, dx: number) {
@@ -339,7 +336,7 @@ function realfagspoeng(grades: IGrade[]) {
     )?.rPoints;
     if (thisGradeRealfagspoeng) realfagspoeng += thisGradeRealfagspoeng;
   }
-  return realfagspoeng; //Math.min(realfagspoeng, 4);
+  return Math.min(realfagspoeng, 4);
 }
 function alderspoeng(yearOfBirth: string, _235: boolean = false) {
   let fødselsår = isPositiveInteger(yearOfBirth) ? Number(yearOfBirth) : 2020;

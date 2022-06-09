@@ -65,7 +65,7 @@ const EducationList: React.FC<EducationListProps> = (props) => {
                   GlobalStyles.listText,
                   {
                     width: "90%",
-                    fontWeight: isAdded(item.studiekode) ? "bold" : "100",
+                    fontWeight: isAdded(item.studiekode) ? "bold" : undefined,
                   },
                 ]}
               >

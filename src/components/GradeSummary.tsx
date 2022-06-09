@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import { connect } from "react-redux";
 import { IExtraPoints } from "../assets/data/Interfaces";

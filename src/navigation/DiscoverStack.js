@@ -13,7 +13,14 @@ const DiscoverStack = () => {
       <Stack.Screen
         name="Discover"
         component={DiscoverScreen}
-        options={{ headerTitle: "Se hva du kan studere", headerShown: false }}
+        options={{
+          headerTitle: "Hva ønsker du å studere?",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            color: GlobalStyles.blueColor.color,
+            fontSize: 13,
+          },
+        }}
       />
       <Stack.Screen
         name="EducationDetails"

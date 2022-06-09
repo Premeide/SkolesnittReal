@@ -20,7 +20,11 @@ const MyEducationsList: React.FC<MyEducationsListProps> = (props) => {
     return (
       <TouchableOpacity
         style={GlobalStyles.row}
-        onPress={() => props.navigation.navigate("About")}
+        onPress={() =>
+          props.navigation.navigate("_RecommendDetails", {
+            studiekode: s,
+          })
+        }
       >
         <Text style={[GlobalStyles.listText, { width: "70%" }]}>
           {thisEd.studienavn} ({thisEd.lærerstedskode})
@@ -47,7 +51,11 @@ const MyEducationsList: React.FC<MyEducationsListProps> = (props) => {
             </View>
           ))
         ) : (
-          <TouchableOpacity onPress={() => props.navigation.navigate("About")}>
+          <TouchableOpacity
+            onPress={() =>
+              props.navigation.navigate("Tab", { screen: "Utforsk" })
+            }
+          >
             <Text style={GlobalStyles.listText}>
               Trykk for å legge til utdanninger
             </Text>

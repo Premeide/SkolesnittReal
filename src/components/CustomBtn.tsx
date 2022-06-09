@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  View,
   Text,
   StyleSheet,
   TouchableOpacity,
@@ -19,9 +18,9 @@ interface ICustomBtn {
 }
 class CustomBtn extends Component<ICustomBtn> {
   state = {
-    height: this.props?.height
+    bottom: this.props?.height
       ? this.props.height
-      : GlobalStyles.customBtnContainer.height,
+      : GlobalStyles.customBtnContainer.bottom,
   };
   render() {
     return (
@@ -29,7 +28,8 @@ class CustomBtn extends Component<ICustomBtn> {
         style={[
           GlobalStyles.customBtnContainer,
           {
-            height: this.state.height,
+            bottom: this.state.bottom,
+            backgroundColor: "green",
           },
         ]}
         animation="slideInUp"

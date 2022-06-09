@@ -1,16 +1,9 @@
-import React, { Component, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, Text, TextInput } from "react-native";
 import { connect } from "react-redux";
-import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
+import { IState } from "../assets/data/Interfaces";
 
 interface AgeInputProps {
   yearOfBirth: string;
@@ -44,7 +37,7 @@ class AgeInput extends Component<AgeInputProps> {
 }
 const styles = StyleSheet.create({});
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: IState) {
   return {
     yearOfBirth: state.yearOfBirth,
   };

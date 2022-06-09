@@ -1,23 +1,7 @@
-import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Animated, {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  withDelay,
-  withSpring,
-} from "react-native-reanimated";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 import GlobalStyles from "../assets/styles/GlobalStyles";
-import { FontAwesome5 } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { IGrade } from "../assets/data/Interfaces";
 import List from "./List";

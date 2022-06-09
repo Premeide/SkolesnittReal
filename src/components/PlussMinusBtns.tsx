@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import Animated, {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  withDelay,
-  withSpring,
-} from "react-native-reanimated";
-import GlobalStyles from "../assets/styles/GlobalStyles";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+
 import { FontAwesome5 } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -46,7 +37,7 @@ const styles = StyleSheet.create({
   BtnContainer: {
     backgroundColor: "lightgrey",
     borderRadius: 100,
-    padding: 3,
+    padding: 5,
   },
 });
 

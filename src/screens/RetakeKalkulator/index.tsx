@@ -1,11 +1,10 @@
-// import React, { Component } from "react";
+import { Component } from "react";
 import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import { IGrade } from "../../assets/data/Interfaces";
 import { Modal, StyleSheet, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import ElevatingSnitt from "../../components/ElevatingSnitt";
-import { Component } from "react";
 import RetakeGradesList from "../../components/RetakeGradesList";
 import AddRetakeClass from "../../components/AddRetakeClass";
 

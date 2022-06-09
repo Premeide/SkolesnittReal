@@ -19,7 +19,7 @@ class COMPONENT_NAME extends Component<COMPONENT_NAMEProps> {
   render() {
     return (
       <View>
-        <Text>ABC</Text>
+        <Text>NEW CLASS COMPONENT</Text>
       </View>
     );
   }

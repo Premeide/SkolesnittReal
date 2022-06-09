@@ -1,15 +1,6 @@
-import React, { Component, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { connect } from "react-redux";
-import { FontAwesome5 } from "@expo/vector-icons";
-import * as Animatable from "react-native-animatable";
-import GlobalStyles from "../assets/styles/GlobalStyles";
 import { IGrade } from "../assets/data/Interfaces";
 import GradeItem from "./GradeItem";
 
@@ -32,8 +23,8 @@ class RetakeGradesList extends Component<RetakeGradesListProps> {
           data={this.props.retakeGrades}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={6}
-          ListFooterComponent={() => <Text style={{ fontSize: 65 }}> </Text>}
-          ListHeaderComponent={() => <Text style={{ fontSize: 60 }}> </Text>}
+          ListHeaderComponent={() => <Text style={{ fontSize: 65 }}> </Text>}
+          ListFooterComponent={() => <Text style={{ fontSize: 100 }}> </Text>}
           keyExtractor={(e) => e.id}
           renderItem={({ item }) => (
             <View>

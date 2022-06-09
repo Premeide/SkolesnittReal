@@ -13,7 +13,6 @@ import SegmentedControl from "rn-segmented-control";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { IGrade } from "../assets/data/Interfaces";
-import * as Animatable from "react-native-animatable";
 import { connect } from "react-redux";
 
 interface GradeItemProps {
@@ -112,7 +111,7 @@ const GradeItem: React.FC<GradeItemProps> = (props) => {
         (isFinished) => {
           if (isFinished) {
             runOnJS(props.hadExamChange)(props.grade);
-            examContainerOpacity.value = withDelay(200, withTiming(1));
+            examContainerOpacity.value = withDelay(100, withTiming(1));
           }
         }
       );

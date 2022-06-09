@@ -48,7 +48,7 @@ class KalkulatorScreen extends Component<IKalkulatorScreen> {
         {this.props.tutorial ? (
           <CustomBtn
             text="Fortsett"
-            height={"25%"}
+            height={"12%"}
             onclick={() =>
               this.props.navigation.navigate("Tab", {
                 screen: "Hjem",

@@ -18,6 +18,7 @@ import QuestionsScreen from "../screens/Questions";
 import FeedbackScreen from "../screens/Feedback";
 import EducationDetailsScreen from "../screens/EducationDetails";
 import ForsideScreen from "../screens/Forside";
+import RecommendDetailsScreen from "../screens/RecommendDetails";
 
 const Stack = createStackNavigator();
 
@@ -42,12 +43,12 @@ const Router = (props) => {
           }}
         />
       ) : null}
+
       <Stack.Screen
         name="Tab"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="_Kalkulator"
         component={KalkulatorScreen}
@@ -68,6 +69,15 @@ const Router = (props) => {
             color: GlobalStyles.blueColor.color,
             fontSize: 16,
           },
+        }}
+      />
+      <Stack.Screen
+        name="_RecommendDetails"
+        component={RecommendDetailsScreen}
+        options={{
+          headerTitle: "Øk snittet",
+          headerTitleAlign: "center",
+          headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}
       />
       <Stack.Screen

@@ -1,3 +1,65 @@
+// (
+//   <TouchableOpacity
+//     style={GlobalStyles.customBtnContainer}
+//     onPress={() => navigation.goBack()}
+//   >
+// const { postStudiekode: subjectId } = route.params;
+  // const karakterGrenser = require("../../assets/data/karaktergrense.json");
+  // const allopptakskrav = require("../../assets/data/opptakskrav.json");
+  // const thisEd = karakterGrenser.find((item) => item.studiekode === subjectId);
+  // const opptakskrav = allopptakskrav.find(
+  //   (item) => item.opptakskrav == thisEd.opptakskrav
+  // );
+
+  // const educationData = [
+  //   { name: "Studiekode", value: thisEd.studiekode },
+  //   { name: "Lærerstedskode", value: thisEd.lærerstedskode },
+  //   { name: "Studiested", value: thisEd.studiested },
+  //   { name: "Felt", value: thisEd.felt },
+  //   { name: "Opptakskrav", value: thisEd.opptakskrav },
+  //   { name: "Ordinær Poenggrense", value: thisEd.poenggrense },
+  //   { name: "Primær poenggrense", value: thisEd.poenggrense_f },
+  //   { name: "Antall venteliste", value: thisEd.antall_venteliste },
+  // ];
+  /* <View style={GlobalStyles.whiteContainer2}>
+          <Text style={styles.title}>{thisEd.studienavn}</Text>
+          <View style={GlobalStyles.greyContainer}>
+            <FlatList
+              data={educationData}
+              keyExtractor={(item) => item.name}
+              ItemSeparatorComponent={() => (
+                <View style={GlobalStyles.ItemSeparatorComponent} />
+              )}
+              renderItem={({ item }) => (
+                <View style={GlobalStyles.row}>
+                  <Text style={[GlobalStyles.listText, { fontWeight: "bold" }]}>
+                    {item.name}
+                  </Text>
+                  <View style={GlobalStyles.listEndContainer}>
+                    <Text style={GlobalStyles.listText}>{item.value}</Text>
+                  </View>
+                </View>
+              )}
+            />
+          </View>
+          <Text>
+            Fra opptakskrav "{opptakskrav.opptakskrav}": {opptakskrav.description}
+          </Text>
+        </View> */
+  // title: { fontSize: 20, fontWeight: "bold", marginTop: 20 },
+
+//     <Animatable.View
+//       animation="jello"
+//       style={[GlobalStyles.addBtn, { flexDirection: "row" }]}
+//     >
+//       <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
+//       <Text style={{ color: GlobalStyles.blueColor.color }}>
+//         {" "}
+//         Tilbake
+//       </Text>
+//     </Animatable.View>
+//   </TouchableOpacity>
+// )
 import React, { useCallback, useRef, useState } from "react";
 // import {
 //   Button,

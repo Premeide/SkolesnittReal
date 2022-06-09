@@ -1,11 +1,5 @@
-import React, { Component, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { connect } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";

@@ -24,7 +24,7 @@ interface IEducation {
   poenggrense_f: string;
   venteliste_f: number;
 }
-interface IInitialState {
+interface IState {
   tutorial: boolean;
   yearOfBirth: string;
   grades: IGrade[];
@@ -51,5 +51,9 @@ interface IInitialState {
   retakeRealfagspoeng: number;
   retakeSnitt: number;
 }
+interface IOpptaksKrav {
+  opptakskrav: string;
+  description: string;
+}
 
-export { IGrade, IExtraPoints, IEducation, IInitialState };
+export { IGrade, IExtraPoints, IEducation, IState, IOpptaksKrav };

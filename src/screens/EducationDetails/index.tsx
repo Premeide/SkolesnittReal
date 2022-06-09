@@ -1,14 +1,7 @@
-import React, { Component, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import React, { Component } from "react";
+import { View, StyleSheet } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
 import CustomBtn from "../../components/CustomBtn";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import EducationDetails from "../../components/EducationDetails";
 import { IEducation } from "../../assets/data/Interfaces";
@@ -85,21 +78,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(EducationDetailsScreen);
-
-// (
-//   <TouchableOpacity
-//     style={GlobalStyles.customBtnContainer}
-//     onPress={() => navigation.goBack()}
-//   >
-//     <Animatable.View
-//       animation="jello"
-//       style={[GlobalStyles.addBtn, { flexDirection: "row" }]}
-//     >
-//       <Icon name="check" size={25} color={GlobalStyles.blueColor.color} />
-//       <Text style={{ color: GlobalStyles.blueColor.color }}>
-//         {" "}
-//         Tilbake
-//       </Text>
-//     </Animatable.View>
-//   </TouchableOpacity>
-// )

@@ -23,8 +23,8 @@ class GradesList extends Component<GradesListProps> {
           data={this.props.grades}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={6}
-          ListFooterComponent={() => <Text style={{ fontSize: 65 }}> </Text>}
-          ListHeaderComponent={() => <Text style={{ fontSize: 60 }}> </Text>}
+          ListHeaderComponent={() => <Text style={{ fontSize: 65 }}> </Text>}
+          ListFooterComponent={() => <Text style={{ fontSize: 100 }}> </Text>}
           keyExtractor={(e) => e.id}
           renderItem={({ item }) => (
             <View>

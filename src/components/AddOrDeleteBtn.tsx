@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { runOnJS } from "react-native-reanimated";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { runOnJS } from "react-native-reanimated";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -24,7 +23,12 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
     runOnJS(toggleIsEditing)();
   };
   return (
-    <View style={[GlobalStyles.customBtnContainer, { flexDirection: "row" }]}>
+    <View
+      style={[
+        GlobalStyles.customBtnContainer,
+        { flexDirection: "row", bottom: "1%" },
+      ]}
+    >
       <TouchableOpacity
         onPress={toggleModalHandler}
         style={[styles.btn, { backgroundColor: "#3EB489" }]}

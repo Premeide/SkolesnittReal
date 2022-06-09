@@ -1,8 +1,6 @@
-import React, { Component, useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import React, { Component } from "react";
+import { View } from "react-native";
 import GlobalStyles from "../../assets/styles/GlobalStyles";
-import { Alert } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
 import ExtraPoints from "../../components/ExtraPoints";
 import AgeInput from "../../components/AgeInput";
 import { connect } from "react-redux";

@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
-import { IGrade } from "../assets/data/Interfaces";
+import { IGrade, IState } from "../assets/data/Interfaces";
 import { ALL_CLASSES_LIST } from "../assets/data/GlobalData";
 import CustomBtn from "./CustomBtn";
 
@@ -115,7 +115,7 @@ class AddClass extends Component<AddClassProps> {
 }
 const styles = StyleSheet.create({});
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: IState) {
   return {
     grades: state.grades,
   };

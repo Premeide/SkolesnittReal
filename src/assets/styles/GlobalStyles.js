@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     width: "100%",
-    height: "10%",
-    bottom: "1%",
+    // height: "50%",
+    bottom: "6%",
   },
   smallText: {
     marginTop: 10,
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   kalkText: { fontSize: 15, color: "black", fontWeight: "bold" },
   customBtn2Bottom: { bottom: "10%" },
+  title: { fontSize: 20, fontWeight: "bold" },
 });
 
 export default styles;
