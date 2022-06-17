@@ -19,9 +19,7 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
   const toggleModalHandler = () => {
     runOnJS(toggleModal)();
   };
-  const toggleIsEditingHandler = () => {
-    runOnJS(toggleIsEditing)();
-  };
+
   return (
     <View
       style={[
@@ -31,7 +29,7 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
     >
       <TouchableOpacity
         onPress={toggleModalHandler}
-        style={[styles.btn, { backgroundColor: "#3EB489" }]}
+        style={[styles.btn, GlobalStyles.elevation]}
       >
         <Text style={styles.btnText}>Legg til</Text>
       </TouchableOpacity>
@@ -40,12 +38,13 @@ const AddOrDeleteBtn: React.FC<AddOrDeleteBtnProps> = ({
 };
 const styles = StyleSheet.create({
   btn: {
+    backgroundColor: "#3EB489",
     padding: 10,
     borderRadius: 15,
-    marginHorizontal: 10,
+    // marginHorizontal: 10,
     width: SCREEN_WIDTH * 0.4,
-    elevation: 8,
-    shadowColor: "#52006A",
+    // elevation: 30,
+    // shadowColor: "black",
   },
   btnText: {
     alignSelf: "center",

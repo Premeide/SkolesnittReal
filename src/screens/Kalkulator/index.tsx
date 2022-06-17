@@ -50,8 +50,8 @@ class KalkulatorScreen extends Component<IKalkulatorScreen> {
             text="Fortsett"
             height={"12%"}
             onclick={() =>
-              this.props.navigation.navigate("Tab", {
-                screen: "Hjem",
+              this.props.navigation.navigate("_Hjem", {
+                dontShowEducations: true,
               })
             }
           />

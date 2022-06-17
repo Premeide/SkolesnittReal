@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
   karakterElevationContainer: {
     backgroundColor: "white",
-    elevation: 10,
-    shadowColor: "#52006A",
+    elevation: 5,
+    shadowColor: "black",
     borderRadius: 20,
     width: "94%",
     top: "6%",

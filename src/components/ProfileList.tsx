@@ -14,6 +14,7 @@ let LISTDATA = [
 
 interface ProfileListProps {
   navigation: any;
+  resetAllStates: () => {};
 }
 
 class ProfileList extends Component<ProfileListProps> {
@@ -50,7 +51,8 @@ class ProfileList extends Component<ProfileListProps> {
                 {
                   text: "Ja, gjør det",
                   onPress: () => {
-                    this.props.navigation.navigate("_Forside");
+                    this.props.resetAllStates();
+                    this.props.navigation.navigate("NewProfile");
                   },
                 },
                 { text: "sry" },
@@ -70,6 +72,8 @@ function mapStateToProps(state: any) {
   return {};
 }
 function mapDispatchToProps(dispatch: any) {
-  return {};
+  return {
+    resetAllStates: () => dispatch({ type: "RESET_ALL_STATES", payload: null }),
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileList);

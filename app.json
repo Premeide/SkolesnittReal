@@ -21,7 +21,7 @@
       "package": "com.SkoleSnitt",
       "versionCode": 2,
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/skoleLogo.png",
         "backgroundColor": "#FFFFFF"
       }
     },

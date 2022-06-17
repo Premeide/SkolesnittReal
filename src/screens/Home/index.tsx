@@ -12,20 +12,36 @@ interface IHomeScreen {
   navigation: any;
   route: any;
   tutorial: boolean;
+  dontShowEducations?: boolean;
+  tutorialDone: () => {};
 }
 class HomeScreen extends Component<IHomeScreen> {
+  state = {
+    dontShowEducations: this.props?.route?.params?.dontShowEducations,
+  };
+
+  skipHandler() {
+    this.props.tutorialDone();
+    this.props.navigation.navigate("Tab", { screen: "Hjem" });
+  }
   render() {
     return (
       <View style={GlobalStyles.container}>
         <ScrollView>
           <CustomHeader />
           <GradeSummary />
-          <MyEducationsList navigation={this.props.navigation} />
+          {this.state.dontShowEducations ? null : (
+            <MyEducationsList navigation={this.props.navigation} />
+          )}
         </ScrollView>
         {this.props.tutorial ? (
           <CustomBtn
             text="Legg til utdanning"
             onclick={() => this.props.navigation.navigate("Discover")}
+            flexEndBtn={{
+              text: "SKIP",
+              onPress: () => this.skipHandler(),
+            }}
           />
         ) : null}
       </View>
@@ -41,6 +57,8 @@ function mapStateToProps(state: any) {
   };
 }
 function mapDispatchToProps(dispatch: any) {
-  return {};
+  return {
+    tutorialDone: () => dispatch({ type: "TUTORIAL_DONE", payload: null }),
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

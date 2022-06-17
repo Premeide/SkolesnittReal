@@ -30,7 +30,7 @@ class EducationDetailsScreen extends Component<IEducationDetailsScreen> {
     this.setState({ isAdded: true });
     if (this.props.tutorial) {
       this.props.tutorialDone();
-      this.props.navigation.navigate("RecommendStack");
+      this.props.navigation.navigate("Tab", { screen: "Hjem" });
     }
   }
 

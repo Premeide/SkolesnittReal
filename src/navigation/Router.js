@@ -17,8 +17,8 @@ import RetakeKalkulatorScreen from "../screens/RetakeKalkulator";
 import QuestionsScreen from "../screens/Questions";
 import FeedbackScreen from "../screens/Feedback";
 import EducationDetailsScreen from "../screens/EducationDetails";
-import ForsideScreen from "../screens/Forside";
 import RecommendDetailsScreen from "../screens/RecommendDetails";
+import HomeScreen from "../screens/Home";
 
 const Stack = createStackNavigator();
 
@@ -33,13 +33,12 @@ const Router = (props) => {
     >
       {props.tutorial ? (
         <Stack.Screen
-          name="Forside"
-          component={ForsideScreen}
+          name="NewProfile"
+          component={NewProfileScreen}
           options={{
-            headerTitle: "FORSIDE as",
+            headerTitle: "Ny profil",
             headerTitleAlign: "center",
             headerTitleStyle: { color: GlobalStyles.blueColor.color },
-            headerShown: false,
           }}
         />
       ) : null}
@@ -48,6 +47,16 @@ const Router = (props) => {
         name="Tab"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="_Hjem"
+        component={HomeScreen}
+        options={{
+          // headerTitle: "Ny profil",
+          // headerTitleAlign: "center",
+          // headerTitleStyle: { color: GlobalStyles.blueColor.color },
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="_Kalkulator"
@@ -90,7 +99,7 @@ const Router = (props) => {
         }}
       />
       <Stack.Screen
-        name="NewProfile"
+        name="_NewProfile"
         component={NewProfileScreen}
         options={{
           headerTitle: "Ny profil",
@@ -160,7 +169,7 @@ const Router = (props) => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="_Forside"
         component={ForsideScreen}
         options={{
@@ -169,7 +178,7 @@ const Router = (props) => {
           headerTitleStyle: { color: GlobalStyles.blueColor.color },
           headerShown: false,
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

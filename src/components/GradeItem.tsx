@@ -29,7 +29,7 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const HEIGHT_CONTAINER = SCREEN_HEIGHT * 0.18;
 const HEIGHT_CONTAINER_INCLUDING_EXAM = SCREEN_HEIGHT * 0.28;
-const GRADE_TABS = ["1", "2", "3", "4", "5", "6"];
+const GRADE_TABS = ["2", "3", "4", "5", "6"];
 
 const GradeItem: React.FC<GradeItemProps> = (props) => {
   const [, updateState] = React.useState(false);
@@ -129,7 +129,10 @@ const GradeItem: React.FC<GradeItemProps> = (props) => {
         <View style={GlobalStyles.row}>
           <Text style={styles.gradeName}>{props.grade.id}</Text>
           <View style={GlobalStyles.listEndContainer}>
-            <TouchableOpacity onPress={tabDeleteHandler} style={{ padding: 3 }}>
+            <TouchableOpacity
+              onPress={tabDeleteHandler}
+              style={{ padding: 5, paddingHorizontal: 8 }}
+            >
               <FontAwesome5 name={"trash-alt"} size={20} color="red" />
             </TouchableOpacity>
           </View>
@@ -208,8 +211,6 @@ function mapStateToProps(state: any) {
 }
 function mapDispatchToProps(dispatch: any) {
   return {
-    // setYearOfBirth: (text: string) =>
-    //   dispatch({ type: "SET_YEAR_OF_BIRTH", payload: text }),
     updateSnitt: () => dispatch({ type: "UPDATE_SNITT", payload: null }),
     updateRetakeSnitt: () =>
       dispatch({ type: "UPDATE_RETAKE_SNITT", payload: null }),

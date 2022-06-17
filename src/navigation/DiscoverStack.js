@@ -18,7 +18,7 @@ const DiscoverStack = () => {
           headerTitleAlign: "center",
           headerTitleStyle: {
             color: GlobalStyles.blueColor.color,
-            fontSize: 13,
+            fontSize: 16,
           },
         }}
       />

@@ -8,6 +8,7 @@ import { ALL_CLASSES_LIST } from "./src/assets/data/GlobalData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { StatusBar } from "expo-status-bar";
 // søppel icon høyre istedet for..
 // BARE snitt (finnes?)
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
@@ -15,19 +16,19 @@ const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
 const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
 
 const INITIAL_GRADES = [
-  { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
-  { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
-  { value: 0, id: "Geografi", includeExam: false, examValue: 0 },
-  { value: 0, id: "Historie", includeExam: false, examValue: 0 },
-  { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
-  { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
-  { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
-  { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
-  { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
-  { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
-  { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
-  { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
-  { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
+  { value: 1, id: "Engelsk", includeExam: false, examValue: 1 },
+  { value: 1, id: "Fremmedspråk", includeExam: false, examValue: 1 },
+  { value: 1, id: "Geografi", includeExam: false, examValue: 1 },
+  { value: 1, id: "Historie", includeExam: false, examValue: 1 },
+  { value: 1, id: "Naturfag", includeExam: false, examValue: 1 },
+  { value: 1, id: "Kroppsøving", includeExam: false, examValue: 1 },
+  { value: 1, id: "Matematikk 1T/1P", includeExam: false, examValue: 1 },
+  { value: 1, id: "Matematikk 2T/2P", includeExam: false, examValue: 1 },
+  { value: 1, id: "Norsk hovedmål", includeExam: false, examValue: 1 },
+  { value: 1, id: "Norsk muntlig", includeExam: false, examValue: 1 },
+  { value: 1, id: "Norsk sidemål", includeExam: false, examValue: 1 },
+  { value: 1, id: "Religion og etikk", includeExam: false, examValue: 1 },
+  { value: 1, id: "Samfunnsfag", includeExam: false, examValue: 1 },
 ];
 
 const initialState: IState = {
@@ -38,8 +39,8 @@ const initialState: IState = {
   educations: [],
 
   //current grades summary
-  totalPoints: 100,
-  alderspoeng: 100,
+  totalPoints: 0,
+  alderspoeng: 0,
   extraPoints: {
     value: 0,
     Military: false,
@@ -47,15 +48,15 @@ const initialState: IState = {
     _30points: false,
     _60points: false,
   },
-  realfagspoeng: 100,
-  snitt: 70.0,
+  realfagspoeng: 0,
+  snitt: 10.0,
 
   //retake grades summary
-  retakeTotalPoints: 100,
+  retakeTotalPoints: 0,
   retakeAlderspoeng: 0,
   retakeExtraPoints: 0,
-  retakeRealfagspoeng: 100,
-  retakeSnitt: 70.0,
+  retakeRealfagspoeng: 0,
+  retakeSnitt: 10.0,
 };
 const reducer = (state: IState = initialState, action: any) => {
   switch (action.type) {
@@ -200,6 +201,7 @@ class App extends Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
+            <StatusBar style="auto" />
             <Router />
           </NavigationContainer>
         </PersistGate>

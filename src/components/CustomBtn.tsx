@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ViewStyle,
   TextStyle,
+  View,
 } from "react-native";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import * as Animatable from "react-native-animatable";
@@ -15,6 +16,11 @@ interface ICustomBtn {
   style?: ViewStyle;
   textStyle?: TextStyle;
   height?: string | number;
+  flexEndBtn?: {
+    text: string;
+    color?: string;
+    onPress?: () => void;
+  };
 }
 class CustomBtn extends Component<ICustomBtn> {
   state = {
@@ -38,9 +44,32 @@ class CustomBtn extends Component<ICustomBtn> {
           onPress={this.props.onclick}
           style={[styles.container, this.props.style]}
         >
+          {this.props.flexEndBtn ? <View style={{ flex: 1 }} /> : null}
+
           <Text style={[styles.text, this.props.textStyle]}>
             {this.props.text}
           </Text>
+          {this.props.flexEndBtn ? (
+            <View
+              style={{
+                alignItems: "flex-end",
+                flex: 1,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "grey",
+                  borderRadius: 20,
+                  paddingHorizontal: 10,
+                }}
+                onPress={this.props?.flexEndBtn?.onPress}
+              >
+                <Text style={[styles.flexEndText, this.props.textStyle]}>
+                  {this.props.flexEndBtn.text}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : null}
         </TouchableOpacity>
       </Animatable.View>
     );
@@ -48,6 +77,7 @@ class CustomBtn extends Component<ICustomBtn> {
 }
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
@@ -57,7 +87,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
     borderRadius: 20,
+    paddingHorizontal: 20,
   },
   text: { fontSize: 15, color: "white", fontWeight: "bold" },
+  flexEndText: { fontSize: 15, color: "white" },
 });
 export default CustomBtn;
