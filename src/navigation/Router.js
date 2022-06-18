@@ -8,17 +8,17 @@ import GlobalStyles from "../assets/styles/GlobalStyles";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 
-import KalkulatorScreen from "../screens/Kalkulator";
-import NewProfileScreen from "../screens/NewProfile";
-import AboutScreen from "../screens/About";
-import DiscoverScreen from "../screens/Discover";
-import ProfileScreen from "../screens/Profile";
-import RetakeKalkulatorScreen from "../screens/RetakeKalkulator";
-import QuestionsScreen from "../screens/Questions";
-import FeedbackScreen from "../screens/Feedback";
-import EducationDetailsScreen from "../screens/EducationDetails";
-import RecommendDetailsScreen from "../screens/RecommendDetails";
-import HomeScreen from "../screens/Home";
+import KalkulatorScreen from "../screens/KalkulatorScreen";
+import NewProfileScreen from "../screens/NewProfileScreen";
+import AboutScreen from "../screens/AboutScreen";
+import DiscoverScreen from "../screens/DiscoverScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import RetakeKalkulatorScreen from "../screens/RetakeKalkulatorScreen";
+import QuestionsScreen from "../screens/QuestionsScreen";
+import FeedbackScreen from "../screens/FeedbackScreen";
+import EducationDetailsScreen from "../screens/EducationDetailsScreen";
+import RecommendDetailsScreen from "../screens/RecommendDetailsScreen";
+import HomeScreen from "../screens/HomeScreen";
 
 const Stack = createStackNavigator();
 

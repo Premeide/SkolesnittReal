@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import ArrowBtn from "../../components/ArrowBtn";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import ArrowBtn from "../components/ArrowBtn";
 import { connect } from "react-redux";
-import ExtraPoints from "../../components/ExtraPoints";
-import AgeInput from "../../components/AgeInput";
+import ExtraPoints from "../components/ExtraPoints";
+import AgeInput from "../components/AgeInput";
 
 interface INewProfileProps {
   navigation: any;

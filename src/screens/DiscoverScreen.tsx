@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import EducationList from "../../components/EducationList";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import EducationList from "../components/EducationList";
 interface IDiscoverScreen {
   navigation: any;
 }

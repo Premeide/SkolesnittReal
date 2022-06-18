@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CollapsibleItem from "../../components/CollapsibleItem";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import CollapsibleItem from "../components/CollapsibleItem";
 
 interface IQuestionsScreen {
   navigation: any;

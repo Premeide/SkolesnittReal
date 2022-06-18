@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomHeader from "../../components/CustomHeader";
-import RetakeClassesList from "../../components/RetakeClassesList";
-import RetakeGradeSummary from "../../components/RetakeGradeSummary";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import CustomHeader from "../components/CustomHeader";
+import RetakeClassesList from "../components/RetakeClassesList";
+import RetakeGradeSummary from "../components/RetakeGradeSummary";
 interface IRecommendScreen {
   navigation: any;
 }

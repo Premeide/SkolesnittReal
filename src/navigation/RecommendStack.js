@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
-import RecommendScreen from "../screens/Recommend";
-import RecommendDetailsScreen from "../screens/RecommendDetails";
+import RecommendScreen from "../screens/RecommendScreen";
+import RecommendDetailsScreen from "../screens/RecommendDetailsScreen";
 
 const Stack = createStackNavigator();
 

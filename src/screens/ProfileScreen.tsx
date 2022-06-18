@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import ExtraPoints from "../../components/ExtraPoints";
-import AgeInput from "../../components/AgeInput";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import ExtraPoints from "../components/ExtraPoints";
+import AgeInput from "../components/AgeInput";
 import { connect } from "react-redux";
-import ProfileList from "../../components/ProfileList";
+import ProfileList from "../components/ProfileList";
 
 interface IProfileScreen {
   navigation: any;

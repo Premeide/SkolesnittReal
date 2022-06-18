@@ -1,8 +1,8 @@
 import React from "react";
 import { View, ImageBackground } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import ArrowBtn from "../../components/ArrowBtn";
-import CustomBtn from "../../components/CustomBtn";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import ArrowBtn from "../components/ArrowBtn";
+import CustomBtn from "../components/CustomBtn";
 import { connect } from "react-redux";
 
 const ForsideScreen = (props) => {

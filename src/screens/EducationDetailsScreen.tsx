@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import CustomBtn from "../components/CustomBtn";
 import { connect } from "react-redux";
-import EducationDetails from "../../components/EducationDetails";
-import { IEducation } from "../../assets/data/Interfaces";
+import EducationDetails from "../components/EducationDetails";
+import { IEducation } from "../assets/data/Interfaces";
 
 interface IEducationDetailsScreen {
   route: any;

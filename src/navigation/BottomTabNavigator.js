@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
-import KalkulatorScreen from "../screens/Kalkulator";
-import HomeScreen from "../screens/Home";
+import KalkulatorScreen from "../screens/KalkulatorScreen";
+import HomeScreen from "../screens/HomeScreen";
 import DiscoverStack from "./DiscoverStack";
 import RecommendStack from "./RecommendStack";
 const Tab = createBottomTabNavigator();

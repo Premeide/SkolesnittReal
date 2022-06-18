@@ -9,8 +9,8 @@ import {
   Platform,
   StyleSheet,
 } from "react-native";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import CustomBtn from "../components/CustomBtn";
 // import qs from "qs";
 
 // export async function sendEmail(to, subject, body, options = {}) {

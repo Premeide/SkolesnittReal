@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IEducation } from "../../assets/data/Interfaces";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import EducationDetails from "../../components/EducationDetails";
-import OpptakskravDetails from "../../components/OpptakskravDetails";
+import { IEducation } from "../assets/data/Interfaces";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import EducationDetails from "../components/EducationDetails";
+import OpptakskravDetails from "../components/OpptakskravDetails";
 
 const KARAKTERGRENSER = require("../../assets/data/karaktergrense.json");
 

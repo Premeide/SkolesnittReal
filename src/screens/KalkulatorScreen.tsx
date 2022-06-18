@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import AddOrDeleteBtn from "../../components/AddOrDeleteBtn";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
-import { IGrade } from "../../assets/data/Interfaces";
+import AddOrDeleteBtn from "../components/AddOrDeleteBtn";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import CustomBtn from "../components/CustomBtn";
+import { IGrade } from "../assets/data/Interfaces";
 import { Modal, StyleSheet, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import GradesList from "../../components/GradesList";
-import AddClass from "../../components/AddClass";
-import ElevatingSnitt from "../../components/ElevatingSnitt";
+import GradesList from "../components/GradesList";
+import AddClass from "../components/AddClass";
+import ElevatingSnitt from "../components/ElevatingSnitt";
 
 interface IKalkulatorScreen {
   navigation: any;

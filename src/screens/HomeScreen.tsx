@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 
-import CustomHeader from "../../components/CustomHeader";
-import GlobalStyles from "../../assets/styles/GlobalStyles";
-import CustomBtn from "../../components/CustomBtn";
-import GradeSummary from "../../components/GradeSummary";
+import CustomHeader from "../components/CustomHeader";
+import GlobalStyles from "../assets/styles/GlobalStyles";
+import CustomBtn from "../components/CustomBtn";
+import GradeSummary from "../components/GradeSummary";
 import { connect } from "react-redux";
-import MyEducationsList from "../../components/MyEducationsList";
+import MyEducationsList from "../components/MyEducationsList";
 
 interface IHomeScreen {
   navigation: any;

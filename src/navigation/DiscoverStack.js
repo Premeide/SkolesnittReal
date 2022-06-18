@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 
-import EducationDetailsScreen from "../screens/EducationDetails";
-import DiscoverScreen from "../screens/Discover";
+import EducationDetailsScreen from "../screens/EducationDetailsScreen";
+import DiscoverScreen from "../screens/DiscoverScreen";
 
 const Stack = createStackNavigator();
 
