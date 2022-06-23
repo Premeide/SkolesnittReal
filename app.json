@@ -2,7 +2,7 @@
   "expo": {
     "name": "SkoleSnitt",
     "slug": "SkoleSnitt",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./src/assets/images/skoleLogo.png",
     "splash": {
@@ -19,7 +19,7 @@
     },
     "android": {
       "package": "com.SkoleSnitt",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/skoleLogo.png",
         "backgroundColor": "#FFFFFF"
