@@ -13,7 +13,6 @@ import * as Animatable from "react-native-animatable";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import List from "./List";
 
-const INGEN_AV_DISSE = "Ingen av disse";
 const FOLKEHØYSKOLE = "Folkehøyskole";
 const MILITÆRET = "Militæret";
 const STUDIEPOENG_30 = "30 til 59 studiepoeng";
@@ -24,7 +23,6 @@ let extraPointsAlternatives = [
   { name: MILITÆRET },
   { name: STUDIEPOENG_30 },
   { name: STUDIEPOENG_60 },
-  { name: INGEN_AV_DISSE },
 ];
 interface ExtraPointsProps {
   extraPoints: IExtraPoints;
@@ -47,8 +45,6 @@ class ExtraPoints extends Component<ExtraPointsProps> {
     let newCheckArray = this.state.checkArray;
     if (this.state.checkArray.includes(text)) {
       newCheckArray = newCheckArray.filter((e: string) => e !== text);
-    } else if (text == INGEN_AV_DISSE) {
-      newCheckArray = [INGEN_AV_DISSE];
     } else {
       newCheckArray.push(text);
     }
@@ -58,8 +54,8 @@ class ExtraPoints extends Component<ExtraPointsProps> {
     return (
       <Animatable.View
         style={GlobalStyles.whiteContainer}
-        animation="fadeInUp"
-        duration={700}
+        animation="fadeIn"
+        duration={500}
       >
         <Text style={GlobalStyles.underTitleText}>
           Tilleggspoeng: {this.props.extraPoints.value}
@@ -80,53 +76,20 @@ class ExtraPoints extends Component<ExtraPointsProps> {
                 }}
               >
                 <Text style={GlobalStyles.listText}>{item.name}</Text>
-                {item.name == INGEN_AV_DISSE ? null : (
-                  <View style={GlobalStyles.listEndContainer}>
-                    {this.state.checkArray.includes(item.name) ? (
-                      <FontAwesome5
-                        name={"check-circle"}
-                        size={25}
-                        color="black"
-                      />
-                    ) : (
-                      <FontAwesome5 name={"circle"} size={25} color="black" />
-                    )}
-                  </View>
-                )}
+                <View style={GlobalStyles.listEndContainer}>
+                  {this.state.checkArray.includes(item.name) ? (
+                    <FontAwesome5
+                      name={"check-circle"}
+                      size={25}
+                      color="black"
+                    />
+                  ) : (
+                    <FontAwesome5 name={"circle"} size={25} color="black" />
+                  )}
+                </View>
               </TouchableOpacity>
             )}
           />
-          {/* <FlatList
-            data={extraPointsAlternatives}
-            keyExtractor={(item) => item.name}
-            ItemSeparatorComponent={() => (
-              <View style={GlobalStyles.ItemSeparatorComponent} />
-            )}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                style={GlobalStyles.row}
-                onPress={() => {
-                  this.props.setExtraPoints(item.name);
-                  this.changeCheckArray(item.name);
-                }}
-              >
-                <Text style={GlobalStyles.listText}>{item.name}</Text>
-                {item.name == INGEN_AV_DISSE ? null : (
-                  <View style={GlobalStyles.listEndContainer}>
-                    {this.state.checkArray.includes(item.name) ? (
-                      <FontAwesome5
-                        name={"check-circle"}
-                        size={25}
-                        color="black"
-                      />
-                    ) : (
-                      <FontAwesome5 name={"circle"} size={25} color="black" />
-                    )}
-                  </View>
-                )}
-              </TouchableOpacity>
-            )}
-          /> */}
         </View>
       </Animatable.View>
     );

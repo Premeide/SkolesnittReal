@@ -14,7 +14,7 @@ class RecommendScreen extends Component<IRecommendScreen> {
       <View style={GlobalStyles.safeContainer}>
         <ScrollView>
           <CustomHeader />
-          <RetakeGradeSummary />
+          <RetakeGradeSummary navigation={this.props.navigation} />
           <RetakeClassesList navigation={this.props.navigation} />
         </ScrollView>
       </View>

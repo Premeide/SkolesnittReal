@@ -12,6 +12,15 @@ class QuestionsScreen extends Component<IQuestionsScreen> {
     return (
       <View style={GlobalStyles.container}>
         <ScrollView>
+          <Text style={GlobalStyles.listText}>
+            {"    "}Finner ikke spørsmålet ditt her?{" "}
+            <Text
+              style={{ textDecorationLine: "underline" }}
+              onPress={() => this.props.navigation.navigate("Feedback")}
+            >
+              Spør her
+            </Text>
+          </Text>
           <CollapsibleItem title="Når er søknadsfristen?">
             <Text style={GlobalStyles.listText}>
               Ordinær søknadsfrist for høyere utdanning er{" "}

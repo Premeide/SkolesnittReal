@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Alert } from "react-native";
 
 import CustomHeader from "../components/CustomHeader";
 import GlobalStyles from "../assets/styles/GlobalStyles";
@@ -40,7 +40,18 @@ class HomeScreen extends Component<IHomeScreen> {
             onclick={() => this.props.navigation.navigate("Discover")}
             flexEndBtn={{
               text: "SKIP",
-              onPress: () => this.skipHandler(),
+              onPress: () =>
+                Alert.alert(
+                  "Skip?",
+                  "No educations, no recommendations or comparisons bro",
+                  [
+                    {
+                      text: "Avbryt",
+                      style: "cancel",
+                    },
+                    { text: "OK", onPress: () => this.skipHandler() },
+                  ]
+                ),
             }}
           />
         ) : null}

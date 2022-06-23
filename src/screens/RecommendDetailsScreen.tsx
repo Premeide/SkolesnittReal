@@ -6,7 +6,7 @@ import GlobalStyles from "../assets/styles/GlobalStyles";
 import EducationDetails from "../components/EducationDetails";
 import OpptakskravDetails from "../components/OpptakskravDetails";
 
-const KARAKTERGRENSER = require("../../assets/data/karaktergrense.json");
+const KARAKTERGRENSER = require("../assets/data/karaktergrense.json");
 
 interface IRecommendDetailsScreen {
   route: any;

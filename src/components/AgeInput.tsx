@@ -16,8 +16,8 @@ class AgeInput extends Component<AgeInputProps> {
     return (
       <Animatable.View
         style={GlobalStyles.whiteContainer}
-        animation="fadeInUp"
-        duration={700}
+        animation="fadeIn"
+        duration={500}
       >
         <Text style={GlobalStyles.underTitleText}>Fødselsår:</Text>
         <TextInput

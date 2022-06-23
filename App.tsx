@@ -9,26 +9,25 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { StatusBar } from "expo-status-bar";
-// søppel icon høyre istedet for..
-// BARE snitt (finnes?)
+
 const DEFAULT_GRADE = { id: "-", value: 0, includeExam: false, examValue: 0 };
 
 const YEAR_WITH_NO_ALDERSPOENG = 2003; // År 2021: 2002, 2022:2003
 
 const INITIAL_GRADES = [
-  { value: 1, id: "Engelsk", includeExam: false, examValue: 1 },
-  { value: 1, id: "Fremmedspråk", includeExam: false, examValue: 1 },
-  { value: 1, id: "Geografi", includeExam: false, examValue: 1 },
-  { value: 1, id: "Historie", includeExam: false, examValue: 1 },
-  { value: 1, id: "Naturfag", includeExam: false, examValue: 1 },
-  { value: 1, id: "Kroppsøving", includeExam: false, examValue: 1 },
-  { value: 1, id: "Matematikk 1T/1P", includeExam: false, examValue: 1 },
-  { value: 1, id: "Matematikk 2T/2P", includeExam: false, examValue: 1 },
-  { value: 1, id: "Norsk hovedmål", includeExam: false, examValue: 1 },
-  { value: 1, id: "Norsk muntlig", includeExam: false, examValue: 1 },
-  { value: 1, id: "Norsk sidemål", includeExam: false, examValue: 1 },
-  { value: 1, id: "Religion og etikk", includeExam: false, examValue: 1 },
-  { value: 1, id: "Samfunnsfag", includeExam: false, examValue: 1 },
+  { value: 0, id: "Engelsk", includeExam: false, examValue: 0 },
+  { value: 0, id: "Fremmedspråk", includeExam: false, examValue: 0 },
+  { value: 0, id: "Geografi", includeExam: false, examValue: 0 },
+  { value: 0, id: "Historie", includeExam: false, examValue: 0 },
+  { value: 0, id: "Naturfag", includeExam: false, examValue: 0 },
+  { value: 0, id: "Kroppsøving", includeExam: false, examValue: 0 },
+  { value: 0, id: "Matematikk 1T/1P", includeExam: false, examValue: 0 },
+  { value: 0, id: "Matematikk 2T/2P", includeExam: false, examValue: 0 },
+  { value: 0, id: "Norsk hovedmål", includeExam: false, examValue: 0 },
+  { value: 0, id: "Norsk muntlig", includeExam: false, examValue: 0 },
+  { value: 0, id: "Norsk sidemål", includeExam: false, examValue: 0 },
+  { value: 0, id: "Religion og etikk", includeExam: false, examValue: 0 },
+  { value: 0, id: "Samfunnsfag", includeExam: false, examValue: 0 },
 ];
 
 const initialState: IState = {
@@ -49,14 +48,14 @@ const initialState: IState = {
     _60points: false,
   },
   realfagspoeng: 0,
-  snitt: 10.0,
+  snitt: 0,
 
   //retake grades summary
   retakeTotalPoints: 0,
   retakeAlderspoeng: 0,
   retakeExtraPoints: 0,
   retakeRealfagspoeng: 0,
-  retakeSnitt: 10.0,
+  retakeSnitt: 0,
 };
 const reducer = (state: IState = initialState, action: any) => {
   switch (action.type) {
@@ -365,7 +364,7 @@ function snitt(grades: IGrade[]) {
   const initialVals = { avg: 0, n: 0 };
   const averageGrade = grades.reduce(averageScores, initialVals);
 
-  return Math.round((averageGrade.avg + 1) * 100 * 10) / 100;
+  return Math.round((averageGrade.avg + 2) * 100 * 10) / 100;
 }
 
 function averageScores({ avg, n }: any, o: IGrade) {
@@ -399,7 +398,7 @@ function retakeSnitt(grades: IGrade[], retakeGrades: IGrade[]) {
   const initialVals = { avg: 0, n: 0 };
   const averageGrade = combinesGrades.reduce(averageScores, initialVals);
 
-  return Math.round((averageGrade.avg + 1) * 100 * 10) / 100;
+  return Math.round((averageGrade.avg + 2) * 100 * 10) / 100;
 }
 function setEducations(educations: number[], studiekode: number) {
   if (educations.includes(studiekode)) {
@@ -436,14 +435,7 @@ function calculateExtraPoints(extraPoints: IExtraPoints, clicked: string) {
         _60points: !extraPoints._60points,
       };
       break;
-    case "Ingen av disse":
-      extraPoints = {
-        value: 0,
-        Military: false,
-        Folkehøyskole: false,
-        _30points: false,
-        _60points: false,
-      };
+    default:
       break;
   }
   var newValue = 0;

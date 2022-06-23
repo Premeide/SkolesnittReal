@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, View } from "react-native";
 import GlobalStyles from "../assets/styles/GlobalStyles";
 import { connect } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import PlussMinusBtns from "./PlussMinusBtns";
 import List from "./List";
+import { FontAwesome5 } from "@expo/vector-icons";
+import * as Animatable from "react-native-animatable";
+import CustomBtn from "./CustomBtn";
 
 const NYE_ALDERSPOENG = "Ny alderspoeng";
 const NYE_TILLEGGSPOENG = "Ny tilleggspoeng";
@@ -16,6 +19,8 @@ type SummaryGradeItem = {
   value: number;
 };
 interface RetakeGradeSummaryProps {
+  navigation: any;
+
   retakeTotalPoints: 100;
   retakeAlderspoeng: 0;
   retakeExtraPoints: 0;
@@ -34,6 +39,7 @@ interface RetakeGradeSummaryProps {
 
 const RetakeGradeSummary: React.FC<RetakeGradeSummaryProps> = (props) => {
   const [summaryList, setSummaryList] = useState<SummaryGradeItem[]>();
+  const [showModal, setShowModal] = useState(false);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -85,9 +91,18 @@ const RetakeGradeSummary: React.FC<RetakeGradeSummaryProps> = (props) => {
   }
   return (
     <View style={GlobalStyles.whiteContainer}>
-      <Text style={[GlobalStyles.smallText, { textAlign: "center" }]}>
-        Dine poeng med nye fag
+      <Text
+        style={[GlobalStyles.smallText, { textAlign: "center" }]}
+        onPress={() => setShowModal(true)}
+      >
+        Dine poeng med nye fag{" "}
+        <FontAwesome5
+          name={"question-circle"}
+          size={10}
+          color={GlobalStyles.blueColor.color}
+        />
       </Text>
+
       <Text style={styles.poeng}>{props.retakeTotalPoints}</Text>
       <View style={GlobalStyles.greyContainer}>
         <List
@@ -120,6 +135,38 @@ const RetakeGradeSummary: React.FC<RetakeGradeSummaryProps> = (props) => {
           )}
         />
       </View>
+      <Modal transparent={true} visible={showModal}>
+        <Animatable.View
+          style={{ backgroundColor: "grey", flex: 1 }}
+          animation="fadeIn"
+          duration={300}
+        >
+          <View style={GlobalStyles.modalContainer}>
+            <Text style={GlobalStyles.listText}>Hva er dette?</Text>
+            <View style={[GlobalStyles.greyContainer, { height: "90%" }]}>
+              <Text style={GlobalStyles.listText}>
+                Tar du opp fag får du annet snitt, kanskje fler realfagspoeng
+                osv idk
+              </Text>
+              <Text>
+                {" "}
+                For andre spørsmål gå til vår{" "}
+                <Text
+                  style={{ textDecorationLine: "underline" }}
+                  onPress={() => {
+                    setShowModal(false);
+                    props.navigation.navigate("Questions");
+                  }}
+                >
+                  FAQ
+                </Text>{" "}
+                side
+              </Text>
+            </View>
+            <CustomBtn text="Ok" onclick={() => setShowModal(false)} />
+          </View>
+        </Animatable.View>
+      </Modal>
     </View>
   );
 };

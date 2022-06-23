@@ -46,16 +46,16 @@ class ProfileList extends Component<ProfileListProps> {
           onPress={() => {
             Alert.alert(
               "Logg ut?",
-              "Bro, du logget aldri inn... men du kan få lage en ny en.",
+              "Vil du lage ny profil? (denne profilen blir slettet)",
               [
                 {
-                  text: "Ja, gjør det",
+                  text: "Ja, lag ny",
                   onPress: () => {
                     this.props.resetAllStates();
                     this.props.navigation.navigate("NewProfile");
                   },
                 },
-                { text: "sry" },
+                { text: "Avbryt" },
               ]
             );
           }}

@@ -15,7 +15,7 @@ interface IEducationDetailsScreen {
   setEducations: (studiekode: number) => {};
   tutorialDone: () => {};
 }
-const KARAKTERGRENSER = require("../../assets/data/karaktergrense.json");
+const KARAKTERGRENSER = require("../assets/data/karaktergrense.json");
 
 class EducationDetailsScreen extends Component<IEducationDetailsScreen> {
   state = {
